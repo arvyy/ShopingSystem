@@ -1,0 +1,20 @@
+Pirkėjo dalies klausimai:
+1. Prisijungimams naudoti Google/Facebook prisijungimus, ar savo sistemą?
+>> Nereikia integracijos su socialiniais tinklais, bet jeigu padarysit - laikysiu privalumu. 
+2. Ar gali vartotojas vykdyti užsakymus neužsiregistravęs?
+>> Negali pirkti neužsiregistravęs. Gali dėti prekes į krepšelį.
+3. Ar pirkinių krepšelį reikia susieti su vartotoju ar su sesija?
+>> Vartotoju. 
+4. Ar vartotojas turi galėti susieti banko kortelę su savo saskaita? 
+Kiek kortelių su savo paskyra gali susieti varotojas?
+>> Kaip atrodys kortelių naudojimas? Užtenka vienos.  
+
+Administratoriaus dalies klausimai:
+5. Kiek prekių gali būti visoje sistemoje?
+>> Neturiu konkretaus atsakymo. 
+6. Ar reikia turėti atsarginę kopiją ir galimybę fiksuoti prekių pakeitimus, kad būtų galima pakeitimus atstatyti?
+>> Užtenka prekių Importo/eksporto. 
+7. Pagal ką blokuoti pirkėją? (Paskyrą, kortelės numerį, adresą?) 8. Ar turėtų būti užsakymų istorija, užsakymo stadija?
+>> Paskyrą. 
+9. Ką reiškia vykdyti užsakymą? (Keisti vartotojo užsakymo vykdymo būsenas ar ką nors kita?)
+>> Keisti užsakymo būsenas. 

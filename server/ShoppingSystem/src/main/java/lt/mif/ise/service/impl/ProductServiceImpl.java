@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product modify(Product product) {
-        return productRepository.modify(product);
+        return productRepository.save(product);
     }
 
     @Override

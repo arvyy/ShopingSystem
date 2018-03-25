@@ -14,6 +14,6 @@ public interface ExampleRepository extends CrudRepository<Example, String>{
 	 * 
 	 * Daugiau: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
 	 */
-	public List<Example> findByText(String text);
+	List<Example> findByText(String text);
 	
 }

@@ -37,4 +37,6 @@ public class ShoppingSystemApplication {
 		b.setData(UUID.randomUUID().toString());
 		return b;
 	}
+
+
 }

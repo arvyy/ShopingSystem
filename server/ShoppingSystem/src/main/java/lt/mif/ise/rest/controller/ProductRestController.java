@@ -32,8 +32,8 @@ public class ProductRestController {
         productService.delete(productId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "{productName}")
-    public Iterable<Product> getProductByName(@PathVariable(value = "productName")String productName){
+    @RequestMapping(method = RequestMethod.GET)
+    public Iterable<Product> getProductByName(@RequestParam(value = "productName") String productName){
         return productService.getByName(productName);
     }
 }

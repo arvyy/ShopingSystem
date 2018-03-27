@@ -16,8 +16,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getById(String id) {
-        // wtf is this?????
-        return productRepository.findById(id).get();
+        return productRepository.findById(id).orElseThrow()->return new RuntimeException("Failed to get product.");
     }
 
     @Override

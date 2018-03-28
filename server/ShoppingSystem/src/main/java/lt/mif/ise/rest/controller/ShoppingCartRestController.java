@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @RequestMapping("api/shoppingcart/")
 @Controller
 public class ShoppingCartRestController {
@@ -31,6 +33,11 @@ public class ShoppingCartRestController {
     @RequestMapping(method = RequestMethod.DELETE, value = "{productId}")
     public void deleteFromCart(@PathVariable(value = "productId") String productId){
         shoppingCart.removeFromCart(productId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ConcurrentHashMap<String, Integer> getCart(){
+        return shoppingCart.getCart();
     }
     //TODO add cart crud here
 }

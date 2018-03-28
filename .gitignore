@@ -3,3 +3,4 @@ localdb.mv.db
 target
 server/ShoppingSystem/target
 server/ShoppingSystem/shopping-system.iml
+server/ShoppingSystem/localdb.trace.db

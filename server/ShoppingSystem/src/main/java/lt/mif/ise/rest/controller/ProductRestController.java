@@ -18,13 +18,13 @@ public class ProductRestController {
 
     // Kaip programa zino, koki status code grazina?
     @RequestMapping(method = RequestMethod.POST)
-    public void createProduct(@RequestBody Product product){
-        productService.create(product);
+    public Product createProduct(@RequestBody Product product){
+        return productService.create(product);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void modifyProduct(@RequestBody Product product){
-        productService.modify(product);
+    public Product modifyProduct(@RequestBody Product product){
+        return productService.modify(product);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "{productId}")

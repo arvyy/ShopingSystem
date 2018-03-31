@@ -1,10 +1,12 @@
 package lt.mif.ise.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.text.DecimalFormat;
+
+import java.math.BigDecimal;
 
 @Entity
 public class Product {
@@ -13,8 +15,9 @@ public class Product {
     private String id;
 
     private String name;
-
-    private DecimalFormat price;
+    
+    @Column(nullable= false, precision=8, scale=3)
+    private BigDecimal price;
 
     public void setName(String name) {
         this.name = name;
@@ -32,11 +35,11 @@ public class Product {
         this.id = id;
     }
 
-    public DecimalFormat getPrice() {
-        return price;
-    }
+	public BigDecimal getPrice() {
+		return price;
+	}
 
-    public void setPrice(DecimalFormat price) {
-        this.price = price;
-    }
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 }

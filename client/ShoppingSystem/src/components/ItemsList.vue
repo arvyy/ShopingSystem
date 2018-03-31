@@ -2,7 +2,7 @@
   <div class="items_list_container">
     <ul>
       <li v-for="item in items">
-        {{ item.message }}
+        {{ item.name }}
       </li>
     </ul>
   </div>
@@ -10,13 +10,19 @@
 
 <script>
   export default {
+/*
+	Gal vertetu pervadint i productList?
+*/
     name: 'ItemsList',
+	props : ['items'],
     data () {
       return {
+/*
         items: [
           { message: 'Foo' },
           { message: 'Bar' }
         ]
+*/
       }
     }
 

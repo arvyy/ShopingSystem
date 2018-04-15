@@ -6,19 +6,33 @@ import java.util.Set;
 @Entity
 @Table(name="user")
 public class User {
-    private Long id;
+
+    private String id;
     private String username;
     private String password;
-    private String passwordConfirm;
+    private String email;
+    private boolean enabled;
     private Set<Role> roles;
+
+    public User(){
+
+    }
+
+    public User(User user){
+        this.enabled = user.isEnabled();
+        this.id  = user.getId();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId(){
+    public String getId(){
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -38,16 +52,23 @@ public class User {
         this.password = password;
     }
 
-    @Transient
-    public String getPasswordConfirm() {
-        return passwordConfirm;
+    public String getEmail(){
+        return email;
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
+    public void setEmail(String email){
+        this.email = email;
     }
 
-    @ManyToMany
+    public boolean isEnabled(){
+        return enabled;
+    }
+
+    public void setEnabled(boolean en){
+        this.enabled = en;
+    }
+
+    @OneToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     public Set<Role> getRoles() {
         return roles;

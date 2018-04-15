@@ -1,37 +1,42 @@
 package lt.mif.ise.rest.controller;
 
-import lt.mif.ise.validator.UserValidator;
 import lt.mif.ise.domain.User;
-import lt.mif.ise.service.SecurityService;
 import lt.mif.ise.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/users")
 @RestController
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-    @RequestMapping(value="/registration", method = RequestMethod.GET)
-    public String registration(){
-        return "registration";
+    @RequestMapping(value="/sign-up", method = RequestMethod.POST)
+    public String signUp(@RequestBody User user){
+        user.setEnabled(true);
+        userService.save(user);
+        return "user registered";
     }
 
-    @RequestMapping(value="/login", method = RequestMethod.GET)
-    public String login(){
-        return "login";
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value="/test/secured/admin", method = RequestMethod.GET)
+    public String testAdminAuthorization(){
+        return "welcome ADMIN";
     }
 
-    @RequestMapping(value={"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(){
-        return "welcome";
+    @PreAuthorize(("hasAnyRole('USER')"))
+    @RequestMapping(value="/test/secured/user", method = RequestMethod.GET)
+    public String testUserAuthorization(){
+        return "welcome USER";
+    }
+
+    @RequestMapping(value = "/test/user", method = RequestMethod.GET)
+    public String testNonAuthorizedUser(){
+        return "welcome non authorized";
     }
 }

@@ -1,7 +1,7 @@
 package lt.mif.ise.rest.controller;
 
 import lt.mif.ise.bean.ShoppingCart;
-import lt.mif.ise.domain.Product;
+import lt.mif.ise.domain.ProductForCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RequestMapping("api/shoppingcart/")
@@ -16,18 +18,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ShoppingCartRestController {
     @Autowired
     private ShoppingCart shoppingCart;
-//    @RequestMapping(method = RequestMethod.DELETE, value = "{productId}")
-//    public void deleteProduct(@PathVariable(value= "productId") String productId){
-//        productService.delete(productId);
-//    }
 
-    //this is stupid but my head doesnt work
+//TODO dont pass id and amount, pass the object
     @RequestMapping(method = RequestMethod.POST)
-    public Iterable<Product> addToCart(@RequestBody Iterable<Product> productList){
-        for (Product product: productList) {
-            shoppingCart.addToCart(product.getId(), 1);
+    public Iterable<ProductForCart> addToCart(@RequestBody Iterable<ProductForCart> products){
+        for (ProductForCart product: products) {
+            shoppingCart.addToCart(product.Id, product.Amount);
         }
-        return productList;
+        return products;
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "{productId}")
@@ -35,9 +33,21 @@ public class ShoppingCartRestController {
         shoppingCart.removeFromCart(productId);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "{productId}")
+    public Iterable<ProductForCart> deleteFromCart(@PathVariable(value = "productId") Iterable<ProductForCart> products){
+        List<ProductForCart> deletedProducts = new ArrayList<ProductForCart>();
+        for (ProductForCart product: products) {
+            Integer deletedAmount = shoppingCart.removeFromCart(product.Id, product.Amount);
+            ProductForCart deletedProduct = new ProductForCart();
+            deletedProduct.Id = product.Id;
+            deletedProduct.Amount = deletedAmount;
+            deletedProducts.add(deletedProduct);
+        }
+        return deletedProducts;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ConcurrentHashMap<String, Integer> getCart(){
         return shoppingCart.getCart();
     }
-    //TODO add cart crud here
 }

@@ -1,13 +1,17 @@
 package lt.mif.ise.rest.controller;
 
 import lt.mif.ise.domain.Product;
+import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/product/")
+@RequestMapping("/api/product")
 @RestController
 public class ProductRestController {
+	/*
+	 * TODO error handling mapping
+	 */
     @Autowired
     private ProductService productService;
 
@@ -33,7 +37,7 @@ public class ProductRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Product> getProductByName(@RequestParam(value = "productName") String productName){
-        return productService.getByName(productName);
+    public Iterable<Product> findProducts(ProductCriteria criteria){
+        return productService.findProducts(criteria);
     }
 }

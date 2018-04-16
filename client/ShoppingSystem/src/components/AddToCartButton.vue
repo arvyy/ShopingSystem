@@ -20,9 +20,7 @@
   .btn {
     background: #3498DB;
     color: #ffffff;
-    font-size: 16px;
-    line-height: 25px;
-    padding: 10px 0;
+    padding: 8% 0;
     border-radius: 4px;
     display: block;
     width: auto;

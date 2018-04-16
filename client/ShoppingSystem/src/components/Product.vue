@@ -30,7 +30,7 @@
   .product_container {
     border: rgb(208, 208, 208) solid 2px;
     width: 250px;
-    height: auto;
+    height: 275px;
     border-radius: 4px;
     overflow: hidden;
     margin: 0;
@@ -40,14 +40,14 @@
     background-color: rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 100%;
-    padding-top: 4%;
-    padding-bottom: 4%;
+    padding-top: 2%;
+    padding-bottom: 2%;
   }
 
   .name {
     font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 4%;
+    font-size: 20px;
+    margin-bottom: 2%;
   }
 
   .price {
@@ -56,7 +56,6 @@
 
   .add_to_cart_button {
     width: 50%;
-
     transform: translateX(50%);
   }
 

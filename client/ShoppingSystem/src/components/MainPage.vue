@@ -23,6 +23,7 @@
         var t = this;
         axios.get('/api/product').then(function(response){
           t.productList = response.data;
+          console.log(response.data)
         });
       }
     },
@@ -30,6 +31,7 @@
       console.log('loadingProductList');
       this.loadItemsList();
     },
+
     components: {
       SearchBar,
       ProductList

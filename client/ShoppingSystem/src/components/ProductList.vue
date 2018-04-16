@@ -1,15 +1,18 @@
 <template>
   <div class="product_list_container">
-    <ul>
-      <li v-for="product in products">
-        {{ product.name }}
-      </li>
-    </ul>
+    <h1>Products</h1>
+    <div class="product_container" v-for="product in products">
+        <Product :name=product.name :price=product.price></Product>
+    </div>
   </div>
 </template>
 
+
 <script>
+  import Product from "./Product";
+
   export default {
+    components: {Product},
     name: 'ProductList',
 	  props : ['products'],
     data () {
@@ -28,6 +31,14 @@
 
 <style scoped>
   .product_list_container {
-    border: black solid 3px;
+    border: black solid 0px;
+  }
+
+  .product_container {
+    margin: 10px;
+    width: auto;
+    display: inline-block;
+
+
   }
 </style>

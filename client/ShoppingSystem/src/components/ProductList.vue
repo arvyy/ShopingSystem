@@ -1,8 +1,8 @@
 <template>
-  <div class="items_list_container">
+  <div class="product_list_container">
     <ul>
-      <li v-for="item in items">
-        {{ item.name }}
+      <li v-for="product in products">
+        {{ product.name }}
       </li>
     </ul>
   </div>
@@ -10,11 +10,8 @@
 
 <script>
   export default {
-/*
-	Gal vertetu pervadint i productList?
-*/
-    name: 'ItemsList',
-	props : ['items'],
+    name: 'ProductList',
+	  props : ['products'],
     data () {
       return {
 /*
@@ -30,7 +27,7 @@
 </script>
 
 <style scoped>
-  .items_list_container {
+  .product_list_container {
     border: black solid 3px;
   }
 </style>

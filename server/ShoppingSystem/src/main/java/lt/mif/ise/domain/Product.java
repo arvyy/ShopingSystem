@@ -15,6 +15,10 @@ public class Product {
     private String id;
 
     private String name;
+
+    private String description;
+
+    private String imageUrl;
     
     @Column(nullable= false, precision=8, scale=3)
     private BigDecimal price;
@@ -42,4 +46,20 @@ public class Product {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

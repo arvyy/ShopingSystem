@@ -1,5 +1,8 @@
 package lt.mif.ise.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.id.GUIDGenerator;
+
 import javax.persistence.*;
 import java.util.Set;
 

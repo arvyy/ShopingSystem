@@ -27,7 +27,6 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public String getId(){
         return id;
     }

@@ -26,12 +26,7 @@
 	  props : ['products'],
     data () {
       return {
-/*
-        items: [
-          { message: 'Foo' },
-          { message: 'Bar' }
-        ]
-*/
+
       }
     }
 

@@ -2,6 +2,7 @@
   <div class="main_page_container">
     <SearchBar v-on:do-search="onSearch"></SearchBar>
     <ProductList id="product_list" :products="productPages" v-on:set-page="loadItemsList"></ProductList>
+    <LogInForm></LogInForm>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
   import axios from 'axios'
   import SearchBar from './SearchBar.vue'
   import ProductList from './ProductList.vue'
+  import LogInForm from './LogInForm.vue'
 
   export default {
     name: 'MainPage',
@@ -46,7 +48,8 @@
 
     components: {
       SearchBar,
-      ProductList
+      ProductList,
+      LogInForm
     }
   }
 

@@ -1,6 +1,8 @@
 package lt.mif.ise.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -8,8 +10,15 @@ import java.util.Set;
 public class User {
 
     private String id;
+
+    @NotNull
+    @NotEmpty
     private String username;
+
+    @NotNull
+    @NotEmpty
     private String password;
+
     private String email;
     private boolean enabled;
     private Set<Role> roles;
@@ -67,7 +76,7 @@ public class User {
         this.enabled = en;
     }
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     public Set<Role> getRoles() {
         return roles;

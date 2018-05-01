@@ -1,6 +1,12 @@
 <template>
   <div class="login_container">
-
+	  <div class="login_form">
+		<form action="/login" method="POST">
+		  <input type="text" name="username" placeholder="User Name">
+		  <input type="password" name="password" placeholder="Password">
+		  <input type="submit" value="Login">
+		</form>
+	  </div>
   </div>
 </template>
 

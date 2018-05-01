@@ -30,14 +30,12 @@ public class ProductServiceImpl implements ProductService {
     
 	@PostConstruct
 	public void init() {
-		/*
-		 * Jei nieko ner, pakist kazkokiu placeholder duomenu
-		 */
-		System.out.println(productRepository.count());
+		productRepository.deleteAll();
 		if (productRepository.count() < 100) {
 			List<Product> products = IntStream.range(0, 100)
 				.mapToObj((i) -> {
 					Product p = new Product();
+					p.setProductId("prod-" + i);
 					p.setDescription("" + p.hashCode());
 					p.setName("Product NR" + i);
 					p.setPrice(new BigDecimal("" + i + ".99"));
@@ -50,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getById(String id) {
-        return productRepository.findById(id).orElseThrow(()->new RuntimeException("Failed to get product."));
+        return productRepository.findByProductId(id).orElseThrow(()->new RuntimeException("Failed to get product."));
     }
 
     @Override

@@ -2,7 +2,7 @@
   <div class="product_list_container">
     <h1>Products</h1>
     <div class="product_container" v-for="product in products.content">
-        <Product :name=product.name :price=product.price></Product>
+        <Product :name=product.name :price=product.price :productId=product.productId v-on:product-click="openProductPage(product.productId)"></Product>
     </div>
 	<div v-if="products.totalPages > 1">
 		<button v-if="!products.first" v-on:click="$emit('set-page', 0)">1</button>
@@ -28,7 +28,12 @@
       return {
 
       }
-    }
+    },
+	methods: {
+		openProductPage: function(productId) {
+			this.$router.push({name: 'ProductPage', params: { productId: productId }});
+		}
+	}
 
   }
 </script>

@@ -8,8 +8,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends CrudRepository<Product, String>, JpaSpecificationExecutor<Product>{
     List<Product> findByName(String name);
+    Optional<Product> findByProductId(String productId);
     Page<Product> findAll(Pageable page);
 }

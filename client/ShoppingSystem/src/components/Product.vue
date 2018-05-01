@@ -1,10 +1,10 @@
 <template>
   <div class="product_container">
     <div class="image_container">
-      <img class="image" src="./../assets/logo.png">
+      <a v-on:click="$emit('product-click')"><img class="image" src="./../assets/logo.png"></a>
     </div>
     <div class="product_info_container">
-      <div class="name">{{ name }}</div>
+      <div class="name"><a v-on:click="$emit('product-click')">{{ name }}</a></div>
       <div class="price">Price: {{ price }} $</div>
       <AddToCartButton class="add_to_cart_button"></AddToCartButton>
     </div>

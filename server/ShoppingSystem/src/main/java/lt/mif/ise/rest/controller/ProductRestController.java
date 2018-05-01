@@ -4,6 +4,8 @@ import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/product")
@@ -37,7 +39,7 @@ public class ProductRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Product> findProducts(ProductCriteria criteria){
-        return productService.findProducts(criteria);
+    public Page<Product> findProducts(ProductCriteria criteria, Pageable page){
+        return productService.findProducts(criteria, page);
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="search_bar_container">
-    <input class="search_bar" type="text" :placeholder="placeholder">
-
+    <input class="search_bar" type="text" :placeholder="placeholder" v-model="searchText">
+	<button v-on:click="$emit('do-search', searchText)">Search</button>
   </div>
 </template>
 
@@ -10,7 +10,8 @@
     name: 'SearchBar',
     data () {
       return {
-        placeholder: 'Search'
+        placeholder: 'Search',
+		searchText: ''
       }
     }
 

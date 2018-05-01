@@ -1,7 +1,7 @@
 <template>
   <div class="main_page_container">
-    <SearchBar></SearchBar>
-    <ProductList id="product_list" :products="productList"></ProductList>
+    <SearchBar v-on:do-search="onSearch"></SearchBar>
+    <ProductList id="product_list" :products="productPages" v-on:set-page="loadItemsList"></ProductList>
     <LogInForm></LogInForm>
   </div>
 </template>
@@ -17,21 +17,33 @@
     name: 'MainPage',
     data () {
       return {
-        productList: []
+		searchText : '',
+		productsPerPage: 20,
+        productPages: {}
       }
     },
     methods: {
-      loadItemsList() {
+		onSearch : function(searchText) {
+			this.searchText = searchText;	
+			this.loadItemsList(0);
+		},
+      loadItemsList(page) {
         var t = this;
-        axios.get('/api/product').then(function(response){
-          t.productList = response.data;
+        axios.get('/api/product', {
+			params: {
+				text: t.searchText,
+				size: t.productsPerPage,
+				page: page
+			}
+		}).then(function(response){
+          t.productPages = response.data;
           console.log(response.data)
         });
       }
     },
     mounted : function() {
       console.log('loadingProductList');
-      this.loadItemsList();
+      this.loadItemsList(0);
     },
 
     components: {

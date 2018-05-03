@@ -5,13 +5,15 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ShoppingCartImp implements ShoppingCart{
-    private ConcurrentHashMap<String, Integer> _cart;
+    private ConcurrentHashMap<String, Integer> _cart = new ConcurrentHashMap<String, Integer>();
     private final Lock lock = new ReentrantLock();
 
+    @Override
     public ConcurrentHashMap<String, Integer> getCart(){
         return _cart;
     }
 
+    @Override
     public Integer addToCart (String productId, Integer amount){
         if (amount < 1)
             throw new IllegalArgumentException("amount is less than 1");
@@ -33,6 +35,7 @@ public class ShoppingCartImp implements ShoppingCart{
         }
     }
 
+    @Override
     public Integer removeFromCart (String productId, Integer amount){
         if (amount < 1)
             throw new IllegalArgumentException("amount is less than 1");
@@ -57,6 +60,7 @@ public class ShoppingCartImp implements ShoppingCart{
         }
     }
 
+    @Override
     public void removeFromCart (String productId){
         lock.lock();
         try{

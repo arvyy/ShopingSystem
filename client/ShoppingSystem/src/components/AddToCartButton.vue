@@ -1,13 +1,13 @@
 <template>
   <div class="button_container">
-    <div class="btn">Add To Cart</div>
+    <div v-on:click="$emit('add-to-cart', productId)" class="btn">Add To Cart</div>
   </div>
 </template>
 
 <script>
   export default {
     name: 'AddToCartButton',
-    props: [],
+    props: ['productId'],
     data () {
       return {
       }

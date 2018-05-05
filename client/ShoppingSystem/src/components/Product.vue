@@ -6,7 +6,7 @@
     <div class="product_info_container">
       <div class="name"><a v-on:click="$emit('product-click')">{{ name }}</a></div>
       <div class="price">Price: {{ price }} $</div>
-      <AddToCartButton class="add_to_cart_button"></AddToCartButton>
+      <AddToCartButton class="add_to_cart_button" :productId="productId" @add-to-cart="$emit('add-to-cart', $event)" ></AddToCartButton>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@
   export default {
     components: {AddToCartButton},
     name: 'Product',
-    props: ['name', 'price', 'image'],
+    props: ['name', 'price', 'image', 'productId'],
     data () {
       return {
       }

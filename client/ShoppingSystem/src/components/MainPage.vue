@@ -1,65 +1,24 @@
 <template>
-  <div class="main_page_container">
-    <SearchBar v-on:do-search="onSearch"></SearchBar>
-    <ProductList id="product_list" :products="productPages" v-on:set-page="loadItemsList"></ProductList>
-    <LogInForm></LogInForm>
-  </div>
+	<div>
+		<router-view @add-to-cart="addToCart" />
+		<TopBar />
+	</div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import axios from 'axios'
-  import SearchBar from './SearchBar.vue'
-  import ProductList from './ProductList.vue'
-  import LogInForm from './LogInForm.vue'
-
-  export default {
-    name: 'MainPage',
-    data () {
-      return {
-		searchText : '',
-		productsPerPage: 20,
-        productPages: {}
-      }
-    },
-    methods: {
-		onSearch : function(searchText) {
-			this.searchText = searchText;	
-			this.loadItemsList(0);
+	import TopBar from "./TopBar"
+	export default {
+		name: 'MainPage',
+		components: {
+			TopBar
 		},
-      loadItemsList(page) {
-        var t = this;
-        axios.get('/api/product', {
-			params: {
-				text: t.searchText,
-				size: t.productsPerPage,
-				page: page
+		methods: {
+			addToCart : function(productId) {
+				console.log('add to cart');
 			}
-		}).then(function(response){
-          t.productPages = response.data;
-          console.log(response.data)
-        });
-      }
-    },
-    mounted : function() {
-      console.log('loadingProductList');
-      this.loadItemsList(0);
-    },
-
-    components: {
-      SearchBar,
-      ProductList,
-      LogInForm
-    }
-  }
-
-
+		}
+	}
 </script>
 
-<style scoped>
-  #items_list {
-    text-align: left;
-
-  }
-
+<style>
 </style>

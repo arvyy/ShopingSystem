@@ -1,6 +1,5 @@
 package lt.mif.ise.service.impl;
 
-import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.Role;
 import lt.mif.ise.domain.User;
 import lt.mif.ise.jpa.RoleRepository;
@@ -42,7 +41,6 @@ public class UserServiceImpl implements UserService {
             Set<Role> userRole = roleRepository.findByName("ROLE_USER");
             if (null == userRole || 0 == userRole.size()){
                 Role newRole = createNewRole(1l, "ROLE_USER");
-                newRole.setUsers(new HashSet<User>(Arrays.asList(u1)));
                 roleRepository.save(newRole);
                 userRole.add(newRole);
             }
@@ -57,7 +55,6 @@ public class UserServiceImpl implements UserService {
             Set<Role> adminRole = roleRepository.findByName("ROLE_ADMIN");
             if (null == adminRole || 0 == adminRole.size()){
                 Role newAdmRole = createNewRole(2l, "ROLE_ADMIN");
-                newAdmRole.setUsers(new HashSet<User>(Arrays.asList(u2)));
                 roleRepository.save(newAdmRole);
                 adminRole.add(newAdmRole);
             }

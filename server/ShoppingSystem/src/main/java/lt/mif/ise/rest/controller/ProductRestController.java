@@ -4,8 +4,8 @@ import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/product")
@@ -24,13 +24,13 @@ public class ProductRestController {
 
     // Kaip programa zino, koki status code grazina?
     @RequestMapping(method = RequestMethod.POST)
-    public void createProduct(@RequestBody Product product){
-        productService.create(product);
+    public Product createProduct(@RequestBody Product product){
+        return productService.create(product);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void modifyProduct(@RequestBody Product product){
-        productService.modify(product);
+    public Product modifyProduct(@RequestBody Product product){
+        return productService.modify(product);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "{productId}")
@@ -39,7 +39,7 @@ public class ProductRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Product> findProducts(ProductCriteria criteria){
-        return productService.findProducts(criteria);
+    public Page<Product> findProducts(ProductCriteria criteria, Pageable page){
+        return productService.findProducts(criteria, page);
     }
 }

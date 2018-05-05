@@ -2,6 +2,8 @@ package lt.mif.ise;
 
 import java.util.UUID;
 
+import lt.mif.ise.bean.ShoppingCart;
+import lt.mif.ise.bean.ShoppingCartImp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -38,5 +40,9 @@ public class ShoppingSystemApplication {
 		return b;
 	}
 
-
+	@Bean
+    @SessionScope(proxyMode=ScopedProxyMode.INTERFACES)
+    public ShoppingCart ShoppingCartBean(){
+	    return new ShoppingCartImp();
+    }
 }

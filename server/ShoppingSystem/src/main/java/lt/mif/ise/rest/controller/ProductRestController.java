@@ -4,6 +4,8 @@ import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/product")

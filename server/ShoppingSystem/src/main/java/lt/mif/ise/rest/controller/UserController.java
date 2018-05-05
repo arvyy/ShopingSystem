@@ -6,15 +6,14 @@ import lt.mif.ise.service.SecurityService;
 import lt.mif.ise.service.UserService;
 import org.hibernate.id.GUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -32,20 +31,50 @@ public class UserController {
     private UserValidator userValidator;
 
     @RequestMapping(value="sign-up", method = RequestMethod.POST)
-    public String signUp(@RequestBody @Valid User user, BindingResult bindingResult){
+    public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult){
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "error registering user";
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         user.setId(UUID.randomUUID().toString());
         user.setEnabled(true);
         userService.save(user);
 
-        securityService.autologin(user.getUsername(), user.getPassword());
+        securityService.autologin(user.getEmail(), user.getPassword());
 
-        return "user registered";
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value="allusers", method = RequestMethod.GET)
+    public Iterable<User> getAllUsers(){
+        return userService.getAll();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "disable/{email}", method = RequestMethod.POST)
+    public void disableUserByEmail(@PathVariable(value= "email") String email){
+        userService.disableByEmail(email);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "enable/{email}", method = RequestMethod.POST)
+    public void enableUserByEmail(@PathVariable(value = "email") String email){
+        userService.enableByEmail(email);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "disable/{id}", method = RequestMethod.POST)
+    public void disableUserById(@PathVariable(value= "id") String id){
+        userService.disableById(id);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "enable/{id}", method = RequestMethod.POST)
+    public void enableUserById(@PathVariable(value = "id") String id){
+        userService.enableById(id);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN') or hasAnyRole('USER')")

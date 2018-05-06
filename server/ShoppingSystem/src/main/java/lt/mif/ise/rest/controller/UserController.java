@@ -24,8 +24,8 @@ import java.util.UUID;
 @RestController
 public class UserController {
     
-	@Autowired
-    private SecurityService securityService;
+//	@Autowired
+//    private SecurityService securityService;
 
     @Autowired
     private UserService userService;
@@ -33,22 +33,22 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value="sign-up", method = RequestMethod.POST)
-    public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult){
-        userValidator.validate(user, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-
-        user.setId(UUID.randomUUID().toString());
-        user.setEnabled(true);
-        userService.save(user);
-
-        securityService.autologin(user.getEmail(), user.getPassword());
-
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
+//    @RequestMapping(value="sign-up", method = RequestMethod.POST)
+//    public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult){
+//        userValidator.validate(user, bindingResult);
+//
+//        if (bindingResult.hasErrors()) {
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        user.setId(UUID.randomUUID().toString());
+//        user.setEnabled(true);
+//        userService.save(user);
+//
+//        securityService.autologin(user.getEmail(), user.getPassword());
+//
+//        return new ResponseEntity(HttpStatus.CREATED);
+//    }
     
     @RequestMapping("me")
     public String me(Principal p) {

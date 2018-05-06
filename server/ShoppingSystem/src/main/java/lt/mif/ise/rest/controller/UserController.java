@@ -16,12 +16,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.security.Principal;
 import java.util.UUID;
 
-@RequestMapping("/api/users/")
+@RequestMapping("/api/user/")
 @RestController
 public class UserController {
-    @Autowired
+    
+	@Autowired
     private SecurityService securityService;
 
     @Autowired
@@ -46,7 +49,12 @@ public class UserController {
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
-
+    
+    @RequestMapping("me")
+    public String me(Principal p) {
+    	return p == null? null : p.getName();
+    }
+    
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value="allusers", method = RequestMethod.GET)
     public Iterable<User> getAllUsers(){

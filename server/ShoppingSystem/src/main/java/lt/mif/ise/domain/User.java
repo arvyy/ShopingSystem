@@ -9,7 +9,13 @@ import java.util.Set;
 @Table(name="user")
 public class User {
 
-    private String id;
+    @Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", enabled=" + enabled + ", roles="
+				+ roles + "]";
+	}
+
+	private String id;
 
     @NotNull
     @NotEmpty

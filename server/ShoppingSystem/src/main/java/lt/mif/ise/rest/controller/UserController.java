@@ -1,5 +1,7 @@
 package lt.mif.ise.rest.controller;
 
+import lt.mif.ise.domain.EmailUpdateDto;
+import lt.mif.ise.domain.PasswordUpdateDto;
 import lt.mif.ise.domain.User;
 import lt.mif.ise.security.UserValidator;
 import lt.mif.ise.service.UserService;
@@ -11,6 +13,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +23,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import java.io.InvalidObjectException;
+import java.security.InvalidParameterException;
 import java.security.Principal;
 import java.util.UUID;
 
 @RequestMapping("/api/user/")
 @RestController
 public class UserController {
-    
 	@Autowired
     private AuthenticationManager authenticationManager;
 
@@ -63,6 +69,40 @@ public class UserController {
         request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 
         return true;
+    }
+
+    @PreAuthorize(("hasAnyRole('USER')"))
+    @RequestMapping(value = "update/email", method = RequestMethod.POST)
+    public ResponseEntity updateUserEmail(@RequestBody EmailUpdateDto emailDto){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = userService.findByEmail(userDetails.getUsername());
+        if (null == user){
+            throw new UsernameNotFoundException(null);
+        }
+
+        user.setEmail(emailDto.getEmail());
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @PreAuthorize(("hasAnyRole('USER')"))
+    @RequestMapping(value = "update/password", method = RequestMethod.POST)
+    public ResponseEntity updateUserPassword(@RequestBody PasswordUpdateDto passwordDto){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = userService.findByEmail(userDetails.getUsername());
+        if (null == user){
+            throw new UsernameNotFoundException(null);
+        }
+
+        if (!passwordDto.getPassword().equals(passwordDto.getConfirmPassword())){
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+        }
+
+        user.setPassword(passwordDto.getConfirmPassword());
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     

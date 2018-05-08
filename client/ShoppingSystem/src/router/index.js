@@ -4,28 +4,50 @@ import MainPage from '@/components/MainPage'
 import SearchPage from '@/components/SearchPage'
 import ProductPage from '@/components/ProductPage'
 import LoginPage from '@/components/LogInPage'
+import AdminPage from '@/components/AdminPage'
+import ProductsForm from '@/components/ProductsForm'
+import UsersForm from '@/components/UsersForm'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'MainPage',
-      component: MainPage,
-		children: [{
+	routes: [
+		{
 			path: '/',
-			component: SearchPage
+			component: MainPage,
+			children: [{
+				path: '/',
+				name: 'Search',
+				props : function(route) {
+					return {
+						searchText: route.query.text,
+						page: route.query.page
+					};
+				},
+				component: SearchPage
+			}, {
+				path: 'product/:productId',
+				name: 'ProductPage',
+				component: ProductPage,
+				props: true
+			}]
 		}, {
-			path: '/product/:productId',
-			name: 'ProductPage',
-			component: ProductPage,
-			props: true
-		}]
-    }, {
-		path: '/login',
-		name: 'Login',
-		component: LoginPage
-	}
-  ]
+			path: '/login',
+			name: 'Login',
+			component: LoginPage
+		}, {
+			path: '/admin',
+			name: 'AdminPage',
+			component: AdminPage,
+			children: [{
+				path: 'users',
+				name: 'UsersForm',
+				component: UsersForm
+			}, {
+				path: 'products',
+				name: 'ProductsForm',
+				component: ProductsForm
+			}]
+		}
+	]
 })

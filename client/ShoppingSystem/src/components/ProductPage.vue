@@ -2,24 +2,29 @@
 	<div v-if="!isLoading">
 		<h1>{{ product.name }}</h1>
 		<p>
+		<div class="left-container">
 			<img class="productImage" src="../assets/logo.png" v-if="!product.imageUrl">
 			<img class="productImage" v-bind:src="product.imageUrl" v-if="product.imageUrl">
-			{{ product.description }}
+			<AddToCartButton :productId="productId" @add-to-cart="$emit('add-to-cart', $event)"></AddToCartButton>
+		</div>
+		{{ product.description }}
 		</p>
 	</div>
 </template>
 
 <script>
-  import axios from 'axios'
-  export default {
-    name: 'ProductPage',
-    props: ['productId'],
-    data () {
-      return {
-	  	isLoading: true,
-		product: {}
-      }
-    },
+import axios from 'axios'
+import AddToCartButton from './AddToCartButton'
+export default {
+	name: 'ProductPage',
+	components: {AddToCartButton},
+	props: ['productId'],
+	data () {
+		return {
+			isLoading: true,
+			product: {}
+		}
+	},
 	watch: {
 		'$route': function(to, from) {
 			this.loadProductInfo();
@@ -38,11 +43,12 @@
 	mounted : function() {
 		this.loadProductInfo();
 	}
-  }
+}
 </script>
 
 <style scoped>
-	img.productImage {
-		float: left;
-	}
+
+.left-container {
+	float: left;
+}
 </style>

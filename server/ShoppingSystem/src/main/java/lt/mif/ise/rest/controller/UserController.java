@@ -5,6 +5,11 @@ import lt.mif.ise.domain.PasswordUpdateDto;
 import lt.mif.ise.domain.User;
 import lt.mif.ise.security.UserValidator;
 import lt.mif.ise.service.UserService;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,21 +17,21 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import java.io.InvalidObjectException;
-import java.security.InvalidParameterException;
-import java.security.Principal;
-import java.util.UUID;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RequestMapping("/api/user/")
 @RestController
@@ -39,6 +44,12 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+    
+    private ObjectMapper om;
+    
+    public UserController() {
+    	om = new ObjectMapper();
+    }
 
     @RequestMapping(value="sign-up", method = RequestMethod.POST)
     public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult, HttpServletRequest request){
@@ -107,8 +118,11 @@ public class UserController {
 
     
     @RequestMapping("me")
-    public String me(Principal p) {
-    	return p == null? null : p.getName();
+    public JsonNode me(UsernamePasswordAuthenticationToken user) {
+    	ObjectNode n = om.createObjectNode();
+    	n.put("name", user != null? user.getName() : null);
+    	n.put("admin", user != null && user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")));
+    	return n;
     }
     
     @PreAuthorize("hasAnyRole('ADMIN')")

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,12 @@ public class ShoppingCartRestController {
         deletedProduct.Amount = deletedAmount;
         return deletedProduct;
     }
+    
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void clearCart() {
+    	
+    }
+    
 /*
  * [[product, count], [product2, count2], ...]
  */
@@ -55,7 +62,9 @@ public class ShoppingCartRestController {
         //return shoppingCart.getCart();
     	return IntStream.range(0, 5).mapToObj(i -> {
     		Product p = new Product();
+    		p.setProductId("prod-" + i);
     		p.setName("Randomname" + p.hashCode());
+    		p.setPrice(new BigDecimal(i + ".99"));
     		return new Object[]{
     			p, i
     		};

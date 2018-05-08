@@ -1,37 +1,41 @@
 package lt.mif.ise.rest.controller;
 
-import lt.mif.ise.domain.User;
-import lt.mif.ise.security.UserValidator;
-import lt.mif.ise.service.SecurityService;
-import lt.mif.ise.service.UserService;
-import org.hibernate.id.GUIDGenerator;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import javax.validation.Valid;
-
-import java.security.Principal;
-import java.util.UUID;
+import lt.mif.ise.domain.User;
+import lt.mif.ise.security.UserValidator;
+import lt.mif.ise.service.UserService;
 
 @RequestMapping("/api/user/")
 @RestController
 public class UserController {
     
-//	@Autowired
-//    private SecurityService securityService;
+	@Autowired
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserService userService;
@@ -45,22 +49,37 @@ public class UserController {
     	om = new ObjectMapper();
     }
 
-//    @RequestMapping(value="sign-up", method = RequestMethod.POST)
-//    public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult){
-//        userValidator.validate(user, bindingResult);
-//
-//        if (bindingResult.hasErrors()) {
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        user.setId(UUID.randomUUID().toString());
-//        user.setEnabled(true);
-//        userService.save(user);
-//
-//        securityService.autologin(user.getEmail(), user.getPassword());
-//
-//        return new ResponseEntity(HttpStatus.CREATED);
-//    }
+    @RequestMapping(value="sign-up", method = RequestMethod.POST)
+    public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult, HttpServletRequest request){
+        userValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        String email = user.getEmail();
+        String password = user.getPassword();
+
+        user.setId(UUID.randomUUID().toString());
+        user.setEnabled(true);
+        userService.save(user);
+
+        autoLogin(email, password, request);
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    public boolean autoLogin( String username, String password, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+
+        Authentication authentication = authenticationManager.authenticate(token);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication );
+        request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+
+        return true;
+    }
+
     
     @RequestMapping("me")
     public JsonNode me(UsernamePasswordAuthenticationToken user) {

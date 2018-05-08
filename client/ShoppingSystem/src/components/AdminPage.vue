@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="admin-container">
 		<div class="navigation">
 			<a class="navigation-link" @click="openUsersForm">Users</a>
 			<a class="navigation-link" @click="openProductsForm">Products</a>
@@ -28,16 +28,21 @@ export default {
 }
 </script>
 <style scoped>
+
+.admin-container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
 .navigation {
-	position: absolute;
 	background-color: magenta;
-	top: 0;
-	left: 0;
-	width: 100%;
 	display: flex;
 	height: 20px;
 }
+
 .main {
-	margin-top: 20px;
+	flex: 1;
+	overflow: scroll;
 }
 </style>

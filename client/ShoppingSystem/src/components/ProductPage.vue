@@ -34,7 +34,7 @@ export default {
 		loadProductInfo : function() {
 			this.isLoading = true;
 			var t = this;
-			axios.get('/api/product/' + this.productId).then(function(response){
+			axios.get('/api/product/id/' + this.productId).then(function(response){
 				t.product = response.data;
 				t.isLoading = false;	
 			});

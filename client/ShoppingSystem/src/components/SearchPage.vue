@@ -51,7 +51,7 @@ export default {
 		},
 		loadItemsList(page) {
 			var t = this;
-			axios.get('/api/product', {
+			axios.get('/api/product/page', {
 				params: {
 					text: t.searchText,
 					size: t.productsPerPage,

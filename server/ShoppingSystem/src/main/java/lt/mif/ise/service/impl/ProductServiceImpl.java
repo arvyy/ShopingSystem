@@ -2,7 +2,9 @@ package lt.mif.ise.service.impl;
 
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
+import lt.mif.ise.domain.search.ProductSearch;
 import lt.mif.ise.jpa.ProductRepository;
+import lt.mif.ise.jpa.ProductSearchRepository;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +28,9 @@ public class ProductServiceImpl implements ProductService {
 	
     @Autowired
     private ProductRepository productRepository;
-    
+
+    @Autowired
+    private ProductSearchRepository productSearchRepository;
     
 	@PostConstruct
 	public void init() {
@@ -52,9 +56,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findProducts(ProductCriteria criteria, Pageable page) {
-    	if (criteria.isUnspecified()) return productRepository.findAll(page);
-        return productRepository.findAll(buildProductSpec(criteria), page);
+    public Page<ProductSearch> findProducts(ProductCriteria criteria, Pageable page) {
+    	if (criteria.isUnspecified()) return productSearchRepository.findAll(page);
+        return productSearchRepository.findAll(buildProductSpec(criteria), page);
+    }
+    
+    @Override
+    public Iterable<ProductSearch> findProductsList(ProductCriteria criteria) {
+    	if (criteria.isUnspecified()) return productSearchRepository.findAll();
+        return productSearchRepository.findAll(buildProductSpec(criteria));
     }
 
     @Override
@@ -72,13 +82,13 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(productId);
     }
     
-    private Specification<Product> buildProductSpec(ProductCriteria search) {
+    private Specification<ProductSearch> buildProductSpec(ProductCriteria search) {
     	/*
     	 * inline interface'o Specification implementacija.
     	 * ateity papildysim paieskai pagal kaina, kategorija, ir t.t.
     	 * 
     	 */
-    	return (Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
+    	return (Root<ProductSearch> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
     		return builder.like(root.get("name"), search.getText().orElse(""));
     	};
     }

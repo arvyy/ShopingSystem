@@ -2,10 +2,12 @@ package lt.mif.ise.rest.controller;
 
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
+import lt.mif.ise.domain.search.ProductSearch;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/product")
@@ -17,7 +19,7 @@ public class ProductRestController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "{productId}")
+    @RequestMapping(method = RequestMethod.GET, value = "id/{productId}")
     public Product getProduct(@PathVariable(value = "productId")String productId){
         return productService.getById(productId);
     }
@@ -33,13 +35,19 @@ public class ProductRestController {
         return productService.modify(product);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "{productId}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "id/{productId}")
     public void deleteProduct(@PathVariable(value= "productId") String productId){
         productService.delete(productId);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Page<Product> findProducts(ProductCriteria criteria, Pageable page){
+    @RequestMapping(value="page", method = RequestMethod.GET)
+    public Page<ProductSearch> findProducts(ProductCriteria criteria, Pageable page){
         return productService.findProducts(criteria, page);
+    }
+    
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public Iterable<ProductSearch> findProductsList(ProductCriteria criteria) {
+    	return productService.findProductsList(criteria);
     }
 }

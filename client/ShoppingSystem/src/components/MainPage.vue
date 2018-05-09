@@ -3,7 +3,7 @@
 		<router-view @add-to-cart="addToCart" />
 			<TopBar :user="currentUser"
 			:cart="cart"
-			@login="onLogin" 
+			@login="onLogin"
 			@logout="onLogout"
 			@clear-cart="onClearCart"/>
 	</div>
@@ -56,5 +56,9 @@ export default {
 }
 </script>
 
+<!--Global style-->
 <style>
+  .round_border {
+    border-radius: 4px;
+  }
 </style>

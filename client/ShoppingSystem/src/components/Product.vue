@@ -1,5 +1,5 @@
 <template>
-	<div class="product_container">
+	<div class="product_container round_border">
 		<div class="image_container">
 			<a v-on:click="$emit('product-click')"><img class="image" src="./../assets/logo.png"></a>
 		</div>
@@ -31,7 +31,6 @@ export default {
 	border: rgb(208, 208, 208) solid 2px;
 	width: 250px;
 	height: 275px;
-	border-radius: 4px;
 	overflow: hidden;
 	margin: 0;
 }
@@ -70,3 +69,4 @@ img {
 	height: 100%;
 }
 </style>
+

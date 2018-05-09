@@ -27,7 +27,7 @@ public class ShoppingCartRestController {
     private ShoppingCartService shoppingCart;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Iterable<Pair<Product, Integer>> addToCart(@RequestBody Iterable<ProductForCart> products){
+    public Iterable<Object[]> addToCart(@RequestBody Iterable<ProductForCart> products){
         for (ProductForCart product: products) {
             shoppingCart.addToCart(product.Id, product.Amount);
         }
@@ -59,8 +59,15 @@ public class ShoppingCartRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Pair<Product, Integer>> getCart(){
-        return shoppingCart.getCart();
+    public Iterable<Object[]> getCart(){
+        Iterable<Pair<Product, Integer>> cart = shoppingCart.getCart();
+        ArrayList<Object[]> forDeserializing = new ArrayList<>();
+        cart.forEach((pair) -> {
+            forDeserializing.add(new Object[]{
+                    pair.getKey(), pair.getValue()
+            });
+        });
+        return forDeserializing;
     }
 
     //test method

@@ -1,13 +1,16 @@
 package lt.mif.ise.rest.controller;
 
+import javafx.util.Pair;
 import lt.mif.ise.bean.ShoppingCart;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.ProductForCart;
 
+import lt.mif.ise.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,13 +24,14 @@ import java.util.stream.IntStream;
 @RestController
 public class ShoppingCartRestController {
     @Autowired
-    private ShoppingCart shoppingCart;
+    private ShoppingCartService shoppingCart;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Iterable<Object[]> addToCart(@RequestBody Iterable<ProductForCart> products){
+    public Iterable<Pair<Product, Integer>> addToCart(@RequestBody Iterable<ProductForCart> products){
         for (ProductForCart product: products) {
             shoppingCart.addToCart(product.Id, product.Amount);
         }
+        //TODO delete
         return getCart();
     }
 
@@ -51,14 +55,21 @@ public class ShoppingCartRestController {
     
     @RequestMapping(method = RequestMethod.DELETE)
     public void clearCart() {
-    	
+    	shoppingCart.clearCart();
     }
-    
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Iterable<Pair<Product, Integer>> getCart(){
+        return shoppingCart.getCart();
+    }
+
+    //test method
+    //TODO delete before PROD
 /*
  * [[product, count], [product2, count2], ...]
  */
-    @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Object[]> getCart(){
+    @RequestMapping(method = RequestMethod.GET, value = "/testingData")
+    public Iterable<Object[]> getCartTestingData(){
         //return shoppingCart.getCart();
     	return IntStream.range(0, 5).mapToObj(i -> {
     		Product p = new Product();
@@ -70,5 +81,4 @@ public class ShoppingCartRestController {
     		};
     	}).collect(Collectors.toList());
     }
-
 }

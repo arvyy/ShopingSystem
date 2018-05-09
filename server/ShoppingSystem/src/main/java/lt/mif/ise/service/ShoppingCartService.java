@@ -1,9 +1,10 @@
-package lt.mif.ise.bean;
+package lt.mif.ise.service;
 
-import java.util.concurrent.ConcurrentHashMap;
+import javafx.util.Pair;
+import lt.mif.ise.domain.Product;
 
-public interface ShoppingCart {
-    ConcurrentHashMap<String, Integer> getCart();
+public interface ShoppingCartService {
+    Iterable<Pair<Product, Integer>> getCart();
     Integer addToCart (String productId, Integer amount);
     Integer removeFromCart (String productId, Integer amount);
     void removeFromCart (String productId);

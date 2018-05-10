@@ -1,10 +1,6 @@
 package lt.mif.ise.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +21,15 @@ public class Product {
     private String description;
 
     private String imageUrl;
-    
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Category getCategory() { return category; }
+
+    public void setCategory(Category category) { this.category = category; }
+
     @Column(nullable= false, precision=8, scale=3)
     private BigDecimal price;
 

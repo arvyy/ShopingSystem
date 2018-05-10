@@ -1,8 +1,10 @@
 package lt.mif.ise.service.impl;
 
+import lt.mif.ise.domain.Category;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.domain.search.ProductSearch;
+import lt.mif.ise.jpa.CategoryRepository;
 import lt.mif.ise.jpa.ProductRepository;
 import lt.mif.ise.jpa.ProductSearchRepository;
 import lt.mif.ise.service.ProductService;
@@ -31,6 +33,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductSearchRepository productSearchRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
     
 	@PostConstruct
 	public void init() {
@@ -43,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
 					p.setDescription("" + p.hashCode());
 					p.setName("Product NR" + i);
 					p.setPrice(new BigDecimal("" + i + ".99"));
+					p.setCategory(categoryRepository.findByName("Default category"));
 					return p;
 				})
 				.collect(Collectors.toList());
@@ -92,4 +98,6 @@ public class ProductServiceImpl implements ProductService {
     		return builder.like(root.get("name"), search.getText().orElse(""));
     	};
     }
+
+
 }

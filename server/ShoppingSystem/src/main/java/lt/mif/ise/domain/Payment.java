@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Payment extends CardInformation implements Serializable {
+public class Payment extends CardInformation {
 
     @SerializedName("amount")
     @JsonProperty("amount")

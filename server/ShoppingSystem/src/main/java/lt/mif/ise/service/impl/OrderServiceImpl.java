@@ -1,13 +1,14 @@
 package lt.mif.ise.service.impl;
 
 import javafx.util.Pair;
-import lt.mif.ise.domain.CardInformation;
-import lt.mif.ise.domain.Payment;
-import lt.mif.ise.domain.Product;
+import lt.mif.ise.domain.*;
+import lt.mif.ise.jpa.OrderRepository;
 import lt.mif.ise.jpa.PaymentRepository;
 import lt.mif.ise.service.OrderService;
 import lt.mif.ise.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 //TODO transactions
@@ -19,11 +20,14 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private PaymentRepository paymentRepo;
 
-    @Override
-    public void makeOrder(CardInformation cardInformation) {
-        Payment payment = (Payment) cardInformation;
-        payment.Amount = 0;
+    @Autowired
+    private OrderRepository orderRepo;
 
+    @Override
+    public Order makeOrder(CardInformation cardInformation) {
+        Payment payment = (Payment) cardInformation;
+
+        payment.Amount = 0;
         Iterable<Pair<Product, Integer>> cart = cartService.getCart();
         cart.forEach((productAmount) -> {
             Product product = productAmount.getKey();
@@ -31,6 +35,35 @@ public class OrderServiceImpl implements OrderService{
             payment.Amount += product.getPrice() * amount;
         });
 
-        paymentRepo.MakePayment(payment);
+        cartService.clearCart();
+
+        PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
+
+        Order order = new Order();
+        order.setPayment(paymentSuccess);
+        order.setState("NEW");
+        order.setUsername(getUserUsername());
+
+        return order;
+    }
+
+    @Override
+    public Iterable<Order> getAllOrders (){
+        return orderRepo.findAll();
+    }
+
+    @Override
+    public Order getById (String orderId){
+        return orderRepo.findById(orderId).get();
+    }
+
+    @Override
+    public Order updateOrder(Order order) {
+        return orderRepo.save(order);
+    }
+
+    // gets current user username
+    private String getUserUsername (){
+        return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 }

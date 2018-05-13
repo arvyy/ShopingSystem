@@ -3,7 +3,9 @@ package lt.mif.ise.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
-public class CardInformation {
+import java.io.Serializable;
+
+public class CardInformation implements Serializable {
     @SerializedName("number")
     @JsonProperty("number")
     public String CardNumber;

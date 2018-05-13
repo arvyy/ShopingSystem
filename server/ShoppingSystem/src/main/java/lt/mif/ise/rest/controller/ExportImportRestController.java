@@ -1,18 +1,24 @@
 package lt.mif.ise.rest.controller;
 
+import lt.mif.ise.bean.ExportImport;
 import lt.mif.ise.jpa.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("api/excel/")
@@ -20,7 +26,8 @@ public class ExportImportRestController {
     @Autowired
     private ProductRepository productRepository;
 
-    private static String UPLOAD_DIR = "uploads";
+    @Autowired
+    private ExportImport exportImport;
 
     private void saveFile(InputStream inputStream, String path){
         try {
@@ -41,7 +48,7 @@ public class ExportImportRestController {
 
     private void importExcel(String path){
         try {
-            //TODO: excel products import
+            exportImport.importProducts(path);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -54,9 +61,17 @@ public class ExportImportRestController {
             String path = request.getServletContext().getRealPath("") + fileName;
             System.out.println(path);
             saveFile(file.getInputStream(), path);
+            importExcel(path);
             return fileName;
         } catch(Exception e) {
             return null;
         }
+    }
+
+    @RequestMapping(value = "export", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    private FileSystemResource export() {
+        String path = exportImport.exportProducts();
+        return new FileSystemResource(path);
     }
 }

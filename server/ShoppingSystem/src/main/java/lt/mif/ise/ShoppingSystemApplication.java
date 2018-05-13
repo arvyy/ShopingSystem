@@ -2,12 +2,15 @@ package lt.mif.ise;
 
 import java.util.UUID;
 
+import lt.mif.ise.bean.ExportImport;
+import lt.mif.ise.bean.ExportImportImpl;
 import lt.mif.ise.bean.ShoppingCart;
 import lt.mif.ise.bean.ShoppingCartImp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 /*
@@ -45,4 +48,8 @@ public class ShoppingSystemApplication {
     public ShoppingCart ShoppingCartBean(){
 	    return new ShoppingCartImp();
     }
+
+	@Bean
+	@RequestScope
+	public ExportImport ExportImportBean() { return new ExportImportImpl(); }
 }

@@ -1,11 +1,11 @@
 package lt.mif.ise.service;
 
 import lt.mif.ise.domain.CardInformation;
-import lt.mif.ise.domain.Order;
+import lt.mif.ise.domain.UserOrder;
 
 public interface OrderService {
-    Order makeOrder (CardInformation payment);
-    Iterable<Order> getAllOrders();
-    Order getById (String orderId);
-    Order updateOrder (Order order);
+    UserOrder makeOrder (CardInformation payment);
+    Iterable<UserOrder> getAllOrders();
+    UserOrder getById (String orderId);
+    UserOrder updateOrder (UserOrder order);
 }

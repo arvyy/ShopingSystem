@@ -1,12 +1,9 @@
 package lt.mif.ise.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Order {
+public class UserOrder {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private String id;
@@ -17,16 +14,20 @@ public class Order {
 
     private PaymentSuccess payment;
 
-    public String getId() {
-        return id;
-    }
-
     public PaymentSuccess getPayment() {
         return payment;
     }
 
     public void setPayment(PaymentSuccess payment) {
         this.payment = payment;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getState() {

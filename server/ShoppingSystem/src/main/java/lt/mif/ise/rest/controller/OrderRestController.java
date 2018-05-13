@@ -1,7 +1,7 @@
 package lt.mif.ise.rest.controller;
 
 import lt.mif.ise.domain.CardInformation;
-import lt.mif.ise.domain.Order;
+import lt.mif.ise.domain.UserOrder;
 import lt.mif.ise.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,22 +16,22 @@ public class OrderRestController {
     private OrderService orderService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Order makeOrder (CardInformation cardInformation){
+    public UserOrder makeOrder (CardInformation cardInformation){
         return orderService.makeOrder(cardInformation);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Order> getAllOrders (){
+    public Iterable<UserOrder> getAllOrders (){
         return orderService.getAllOrders();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = {"orderId"})
-    public Order getById (@PathVariable(value = "orderId") String orderId){
+    @RequestMapping(method = RequestMethod.GET, value = {"{orderId}"})
+    public UserOrder getById (@PathVariable(value = "orderId") String orderId){
         return orderService.getById(orderId);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Order updateOrder (Order order){
+    @RequestMapping(method = RequestMethod.PUT)
+    public UserOrder updateOrder (UserOrder order){
         return orderService.updateOrder(order);
     }
 }

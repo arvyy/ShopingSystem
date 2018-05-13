@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 public class PaymentSuccess extends Payment {
-    @javax.persistence.Id
+    @Id
     @JsonProperty("id")
     @SerializedName("id")
     public String Id;

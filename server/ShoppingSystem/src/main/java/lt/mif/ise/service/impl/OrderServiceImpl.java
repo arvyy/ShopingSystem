@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService{
     private OrderRepository orderRepo;
 
     @Override
-    public Order makeOrder(CardInformation cardInformation) {
+    public UserOrder makeOrder(CardInformation cardInformation) {
         Payment payment = (Payment) cardInformation;
 
         payment.Amount = 0;
@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService{
 
         PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
 
-        Order order = new Order();
+        UserOrder order = new UserOrder();
         order.setPayment(paymentSuccess);
         order.setState("NEW");
         order.setUsername(getUserUsername());
@@ -48,17 +48,17 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Iterable<Order> getAllOrders (){
+    public Iterable<UserOrder> getAllOrders (){
         return orderRepo.findAll();
     }
 
     @Override
-    public Order getById (String orderId){
-        return orderRepo.findById(orderId).get();
+    public UserOrder getById (String orderId){
+        return orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Failed to get order."));
     }
 
     @Override
-    public Order updateOrder(Order order) {
+    public UserOrder updateOrder(UserOrder order) {
         return orderRepo.save(order);
     }
 

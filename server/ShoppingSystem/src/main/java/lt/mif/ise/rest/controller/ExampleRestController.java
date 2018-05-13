@@ -64,8 +64,6 @@ public class ExampleRestController {
 	}
 	
 	// TODO exception handling
-	@ExceptionHandler({RuntimeException.class})
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid payment information")
     @RequestMapping(method = RequestMethod.POST)
 	public PaymentSuccess find(@RequestBody Payment payment) {
         try {

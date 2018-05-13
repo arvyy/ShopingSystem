@@ -1,5 +1,6 @@
 package lt.mif.ise.jpa;
 
+import lt.mif.ise.domain.Category;
 import lt.mif.ise.domain.Product;
 
 import org.springframework.data.domain.Page;
@@ -13,4 +14,6 @@ import java.util.Optional;
 public interface ProductRepository extends CrudRepository<Product, String> {
     List<Product> findByName(String name);
     Optional<Product> findByProductId(String productId);
+	void deleteByProductId(String productId);
+	long countByCategory(Category c);
 }

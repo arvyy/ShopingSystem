@@ -1,6 +1,6 @@
 <template>
 	<div class="main_page_container">
-		<SearchBar v-on:do-search="onSearch"></SearchBar>
+		<SearchBar v-on:do-search="onSearch" :categories="categories"></SearchBar>
 		<ProductList id="product_list" 
 			   :products="productPages" 
 			   @add-to-cart="$emit('add-to-cart', $event)"
@@ -18,11 +18,12 @@ import LogInForm from './LogInForm.vue'
 
 export default {
 	name: 'MainPage',
-	props: ['searchText', 'page'],
+	props: ['searchText', 'page', 'category'],
 	data () {
 		return {
 			productsPerPage: 20,
-			productPages: {}
+			productPages: {},
+			categories: []
 		}
 	},
 	watch: {
@@ -34,12 +35,14 @@ export default {
 		getQuery: function() {
 			return {
 				text: this.searchText,
-				page: this.page
+				page: this.page,
+				category: this.category
 			};
 		},
-		onSearch : function(searchText) {
+		onSearch : function(params) {
 			var q = {
-				text: searchText,
+				text: params.searchText,
+				category: params.category,
 				page: 0
 			};
 			this.$router.push({name: 'Search', query: q});
@@ -54,6 +57,7 @@ export default {
 			axios.get('/api/product/page', {
 				params: {
 					text: t.searchText,
+					category: t.category,
 					size: t.productsPerPage,
 					page: page
 				}
@@ -61,10 +65,17 @@ export default {
 				t.productPages = response.data;
 				console.log(response.data)
 			});
+		},
+		loadCategories: function() {
+			var t = this;
+			axios.get('/api/category').then(function(resp) {
+				t.categories = resp.data;
+			});
 		}
 	},
 	mounted : function() {
 		this.loadItemsList(this.page);
+		this.loadCategories();
 	},
 
 	components: {

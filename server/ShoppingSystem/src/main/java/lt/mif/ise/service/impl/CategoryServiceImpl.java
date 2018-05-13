@@ -2,6 +2,7 @@ package lt.mif.ise.service.impl;
 
 import lt.mif.ise.domain.Category;
 import lt.mif.ise.jpa.CategoryRepository;
+import lt.mif.ise.jpa.ProductRepository;
 import lt.mif.ise.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,44 +14,31 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @PostConstruct
-    public void init(){
-        //create some default categories
-        if (categoryRepository.count() == 0){
-            Category defaultCategory = new Category();
-            defaultCategory.setName("Default category");
-            categoryRepository.save(defaultCategory);
-        }
-    }
-
+    
+    @Autowired
+    private ProductRepository productRepository;
+    
     @Override
-    public Category getById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Failed to get category."));
+    public Category getOrCreate(String catName) {
+    	Category c = categoryRepository.findByName(catName);
+    	if (c == null) {
+    		c = new Category();
+    		c.setName(catName);
+    		c = categoryRepository.save(c);
+    	}
+    	return c;
     }
-
+    
     @Override
-    public Category getByName(String name) {
-        return categoryRepository.findByName(name);
+    public void deleteIfUnused(String catName) {
+    	Category c = categoryRepository.findByName(catName);
+    	if (productRepository.countByCategory(c) == 0) {
+    		categoryRepository.delete(c);
+    	}
     }
 
     @Override
     public Iterable<Category> getAll() {
         return categoryRepository.findAll();
-    }
-
-    @Override
-    public Category create(Category category) {
-        return categoryRepository.save(category);
-    }
-
-    @Override
-    public Category modify(Category category) {
-        return categoryRepository.save(category);
-    }
-
-    @Override
-    public void delete(Long id) {
-        categoryRepository.deleteById(id);
     }
 }

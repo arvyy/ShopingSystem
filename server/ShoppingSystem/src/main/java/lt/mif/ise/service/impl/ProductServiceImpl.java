@@ -7,6 +7,7 @@ import lt.mif.ise.domain.search.ProductSearch;
 import lt.mif.ise.jpa.CategoryRepository;
 import lt.mif.ise.jpa.ProductRepository;
 import lt.mif.ise.jpa.ProductSearchRepository;
+import lt.mif.ise.service.CategoryService;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +25,7 @@ import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 @Service
@@ -35,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductSearchRepository productSearchRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
     
 	@PostConstruct
 	public void init() {
@@ -48,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 					p.setDescription("" + p.hashCode());
 					p.setName("Product NR" + i);
 					p.setPrice(new BigDecimal("" + i + ".99"));
-					p.setCategory(categoryRepository.findByName("Default category"));
+					p.setCategory(categoryService.getOrCreate("Category" + i%5));
 					return p;
 				})
 				.collect(Collectors.toList());
@@ -74,18 +77,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product create(Product product) {
-        return productRepository.save(product);
-    }
-
-    @Override
-    public Product modify(Product product) {
+    public Product save(Product product, boolean isNew) {
+    	if (!isNew) {
+    		Product p = productRepository.findByProductId(product.getProductId()).orElseThrow(RuntimeException::new);
+    		product.setId(p.getId());
+    	}
         return productRepository.save(product);
     }
 
     @Override
     public void delete(String productId) {
-        productRepository.deleteById(productId);
+        productRepository.deleteByProductId(productId);
     }
     
     private Specification<ProductSearch> buildProductSpec(ProductCriteria search) {
@@ -95,7 +97,14 @@ public class ProductServiceImpl implements ProductService {
     	 * 
     	 */
     	return (Root<ProductSearch> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
-    		return builder.like(root.get("name"), search.getText().orElse(""));
+    		ArrayList<Predicate> predicates = new ArrayList<>();
+    		search.getText().filter(t->!t.isEmpty()).ifPresent(t -> {
+    			predicates.add(builder.like(root.get("name"), "%" + t + "%"));
+    		});
+    		search.getCategory().filter(t->!t.isEmpty()).ifPresent(t -> {
+    			predicates.add(builder.equal(root.get("category").get("name"), t));
+    		});
+    		return builder.and(predicates.toArray(new Predicate[predicates.size()]));
     	};
     }
 

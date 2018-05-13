@@ -17,28 +17,4 @@ public class CategoryRestController {
         return categoryService.getAll();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/id/{categoryId}")
-    public Category getCategory(@PathVariable(value = "categoryId")Long categoryId){
-        return categoryService.getById(categoryId);
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public Category createCategory(@RequestBody Category category){
-        return categoryService.create(category);
-    }
-
-    @RequestMapping(method = RequestMethod.PUT)
-    public Category modifyProduct(@RequestBody Category category){
-        return categoryService.modify(category);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/name/{categoryName}")
-    public Category getCategory(@PathVariable(value = "categoryName")String categoryName){
-        return categoryService.getByName(categoryName);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE, value = "/id/{categoryId}")
-    public void deleteCategory(@PathVariable(value= "categoryId") Long categoryId){
-        categoryService.delete(categoryId);
-    }
 }

@@ -142,7 +142,7 @@ public class UserController {
     public void enableUserByEmail(@PathVariable(value = "email") String email){
         userService.enableByEmail(email);
     }
-
+/*
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "disable/{id}", method = RequestMethod.POST)
     public void disableUserById(@PathVariable(value= "id") String id){
@@ -154,7 +154,7 @@ public class UserController {
     public void enableUserById(@PathVariable(value = "id") String id){
         userService.enableById(id);
     }
-
+*/
     @PreAuthorize("hasAnyRole('ADMIN') or hasAnyRole('USER')")
     @RequestMapping(value="test/secured/admin", method = RequestMethod.GET)
     public String testAdminAuthorization(){

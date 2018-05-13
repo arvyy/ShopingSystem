@@ -21,7 +21,8 @@ export default new Router({
 				props : function(route) {
 					return {
 						searchText: route.query.text,
-						page: route.query.page
+						page: route.query.page,
+						category: route.query.category
 					};
 				},
 				component: SearchPage

@@ -17,7 +17,7 @@
 				</table>
 			</div>
 		</div>
-		<form class="right-panel" v-if="showForm" @submit="onSubmit">
+		<form class="right-panel" v-if="showForm" @submit="onSubmit" enctype="multipart/form-data">
 			<h2>{{formHeader}}</h2>
 			<p>
 			<label for="product-form-productid">
@@ -39,6 +39,16 @@
 				Price:<br><input type="number" required step="0.01" id="product-form-price" name="price" v-model="product.price">
 			</label>
 			</p>
+			<p>
+			<label for="product-form-category">
+				Category:<br><input type="text" name="categoryName" id="product-form-category" v-model="category">
+			</label>
+			</p>
+			<p>
+			<label for="product-form-file">
+				Image:<br><input type="file" name="file" id="product-form-file">
+			</label>
+			</p>
 			<input type="submit" :value="saveText">
 			<button v-if="selectedId" @click="onDelete">Delete</button>
 		</form>
@@ -56,6 +66,7 @@ export default {
 			selectedId: '',
 			selectedCreate: false,
 			product: {},
+			category: '',
 			formHeader: ''
 		};
 	},
@@ -68,10 +79,13 @@ export default {
 		}
 	},
 	methods: {
-		loadProducts: function() {
+		loadProducts: function(editIdAfterLoad) {
 			var t = this;
 			axios.get('/api/product/list').then(function(resp){
 				t.products = resp.data;	
+				if (editIdAfterLoad) {
+					t.editProduct(editIdAfterLoad);
+				}
 			});	
 		},
 		editProduct: function(id) {
@@ -81,6 +95,11 @@ export default {
 				t.selectedId = id;
 				t.selectedCreate = false;
 				t.formHeader = 'Editing product ' + t.product.name;
+				if (t.product.category) {
+					t.category = t.product.category.name;
+				} else {
+					t.category = '';
+				}
 			});
 			this.selectedId = id;
 			this.selectedCreate = false;
@@ -89,18 +108,27 @@ export default {
 			this.selectedId = '';
 			this.selectedCreate = true;
 			this.product = {};
+			this.category = '';
 			this.formHeader = 'Creating new product';
 		},
 		onSubmit: function(e) {
 			e.preventDefault();
-			if (this.selectedCreate) {
-				axios.post('/api/product', this.product);
-			} else {
-				axios.put('/api/product', this.product);
+			var t = this;
+			var config = { headers: { 'Content-Type': 'multipart/form-data' } };
+			var fd = new FormData(e.target);
+			fd.append('isNew', this.selectedCreate);
+			if (!this.selectedCreate) {
+				fd.append('productId', this.selectedId);
+				//else ateina is formos
 			}
+			axios.post('/api/product', fd, config).then(function(resp){
+				t.loadProducts(t.selectedCreate? t.product.productId : t.selectedId);
+			});
 		},
 		onDelete: function() {
-			axios.delete('/api/product/id/' + this.selectedId);	
+			axios.delete('/api/product/id/' + this.selectedId).then(function(resp){
+				t.loadProducts();
+			});	
 		}
 	},
 	mounted: function() {

@@ -16,9 +16,7 @@ public interface ProductService {
     
 	Iterable<ProductSearch> findProductsList(ProductCriteria criteria);
 
-    Product create(Product product);
-
-    Product modify(Product product);
+    Product save(Product product, boolean isNew);
 
     void delete(String productId);
 

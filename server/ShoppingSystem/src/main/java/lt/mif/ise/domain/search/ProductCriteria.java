@@ -5,6 +5,8 @@ import java.util.Optional;
 public class ProductCriteria {
 
 	private String text;
+	
+	private String category;
 
 	public Optional<String> getText() {
 		return Optional.ofNullable(text);
@@ -15,7 +17,16 @@ public class ProductCriteria {
 	}
 	
 	public boolean isUnspecified() {
-		return text == null || text.isEmpty();
+		return (text == null || text.isEmpty()) && 
+				(category == null || category.isEmpty());
+	}
+
+	public Optional<String> getCategory() {
+		return Optional.ofNullable(category);
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

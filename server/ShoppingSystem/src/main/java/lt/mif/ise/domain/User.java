@@ -9,17 +9,22 @@ import java.util.Set;
 @Table(name="user")
 public class User {
 
-    private String id;
+    @Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", enabled=" + enabled + ", roles="
+				+ roles + "]";
+	}
+
+	private String id;
 
     @NotNull
     @NotEmpty
-    private String username;
+    private String email;
 
     @NotNull
     @NotEmpty
     private String password;
 
-    private String email;
     private boolean enabled;
     private Set<Role> roles;
 
@@ -30,7 +35,6 @@ public class User {
     public User(User user){
         this.enabled = user.isEnabled();
         this.id  = user.getId();
-        this.username = user.getUsername();
         this.password = user.getPassword();
         this.email = user.getEmail();
     }
@@ -42,14 +46,6 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {

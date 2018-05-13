@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.ManyToAny;
 import org.hibernate.id.GUIDGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -34,6 +36,7 @@ public class Role {
     }
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     public Set<User> getUsers() {
         return users;
     }

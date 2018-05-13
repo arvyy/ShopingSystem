@@ -70,4 +70,14 @@ public class ShoppingCartImp implements ShoppingCart{
         }
 
     }
+
+    @Override
+    public void clearCart() {
+        lock.lock();
+        try {
+            _cart.clear();
+        } finally {
+            lock.unlock();
+        }
+    }
 }

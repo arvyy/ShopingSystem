@@ -30,12 +30,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeRequests()
-                .antMatchers("**/secured/**").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .httpBasic();
+        http.httpBasic().and()
+        .authorizeRequests()
+        	.antMatchers("**/secured/**").authenticated()
+        	.anyRequest().permitAll()
+        	.and()
+        .formLogin()
+    		.successHandler(new RestAuthenticationSuccessHandler())
+    		.failureHandler(new RestAuthenticationFailureHandler())
+        	.loginProcessingUrl("/login")
+        	.permitAll()
+        	.and()
+        .logout()
+        	.logoutUrl("/logout")
+    		.logoutSuccessHandler(new RestLogoutSuccessHandler())
+        	.permitAll()
+        	.and()
+        .csrf().disable();
+        	
     }
 
     @Autowired

@@ -2,6 +2,7 @@ package lt.mif.ise.service;
 
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
+import lt.mif.ise.domain.search.ProductSearch;
 
 import java.util.List;
 
@@ -11,11 +12,12 @@ import org.springframework.data.domain.Pageable;
 public interface ProductService {
     Product getById(String id);
     
-    Page<Product> findProducts(ProductCriteria search, Pageable page);
+    Page<ProductSearch> findProducts(ProductCriteria search, Pageable page);
+    
+	Iterable<ProductSearch> findProductsList(ProductCriteria criteria);
 
-    Product create(Product product);
-
-    Product modify(Product product);
+    Product save(Product product, boolean isNew);
 
     void delete(String productId);
+
 }

@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 					p.setProductId("prod-" + i);
 					p.setDescription("" + p.hashCode());
 					p.setName("Product NR" + i);
-					p.setPrice(new BigDecimal("" + i + ".99"));
+					p.setPrice(199);
 					return p;
 				})
 				.collect(Collectors.toList());

@@ -59,6 +59,7 @@ export default {
 	overflow: scroll;
 }
 
+/*
 .main >>> table.admin-data-table {
 	border-collapse: collapse;
 	text-align: left;
@@ -77,5 +78,6 @@ export default {
 .main >>> table.admin-data-table tr:hover {
 		background-color: yellow;
 }
+*/
 
 </style>

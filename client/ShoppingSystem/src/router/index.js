@@ -7,6 +7,7 @@ import LoginPage from '@/components/LogInPage'
 import AdminPage from '@/components/AdminPage'
 import ProductsForm from '@/components/ProductsForm'
 import UsersForm from '@/components/UsersForm'
+import CheckoutPage from '@/components/CheckoutPage'
 
 Vue.use(Router)
 
@@ -31,7 +32,11 @@ export default new Router({
 				name: 'ProductPage',
 				component: ProductPage,
 				props: true
-			}]
+			}, {
+			  path: '/checkout',
+        name: 'Checkout',
+        component: CheckoutPage
+      }]
 		}, {
 			path: '/login',
 			name: 'Login',

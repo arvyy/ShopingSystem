@@ -3,8 +3,8 @@
 		<div class="toolbar">
 			<span>
 			<button @click="$emit('login')" class="toolbar-item" v-if="!isLogedIn">Log in</button>
-			<button v-bind:class="{activated: showCart}" 
-		   @click="toggleCartVisible" 
+			<button v-bind:class="{activated: showCart}"
+		   @click="toggleCartVisible"
 		   class="cart-toggle toolbar-item">
 				Cart({{ itemsInCart }})
 			</button>
@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="user-menu-container" v-if="showUserMenu">
-			<button class="user-menu">Orders</button> 
+			<button class="user-menu">Orders</button>
 			<button class="user-menu">Preferences</button>
 			<button class="user-menu" v-on:click="$emit('logout')">Logout</button>
 		</div>
@@ -34,15 +34,16 @@
 							<th><button @click="$emit('clear-cart')">X</button></th>
 						</tr>
 						<tr v-for="cartitem in cart" class="cart-item">
-							<td><a @click="openCartItemPage(cartitem[0].productId)">{{cartitem[0].name}}</a></td> 
+							<td><a @click="openCartItemPage(cartitem[0].productId)">{{cartitem[0].name}}</a></td>
 							<td><span class="cart-count">x{{cartitem[1]}}</span></td>
 							<td><span>{{cartitem[0].price}}</span></td>
 							<td><button>X</button></td>
-						</tr>	
+						</tr>
 					</table>
 				</div>
 				<div class="checkout">
-					<button>Checkout</button>
+					<button v-on:click="$emit('open-checkout')"
+                  @click="toggleCartVisible">Checkout</button>
 				</div>
 			</div>
 		</div>
@@ -155,7 +156,7 @@ div.user-menu-container {
 }
 
 div.user-menu-container button {
-	height: 40px; 
+	height: 40px;
 }
 
 div.cart {
@@ -181,3 +182,4 @@ div.cart-item {
 
 }
 </style>
+

@@ -1,8 +1,8 @@
 <template>
 	<div class="main_page_container">
 		<SearchBar v-on:do-search="onSearch" :categories="categories"></SearchBar>
-		<ProductList id="product_list" 
-			   :products="productPages" 
+		<ProductList id="product_list"
+			   :products="productPages"
 			   @add-to-cart="$emit('add-to-cart', $event)"
 			   @set-page="onChangePage" />
 		<!--LogInForm></LogInForm -->
@@ -95,7 +95,7 @@ export default {
 }
 
 div.main_page_container {
-	margin-top: 60px;
+
 }
 
 </style>

@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import lt.mif.ise.domain.*;
 import lt.mif.ise.jpa.OrderRepository;
 import lt.mif.ise.jpa.PaymentRepository;
+import lt.mif.ise.jpa.PaymentSuccessRepository;
 import lt.mif.ise.service.OrderService;
 import lt.mif.ise.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,26 +24,31 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepo;
 
+    @Autowired
+    private PaymentSuccessRepository paymentSuccessRepo;
+
     @Override
     public UserOrder makeOrder(CardInformation cardInformation) {
-        Payment payment = (Payment) cardInformation;
+        Payment payment = new Payment(cardInformation, 0);
 
-        payment.Amount = 0;
         Iterable<Pair<Product, Integer>> cart = cartService.getCart();
         cart.forEach((productAmount) -> {
             Product product = productAmount.getKey();
             Integer amount = productAmount.getValue();
-            payment.Amount += product.getPrice() * amount;
+            payment.Amount += product.getPrice().doubleValue()* 100 * amount;
         });
 
         cartService.clearCart();
 
         PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
+        paymentSuccessRepo.save(paymentSuccess);
 
         UserOrder order = new UserOrder();
         order.setPayment(paymentSuccess);
         order.setState("NEW");
         order.setUsername(getUserUsername());
+
+        orderRepo.save(order);
 
         return order;
     }
@@ -58,7 +64,9 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public UserOrder updateOrder(UserOrder order) {
+    public UserOrder updateOrder(String orderId, String state) {
+        UserOrder order = orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Failed to get order."));
+        order.setState(state);
         return orderRepo.save(order);
     }
 

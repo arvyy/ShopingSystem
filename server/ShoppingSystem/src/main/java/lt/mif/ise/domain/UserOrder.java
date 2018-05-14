@@ -12,6 +12,7 @@ public class UserOrder {
 
     private String state;
 
+    @OneToOne
     private PaymentSuccess payment;
 
     public PaymentSuccess getPayment() {

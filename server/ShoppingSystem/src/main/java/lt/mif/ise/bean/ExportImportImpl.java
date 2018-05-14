@@ -62,7 +62,7 @@ public class ExportImportImpl implements ExportImport{
                 product.setCategory(category);
 
                 //set product price
-                product.setPrice(new BigDecimal(cellsInRow.next().getNumericCellValue()));
+                product.setPrice((new BigDecimal(cellsInRow.next().getNumericCellValue())));
                 productRepository.save(product);
                 productList.add(product);
             }

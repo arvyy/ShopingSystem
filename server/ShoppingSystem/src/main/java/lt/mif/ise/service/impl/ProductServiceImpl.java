@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 					p.setProductId("prod-" + i);
 					p.setDescription("" + p.hashCode());
 					p.setName("Product NR" + i);
-					p.setPrice(199);
+					p.setPrice(new BigDecimal(1.99));
 					p.setCategory(categoryService.getOrCreate("Category" + i%5));
 					return p;
 				})

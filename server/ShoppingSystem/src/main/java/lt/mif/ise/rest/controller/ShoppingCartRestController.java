@@ -82,7 +82,7 @@ public class ShoppingCartRestController {
     		Product p = new Product();
     		p.setProductId("prod-" + i);
     		p.setName("Randomname" + p.hashCode());
-    		p.setPrice(199);
+    		p.setPrice(new BigDecimal(1.99));
     		return new Object[]{
     			p, i
     		};

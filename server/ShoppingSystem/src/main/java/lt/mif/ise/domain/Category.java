@@ -1,9 +1,5 @@
 package lt.mif.ise.domain;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 import javax.persistence.*;
 
 @Entity

@@ -1,5 +1,5 @@
 <template>
-	<div class="adminpage">
+	<div class="adminpage panel panel-default">
 		<div class="header"><h1>Admin Page</h1></div>
 		<div>
 			<div v-for="nav in adminlinks" class="box">

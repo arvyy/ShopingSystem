@@ -16,6 +16,7 @@
 			</span>
 		</div>
 
+		<!-- USER MENU -->
 		<div class="user-menu-container" v-if="showUserMenu">
 			<button class="user-menu">Orders</button> 
 			<button class="user-menu">Preferences</button>

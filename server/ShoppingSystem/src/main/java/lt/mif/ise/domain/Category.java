@@ -1,7 +1,5 @@
 package lt.mif.ise.domain;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 

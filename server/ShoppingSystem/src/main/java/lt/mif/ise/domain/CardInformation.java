@@ -27,4 +27,22 @@ public class CardInformation implements Serializable {
     @SerializedName("cvv")
     @JsonProperty("cvv")
     public String Cvv;
+
+    public CardInformation () {}
+
+    public CardInformation
+    (
+        String cardNumber,
+        String cardHolder,
+        int expirationMonth,
+        int expirationYear,
+        String cvv
+    )
+    {
+        this.CardNumber = cardNumber;
+        this.CardHolder = cardHolder;
+        this.ExpirationMonth = expirationMonth;
+        this.ExpirationYear = expirationYear;
+        this.Cvv = cvv;
+    }
 }

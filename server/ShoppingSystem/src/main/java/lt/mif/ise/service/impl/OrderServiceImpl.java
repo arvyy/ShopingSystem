@@ -25,9 +25,8 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public UserOrder makeOrder(CardInformation cardInformation) {
-        Payment payment = (Payment) cardInformation;
+        Payment payment = new Payment(cardInformation, 0);
 
-        payment.Amount = 0;
         Iterable<Pair<Product, Integer>> cart = cartService.getCart();
         cart.forEach((productAmount) -> {
             Product product = productAmount.getKey();
@@ -43,6 +42,8 @@ public class OrderServiceImpl implements OrderService{
         order.setPayment(paymentSuccess);
         order.setState("NEW");
         order.setUsername(getUserUsername());
+
+        orderRepo.save(order);
 
         return order;
     }

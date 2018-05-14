@@ -8,8 +8,18 @@ import javax.persistence.Inheritance;
 import java.io.Serializable;
 
 public class Payment extends CardInformation {
-
     @SerializedName("amount")
     @JsonProperty("amount")
     public int Amount;
+
+    public Payment () {}
+
+    public Payment (CardInformation cardInformation, int amount) {
+        super (cardInformation.CardNumber,
+                cardInformation.CardNumber,
+                cardInformation.ExpirationMonth,
+                cardInformation.ExpirationYear,
+                cardInformation.Cvv);
+        this.Amount = amount;
+    }
 }

@@ -4,19 +4,16 @@ import lt.mif.ise.domain.CardInformation;
 import lt.mif.ise.domain.UserOrder;
 import lt.mif.ise.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/order/")
+@RequestMapping("/api/order")
 @RestController
 public class OrderRestController {
     @Autowired
     private OrderService orderService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public UserOrder makeOrder (CardInformation cardInformation){
+    public UserOrder makeOrder (@RequestBody CardInformation cardInformation){
         return orderService.makeOrder(cardInformation);
     }
 
@@ -31,7 +28,7 @@ public class OrderRestController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public UserOrder updateOrder (UserOrder order){
+    public UserOrder updateOrder (@RequestBody UserOrder order){
         return orderService.updateOrder(order);
     }
 }

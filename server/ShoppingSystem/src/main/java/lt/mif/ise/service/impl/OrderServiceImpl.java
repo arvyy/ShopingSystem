@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import lt.mif.ise.domain.*;
 import lt.mif.ise.jpa.OrderRepository;
 import lt.mif.ise.jpa.PaymentRepository;
+import lt.mif.ise.jpa.PaymentSuccessRepository;
 import lt.mif.ise.service.OrderService;
 import lt.mif.ise.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepo;
 
+    @Autowired
+    private PaymentSuccessRepository paymentSuccessRepo;
+
     @Override
     public UserOrder makeOrder(CardInformation cardInformation) {
         Payment payment = new Payment(cardInformation, 0);
@@ -37,6 +41,7 @@ public class OrderServiceImpl implements OrderService{
         cartService.clearCart();
 
         PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
+        paymentSuccessRepo.save(paymentSuccess);
 
         UserOrder order = new UserOrder();
         order.setPayment(paymentSuccess);
@@ -65,6 +70,7 @@ public class OrderServiceImpl implements OrderService{
 
     // gets current user username
     private String getUserUsername (){
-        return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        return "asd";
+        //return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 }

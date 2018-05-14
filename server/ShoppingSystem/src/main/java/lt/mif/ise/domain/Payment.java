@@ -5,8 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
+@MappedSuperclass
 public class Payment extends CardInformation {
     @SerializedName("amount")
     @JsonProperty("amount")

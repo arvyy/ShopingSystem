@@ -1,5 +1,8 @@
 <template>
   <div class="checkout_page_container">
+    <div class="items_and_price_container">
+
+    </div>
     <div class="payment_form_container">
       <form @submit.prevent="confirmAndPay">
         <input type="text" placeholder="Card Number" v-model="cardNumber">
@@ -30,6 +33,13 @@
         ccv: ''
       }
     },
+    mounted: function() {
+      axios.get('/api/shoppingcart')
+        .then(function(resp) {
+          console.log(resp);
+      });
+    },
+
     methods: {
       //Should have a selection of payment methods?
       confirmAndPay: function() {
@@ -41,7 +51,6 @@
           exp_year: this.expirationYear,
           exp_month: this.expirationMonth,
           ccv: this.ccv,
-          amount: 10
         };
 
         axios.post('/api/order/', cardInfo)
@@ -58,6 +67,10 @@
 
 <style scoped>
   .checkout_page_container {
+
+  }
+
+  .items_and_price_container {
 
   }
 </style>

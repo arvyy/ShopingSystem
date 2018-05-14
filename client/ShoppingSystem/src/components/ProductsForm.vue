@@ -1,57 +1,64 @@
 <template>
-	<div class="products-form">
-		<div class="left-panel">
+	<div class="products-page">
+		<div class="form-toolbar">
 			<button @click="createProduct">Create</button>
-			<div class="table-cnt">
-				<table>
-					<tr>
-						<th>Id</th>
-						<th>Name</th>
-					</tr>
-					<tr v-for="product in products" 
-		 :class="{ selectedrow : product.productId == selectedId}"
-		 @click="editProduct(product.productId)">
-						<td>{{product.productId}}</td>
-						<td>{{product.name}}</td>
-					</tr>
-				</table>
-			</div>
+			<button>Import</button>
+			<button>Export</button>
 		</div>
-		<form class="right-panel" v-if="showForm" @submit="onSubmit" enctype="multipart/form-data">
-			<h2>{{formHeader}}</h2>
-			<p>
-			<label for="product-form-productid">
-				Id:<br><input type="text" :required="selectedCreate" :disabled="!selectedCreate" id="product-form-productid" name="productId" v-model="product.productId">
-			</label>
-			</p>
-			<p>
-			<label for="product-form-name">
-				Name:<br><input type="text" required id="product-form-name" name="name" v-model="product.name">
-			</label>
-			</p>
-			<p>
-			<label for="product-form-desc">
-				Description:<br><textarea required id="product-form-desc" name="description" v-model="product.description"></textarea>
-			</label>
-			</p>
-			<p>
-			<label for="product-form-price">
-				Price:<br><input type="number" required step="0.01" id="product-form-price" name="price" v-model="product.price">
-			</label>
-			</p>
-			<p>
-			<label for="product-form-category">
-				Category:<br><input type="text" name="categoryName" id="product-form-category" v-model="category">
-			</label>
-			</p>
-			<p>
-			<label for="product-form-file">
-				Image:<br><input type="file" name="file" id="product-form-file">
-			</label>
-			</p>
-			<input type="submit" :value="saveText">
-			<button v-if="selectedId" @click="onDelete">Delete</button>
-		</form>
+		<div class="products-form">
+			<div class="left-panel">
+				<div class="table-cnt">
+					<table class="admin-data-table">
+						<tr>
+							<th class="id-col">Id</th>
+							<th class="name-col">Name</th>
+						</tr>
+						<tr v-for="product in products" 
+		  :class="{ selectedrow : product.productId == selectedId}"
+		  @click="editProduct(product.productId)">
+							<td>{{product.productId}}</td>
+							<td>{{product.name}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="right-panel" v-if="!showForm && isLoading">Loading...</div>
+			<form class="right-panel" v-if="showForm" @submit="onSubmit" enctype="multipart/form-data">
+				<h2>{{formHeader}}</h2>
+				<p>
+				<label for="product-form-productid">
+					Id:<br><input type="text" :required="selectedCreate" :disabled="!selectedCreate" id="product-form-productid" name="productId" v-model="product.productId">
+				</label>
+				</p>
+				<p>
+				<label for="product-form-name">
+					Name:<br><input type="text" required id="product-form-name" name="name" v-model="product.name">
+				</label>
+				</p>
+				<p>
+				<label for="product-form-desc">
+					Description:<br><textarea required id="product-form-desc" name="description" v-model="product.description"></textarea>
+				</label>
+				</p>
+				<p>
+				<label for="product-form-price">
+					Price:<br><input type="number" required step="0.01" id="product-form-price" name="price" v-model="product.price">
+				</label>
+				</p>
+				<p>
+				<label for="product-form-category">
+					Category:<br><input type="text" name="categoryName" id="product-form-category" v-model="category">
+				</label>
+				</p>
+				<p>
+				<label for="product-form-file">
+					Image:<br><input type="file" name="file" id="product-form-file">
+				</label>
+				</p>
+				<input type="submit" :value="saveText">
+				<button v-if="selectedId" @click="onDelete">Delete</button>
+			</form>
+		</div>
 	</div>
 </template>
 
@@ -67,12 +74,13 @@ export default {
 			selectedCreate: false,
 			product: {},
 			category: '',
-			formHeader: ''
+			formHeader: '',
+			isLoading: false
 		};
 	},
 	computed: {
 		showForm: function() {
-			return this.selectedId || this.selectedCreate;
+			return (this.selectedId || this.selectedCreate) && !this.isLoading;
 		},
 		saveText: function() {
 			return this.selectedCreate? 'Create' : 'Update';
@@ -90,6 +98,7 @@ export default {
 		},
 		editProduct: function(id) {
 			var t = this;
+			this.isLoading = true;
 			axios.get('/api/product/id/' + id).then(function(resp){
 				t.product = resp.data;
 				t.selectedId = id;
@@ -100,6 +109,7 @@ export default {
 				} else {
 					t.category = '';
 				}
+				t.isLoading = false;
 			});
 			this.selectedId = id;
 			this.selectedCreate = false;
@@ -139,8 +149,19 @@ export default {
 
 <style scoped>
 .products-form {
+	flex: 1;
+	display: flex;
+	overflow: hidden;
+}
+
+.products-page {
 	height: 100%;
 	display: flex;
+	flex-direction: column;
+}
+
+.form-toolbar button {
+	float: left;
 }
 
 .left-panel {
@@ -162,12 +183,20 @@ export default {
 	width: 95%;
 }
 
-tr.selectedrow {
-	background-color: yellow;
-}
-
 div.table-cnt {
 	flex: 1;
 	overflow: scroll;
+}
+
+table {
+	width: 100%;
+}
+
+.id-col {
+	width: auto;
+}
+
+.name-col {
+	width: 100%;
 }
 </style>

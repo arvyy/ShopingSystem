@@ -1,0 +1,10 @@
+[{
+	"name": "Users",
+	"link": "UsersForm"
+}, {
+	"name": "Products",
+	"link": "ProductsForm"
+}, {
+	"name": "Orders",
+	"link": "OrdersPage"
+}]

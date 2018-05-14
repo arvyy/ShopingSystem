@@ -5,6 +5,7 @@ import SearchPage from '@/components/SearchPage'
 import ProductPage from '@/components/ProductPage'
 import LoginPage from '@/components/LogInPage'
 import AdminPage from '@/components/AdminPage'
+import AdminNavigationPage from '@/components/AdminNavigationPage'
 import ProductsForm from '@/components/ProductsForm'
 import UsersForm from '@/components/UsersForm'
 
@@ -37,8 +38,11 @@ export default new Router({
 			name: 'Login',
 			component: LoginPage
 		}, {
+			path: '/admin/main',
+			name: 'AdminNavigationPage',
+			component: AdminNavigationPage
+		}, {
 			path: '/admin',
-			name: 'AdminPage',
 			component: AdminPage,
 			children: [{
 				path: 'users',

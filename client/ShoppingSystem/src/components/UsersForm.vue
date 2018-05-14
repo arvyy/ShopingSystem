@@ -1,9 +1,9 @@
 <template>
-	<div>
-		<table>
+	<div class="table-cnt">
+		<table class="admin-data-table">
 			<tr>
-				<th>User</th>
-				<th>Activated</th>
+				<th class="user-col">User</th>
+				<th class="activated-col">Activated</th>
 			</tr>
 			<tr v-for="user in users">
 				<td>{{ user.email }}</td>
@@ -44,4 +44,19 @@ export default {
 </script>
 
 <style scoped>
-<style>
+div.table-cnt {
+	overflow: auto;
+}
+
+table {
+	width: 100%;
+}
+
+.user-col {
+	width: 100%;
+}
+
+.activated-col {
+	width: 30px;
+}
+</style>

@@ -1,8 +1,7 @@
 <template>
 	<div class="admin-container">
 		<div class="navigation">
-			<a class="navigation-link" @click="openUsersForm">Users</a>
-			<a class="navigation-link" @click="openProductsForm">Products</a>
+			<a v-for="nav in adminlinks" class="navigation-link" @click="openLink(nav.link)">{{nav.name}}</a>
 		</div>
 		<div class="main">
 			<router-view />	
@@ -11,18 +10,25 @@
 </template>
 
 <script>
+import AdminMenuJson from '../assets/adminmenu.json'
 export default {
 	name: 'AdminPage',
 	data : function() {
 		return {
+			adminlinksmenu: AdminMenuJson
 		};
 	},
+	computed: {
+		adminlinks: function() {
+			return [{
+				name: 'Admin menu',
+				link: 'AdminNavigationPage'
+			}].concat(this.adminlinksmenu);
+		}
+	},
 	methods: {
-		openUsersForm: function() {
-			this.$router.push({name: 'UsersForm'});
-		},
-		openProductsForm: function() {
-			this.$router.push({name: 'ProductsForm'});
+		openLink: function(link) {
+			this.$router.push({name: link});
 		}
 	}
 }
@@ -38,11 +44,38 @@ export default {
 .navigation {
 	background-color: magenta;
 	display: flex;
-	height: 20px;
+}
+
+.navigation-link {
+	margin: 5px 5px 5px 0px;
+}
+
+.navigation-link:hover {
+	font-weight: bold;
 }
 
 .main {
 	flex: 1;
 	overflow: scroll;
 }
+
+.main >>> table.admin-data-table {
+	border-collapse: collapse;
+	text-align: left;
+}
+.main >>> table.admin-data-table th {
+	background-color: lightgray;
+	border-bottom: gray 1px solid;
+}
+.main >>> table.admin-data-table td {
+	padding: 3px;
+}
+.main >>> table.admin-data-table tr.selectedrow {
+		background-color: #fd45a6;
+}
+
+.main >>> table.admin-data-table tr:hover {
+		background-color: yellow;
+}
+
 </style>

@@ -62,7 +62,7 @@ public class ExportImportImpl implements ExportImport{
                 product.setCategory(category);
 
                 //set product price
-                product.setPrice(new BigDecimal(cellsInRow.next().getNumericCellValue()));
+                product.setPrice(((int) cellsInRow.next().getNumericCellValue()));
                 productRepository.save(product);
                 productList.add(product);
             }
@@ -110,7 +110,7 @@ public class ExportImportImpl implements ExportImport{
             row.createCell(2).setCellValue(product.getDescription());
             row.createCell(3).setCellValue(product.getImageUrl());
             row.createCell(4).setCellValue(product.getCategory().getName());
-            row.createCell(5).setCellValue(product.getPrice().doubleValue());
+            row.createCell(5).setCellValue(product.getPrice());
         }
 
         try {

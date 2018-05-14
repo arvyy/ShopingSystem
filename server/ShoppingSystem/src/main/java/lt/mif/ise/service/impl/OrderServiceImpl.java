@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService{
         cart.forEach((productAmount) -> {
             Product product = productAmount.getKey();
             Integer amount = productAmount.getValue();
-            payment.Amount += product.getPrice() * amount;
+            payment.Amount += product.getPrice().doubleValue()* 100 * amount;
         });
 
         cartService.clearCart();

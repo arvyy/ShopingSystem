@@ -26,12 +26,12 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(nullable= false, precision=8, scale=3)
+    private BigDecimal price;
+
     public Category getCategory() { return category; }
 
     public void setCategory(Category category) { this.category = category; }
-
-    @Column(nullable= false, precision=8, scale=3)
-    private int price;
 
     public void setName(String name) {
         this.name = name;
@@ -49,11 +49,11 @@ public class Product {
         this.id = id;
     }
 
-	public int getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

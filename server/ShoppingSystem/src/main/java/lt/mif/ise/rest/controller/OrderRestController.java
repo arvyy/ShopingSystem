@@ -22,13 +22,13 @@ public class OrderRestController {
         return orderService.getAllOrders();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = {"{orderId}"})
+    @RequestMapping(method = RequestMethod.GET, value = "{orderId}")
     public UserOrder getById (@PathVariable(value = "orderId") String orderId){
         return orderService.getById(orderId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public UserOrder updateOrder (@RequestBody UserOrder order){
-        return orderService.updateOrder(order);
+    @RequestMapping(method = RequestMethod.PUT, value = "{orderId}")
+    public UserOrder updateOrderState (@PathVariable(value = "orderId") String orderId, @RequestParam(value = "state") String state){
+        return orderService.updateOrder(orderId, state);
     }
 }

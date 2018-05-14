@@ -7,5 +7,5 @@ public interface OrderService {
     UserOrder makeOrder (CardInformation payment);
     Iterable<UserOrder> getAllOrders();
     UserOrder getById (String orderId);
-    UserOrder updateOrder (UserOrder order);
+    UserOrder updateOrder (String orderId, String state);
 }

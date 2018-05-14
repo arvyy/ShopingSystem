@@ -64,13 +64,14 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public UserOrder updateOrder(UserOrder order) {
+    public UserOrder updateOrder(String orderId, String state) {
+        UserOrder order = orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Failed to get order."));
+        order.setState(state);
         return orderRepo.save(order);
     }
 
     // gets current user username
     private String getUserUsername (){
-        return "asd";
-        //return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 }

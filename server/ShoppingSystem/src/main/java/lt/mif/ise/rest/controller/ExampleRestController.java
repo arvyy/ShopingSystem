@@ -1,16 +1,35 @@
 package lt.mif.ise.rest.controller;
 
+import com.google.gson.Gson;
+import lt.mif.ise.domain.Error;
+import lt.mif.ise.domain.Payment;
+import lt.mif.ise.domain.PaymentSuccess;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.SerializableEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.web.bind.annotation.*;
 
 import lt.mif.ise.ExampleBean;
 import lt.mif.ise.domain.Example;
 import lt.mif.ise.service.ExampleService;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /*
  * bendras path visam controlleriui.
@@ -44,42 +63,47 @@ public class ExampleRestController {
 		return sessionBean.getName() + ":::" + sessionBean.getData();
 	}
 	
-	/*
-	 * @RequestParam -- HTTP uzklausos parametras. 
-	 * Siuo atveju tai butu localhost:8080/rest/example?text=kazkokstekstas
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<Example> find(@RequestParam(value = "text", required = false) String text) {
-		return text == null? service.getAll() : service.find(text);
+	// TODO exception handling
+    @RequestMapping(method = RequestMethod.POST)
+	public PaymentSuccess find(@RequestBody Payment payment) {
+        try {
+            CredentialsProvider provider = new BasicCredentialsProvider();
+            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("technologines", "platformos");
+            provider.setCredentials(AuthScope.ANY, credentials);
+
+            HttpClient client = HttpClientBuilder.create()
+                    .setDefaultCredentialsProvider(provider)
+                    .build();
+
+            HttpPost request = new HttpPost("https://mock-payment-processor.appspot.com/v1/payment");
+
+            Gson gson = new Gson();
+            String json = gson.toJson(payment);
+
+            request.setEntity(new StringEntity(json));
+
+            HttpResponse response = client.execute(request);
+
+            HttpEntity entity = response.getEntity();
+            int statusCode = response.getStatusLine().getStatusCode();
+            String content = IOUtils.toString(entity.getContent(), "UTF8");
+            if (statusCode >= 200 && statusCode < 300)
+                return gson.fromJson(content, PaymentSuccess.class);
+            else {
+                Error error = gson.fromJson(content, Error.class);
+
+
+                String asd = "";
+
+
+                throw new RuntimeException(error.Message);
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Something went wrong");
+        } catch (ClientProtocolException e) {
+            throw new RuntimeException("Something went wrong");
+        } catch (IOException e) {
+            throw new RuntimeException("Something went wrong");
+        }
 	}
-	
-	/*
-	 * @PathVariable -- kelio parametras, t.y. kazkas tarp dvieju '/'
-	 * Siuo atveju tai butu localhost:8080/rest/example/text/kazkokstekstas
-	 */
-	@RequestMapping(value = "text/{text}", method = RequestMethod.GET)
-	public Iterable<Example> findAlt(@PathVariable(value = "text", required = false) String text) {
-		return find(text);
-	}
-	
-	/*
-	 * RequestBody -- POST metodo duomenys; jie neatvaizduojami uzklausos url'e
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public void save(@RequestBody Example example) {
-		service.save(example);
-	}
-	
-	/*
-	 * Vietoj aibes primityviu lauku, galima paprasyti POJO klases .
-	 * Tada requestparametrai sumapinami i to objekto laukus
-	 * 
-	 * Siuo atveju localhost:8080/rest/example?id=kazkoksid&text=kazkokstext
-	 * butu sumapinti i atitinkamai id ir text laukus Example klaseje.
-	 */
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void delete(Example example) {
-		service.delete(example);
-	}
-	
 }

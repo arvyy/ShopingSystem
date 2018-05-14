@@ -1,7 +1,6 @@
 package lt.mif.ise.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "category")

@@ -31,7 +31,7 @@ public class Product {
     public void setCategory(Category category) { this.category = category; }
 
     @Column(nullable= false, precision=8, scale=3)
-    private BigDecimal price;
+    private int price;
 
     public void setName(String name) {
         this.name = name;
@@ -49,11 +49,11 @@ public class Product {
         this.id = id;
     }
 
-	public BigDecimal getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

@@ -64,12 +64,12 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-form-group label="CCV Security Code:"
+                <b-form-group label="CVV Security Code:"
                               label-class="font-weight-bold">
                   <b-form-input type="text"
-                                v-model="ccv"
+                                v-model="cvv"
                                 required
-                                placeholder="CCV">
+                                placeholder="CVV">
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -97,7 +97,7 @@
         cardHolderName: '',
         expirationYear: '',
         expirationMonth: '',
-        ccv: ''
+        cvv: ''
       }
     },
 
@@ -136,9 +136,9 @@
         let cardInfo = {
           number: this.cardNumber,
           holder: this.cardHolderName,
-          exp_year: this.expirationYear,
+          exp_year: "20" + this.expirationYear,
           exp_month: this.expirationMonth,
-          ccv: this.ccv,
+          cvv: this.cvv,
         };
 
         axios.post('/api/order/', cardInfo)

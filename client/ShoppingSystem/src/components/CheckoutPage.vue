@@ -6,44 +6,79 @@
       </div>
     </div>
 
-    <div class="payment_form_container">
-      <form @submit.prevent="confirmAndPay">
-        <input type="text" placeholder="Card Number" v-model="cardNumber">
-        <input type="text" placeholder="Card Holder Name" v-model="cardHolderName">
-        <input type="text" placeholder="Expiration Year" v-model="expirationYear">
-        <input type="text" placeholder="Expiration Month" v-model="expirationMonth">
-        <input type="text" placeholder="CCV Security Code" v-model="ccv">
-        <input type="submit" value="Confirm and pay">
-      </form>
-    </div>
-
-    <!--<div class="container">-->
-      <!--<b-form @submit.prevent="confirmAndPay">-->
-        <!--<b-form-group id="exampleInputGroup1"-->
-                      <!--label="Card Number:"-->
-                      <!--label-for="exampleInput1"-->
-                      <!--description="We'll never share your email with anyone else."-->
-                      <!--label-text-align="left">-->
-          <!--<b-form-input id="exampleInput1"-->
-                        <!--type="email"-->
-                        <!--v-model="cardNumber"-->
-                        <!--required-->
-                        <!--placeholder="Enter email">-->
-          <!--</b-form-input>-->
-        <!--</b-form-group>-->
-        <!--<b-form-group id="exampleInputGroup2"-->
-                      <!--label="Your Name:"-->
-                      <!--label-for="exampleInput2">-->
-          <!--<b-form-input id="exampleInput2"-->
-                        <!--type="text"-->
-                        <!--v-model="cardHolderName"-->
-                        <!--required-->
-                        <!--placeholder="Enter name">-->
-          <!--</b-form-input>-->
-        <!--</b-form-group>-->
-        <!--<b-button type="submit" variant="primary">Submit</b-button>-->
-      <!--</b-form>-->
+    <!--<div class="payment_form_container">-->
+      <!--<form @submit.prevent="confirmAndPay">-->
+        <!--<input type="text" placeholder="Card Number" v-model="cardNumber">-->
+        <!--<input type="text" placeholder="Card Holder Name" v-model="cardHolderName">-->
+        <!--<input type="text" placeholder="Expiration Year" v-model="expirationYear">-->
+        <!--<input type="text" placeholder="Expiration Month" v-model="expirationMonth">-->
+        <!--<input type="text" placeholder="CCV Security Code" v-model="ccv">-->
+        <!--<input type="submit" value="Confirm and pay">-->
+      <!--</form>-->
     <!--</div>-->
+
+    <div class="container w-50">
+      <b-form  @submit.prevent="confirmAndPay">
+        <b-card bg-variant="light">
+          <b-form-group horizontal
+                        breakpoint="lg"
+                        label="Payment Information"
+                        label-size="lg"
+                        label-class="font-weight-bold pt-0"
+                        class="mb-0">
+            <b-form-group label="Card Number:"
+                          label-class="font-weight-bold">
+              <b-form-input type="text"
+                            v-model="cardNumber"
+                            required
+                            placeholder="Your Card Number">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="Card Holder Name:"
+                          label-class="font-weight-bold">
+              <b-form-input type="text"
+                            v-model="cardHolderName"
+                            required
+                            placeholder="Full Name">
+              </b-form-input>
+            </b-form-group>
+            <b-form-row>
+              <b-col>
+                <b-form-group label="Expiration Month:"
+                                   label-class="font-weight-bold">
+                <b-form-input type="text"
+                              v-model="expirationMonth"
+                              required
+                              placeholder="MM">
+                </b-form-input>
+              </b-form-group>
+              </b-col>
+              <b-col>
+                <b-form-group label="Expiration Year:"
+                              label-class="font-weight-bold">
+                  <b-form-input type="text"
+                                v-model="expirationYear"
+                                required
+                                placeholder="YY">
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <b-form-group label="CCV Security Code:"
+                              label-class="font-weight-bold">
+                  <b-form-input type="text"
+                                v-model="ccv"
+                                required
+                                placeholder="CCV">
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
+          </b-form-group>
+          <b-button type="submit" variant="primary">Confirm And Pay</b-button>
+        </b-card>
+      </b-form>
+    </div>
 
   </div>
 </template>
@@ -122,7 +157,8 @@
 
   }
 
-  .items_and_price_container {
-
+  .b-form-group {
+    text-align: left;
   }
+
 </style>

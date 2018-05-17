@@ -1,11 +1,12 @@
 <template>
-	<div>
+	<div class="main_page_container">
 		<router-view @add-to-cart="addToCart" />
 			<TopBar :user="currentUser"
 			:cart="cart"
 			@login="onLogin"
 			@logout="onLogout"
-			@clear-cart="onClearCart"/>
+			@clear-cart="onClearCart"
+      @open-checkout="onOpenCheckout"/>
 	</div>
 </template>
 
@@ -45,7 +46,10 @@ export default {
 		onClearCart: function() {
 			axios.delete('/api/shoppingcart');
 			this.cart = [];
-		}
+		},
+    onOpenCheckout: function() {
+      this.$router.push({name: 'Checkout'});
+    }
 	},
 	mounted: function() {
 		var t = this;
@@ -55,6 +59,12 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+  .main_page_container {
+    margin-top: 60px;  /*Why does it not affect TopBar?*/
+  }
+</style>
 
 <!--Global style-->
 <style>

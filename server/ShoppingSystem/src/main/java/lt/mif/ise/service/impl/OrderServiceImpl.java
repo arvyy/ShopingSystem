@@ -9,6 +9,8 @@ import lt.mif.ise.jpa.PaymentSuccessRepository;
 import lt.mif.ise.service.OrderService;
 import lt.mif.ise.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -82,6 +84,6 @@ public class OrderServiceImpl implements OrderService{
 
     // gets current user email
     private String getUserUsername (){
-        return "asd";//((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 }

@@ -1,6 +1,7 @@
 package lt.mif.ise.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 public class UserOrder {
@@ -8,9 +9,11 @@ public class UserOrder {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private String id;
 
-    private String username;
+    private String email;
 
     private String state;
+
+    private ArrayList<ProductForCart> products;
 
     @OneToOne
     private PaymentSuccess payment;
@@ -39,11 +42,19 @@ public class UserOrder {
         this.state = state;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public ArrayList<ProductForCart> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<ProductForCart> products) {
+        this.products = products;
     }
 }

@@ -18,7 +18,7 @@ public class Payment extends CardInformation {
 
     public Payment (CardInformation cardInformation, int amount) {
         super (cardInformation.CardNumber,
-                cardInformation.CardNumber,
+                cardInformation.CardHolder,
                 cardInformation.ExpirationMonth,
                 cardInformation.ExpirationYear,
                 cardInformation.Cvv);

@@ -51,7 +51,7 @@ public class UserController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            throw new BadRequestException("Bad user object");
         }
 
         String email = user.getEmail();

@@ -1,13 +1,60 @@
 <template>
+	<div class="container">
+		<h3>Login</h3>
+		<form @submit="doLogin">
+		<div class="form-group row">
+		  <label for="inputEmailLogin" class="col-sm-2 col-form-label">Email</label>
+		  <div class="col-sm-10">
+			<input type="email" class="form-control" id="inputEmailLogin" placeholder="Email" v-model="username">
+		  </div>
+		</div>
+		<div class="form-group row">
+		  <label for="inputPasswordLogin" class="col-sm-2 col-form-label">Password</label>
+		  <div class="col-sm-10">
+			<input type="password" class="form-control" id="inputPasswordLogin" placeholder="Password" v-model="password">
+		  </div>
+		</div>
+		<button type="submit" class="btn btn-primary">Login</button>
+		</form>
+		<hr>
+		<h3>Sign up</h3>
+		<form @submit="doSignup">
+			<div class="form-group row">
+			  <label for="inputEmailSignup" class="col-sm-2 col-form-label">Email</label>
+			  <div class="col-sm-10">
+				<input type="email" class="form-control" id="inputEmailSignup" placeholder="Email" v-model="signupUsername">
+			  </div>
+			</div>
+			<div class="form-group row">
+			  <label for="inputPasswordSignup" class="col-sm-2 col-form-label">Password</label>
+			  <div class="col-sm-10">
+				<input type="password" class="form-control" id="inputPasswordSignup" placeholder="Password" v-model="signupPassword">
+			  </div>
+			</div>
+			<div class="form-group row">
+			  <label for="inputPasswordSignupRepeat" class="col-sm-2 col-form-label">Repeat password</label>
+			  <div class="col-sm-10">
+				<input type="password" class="form-control" id="inputPasswordSignupRepeat" placeholder="Password">
+			  </div>
+			</div>
+			<button type="submit" class="btn btn-primary">Signup</button>
+		</form>
+	</div>
+	<!--
 	<div class="login_container">
-		<div class="login_form">
+		<div>
+			<h3>Login</h3>
 			<form action="/login" @submit="checkForm" method="POST">
-				<input type="text" name="username" placeholder="User Name" v-model="username">
-				<input type="password" name="password" placeholder="Password" v-model="password">
+				<input type="text" class="form-control" name="username" placeholder="User Name" v-model="username">
+				<input type="password" class="form-control" name="password" placeholder="Password" v-model="password">
 				<input type="submit" value="Login">
 			</form>
+			<hr>
+			<h3>Sign up</h3>
+
 		</div>
 	</div>
+	-->
 </template>
 
 <script>
@@ -17,11 +64,14 @@ export default {
 	data : function() {
 		return {
 			username: '',
-			password: ''
+			password: '',
+
+			signupUsername: '',
+			signupPassword: ''
 		};
 	},
 	methods: {
-		checkForm: function(e) {
+		doLogin: function(e) {
 			e.preventDefault();
 			var t = this;
 			//gaidys sitas, kazkaip gudriau turetu susidet parametrai
@@ -32,6 +82,18 @@ export default {
 						t.onLoginSuccess();
 					}
 				});
+		},
+		doSignup: function(e) {
+			e.preventDefault();
+			var t = this;
+			axios.post('/api/user/sign-up', {
+				email: t.signupUsername,
+				password: t.signupPassword
+			}).then(function(resp){
+				if (resp.data.success === true) {
+					t.onLoginSuccess();
+				}
+			});
 		},
 		onLoginSuccess: function() {
 			this.$router.go(-1);

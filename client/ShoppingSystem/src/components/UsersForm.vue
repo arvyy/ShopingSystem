@@ -1,14 +1,18 @@
 <template>
-	<div class="table-cnt">
-		<table class="admin-data-table">
+	<div class="row">
+		<table class="table table-hover">
+			<thead>
 			<tr>
-				<th class="user-col">User</th>
-				<th class="activated-col">Activated</th>
+				<th >User</th>
+				<th >Activated</th>
 			</tr>
+			</thead>
+			<tbody>
 			<tr v-for="user in users">
 				<td>{{ user.email }}</td>
 				<td><input type="checkbox" :checked="user.enabled" @click="updateUser(user)"></td>
 			</tr>
+			</tbody>
 		</table>
 	</div>
 </template>

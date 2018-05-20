@@ -1,8 +1,10 @@
 <template>
 	<div class="admin-container">
-		<div class="navigation">
-			<a v-for="nav in adminlinks" class="navigation-link" @click="openLink(nav.link)">{{nav.name}}</a>
-		</div>
+		<nav class="navbar navbar-default">
+			<ul class="nav navbar-nav navbar-left">
+				<li v-for="nav in adminlinks" class="navigation-link"><a @click="openLink(nav.link)">{{nav.name}}</a></li>
+			</ul>
+		</nav>
 		<div class="main">
 			<router-view />	
 		</div>
@@ -40,11 +42,12 @@ export default {
 	display: flex;
 	flex-direction: column;
 }
-
+/*
 .navigation {
 	background-color: magenta;
 	display: flex;
 }
+*/
 
 .navigation-link {
 	margin: 5px 5px 5px 0px;

@@ -1,10 +1,12 @@
 <template>
 	<div class="adminpage panel panel-default">
-		<div class="header"><h1>Admin Page</h1></div>
-		<div>
-			<div v-for="nav in adminlinks" class="box">
+		<div class="panel-heading">Admin Page</div>
+		<div class="panel-body">
+			<ul class="list-group">
+			<li v-for="nav in adminlinks" class="list-group-item">
 				<div><a @click="openAdminLink(nav.link)">{{nav.name}}</a></div>
-			</div>
+			</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -27,12 +29,4 @@ export default {
 </script>
 
 <style scoped>
-
-	div.box {
-		display: inline-block;
-		padding: 10px;
-		margin: 5px;
-		border: gray solid 1px;
-	}
-
 </style>

@@ -7,7 +7,9 @@ import LoginPage from '@/components/LogInPage'
 import AdminPage from '@/components/AdminPage'
 import AdminNavigationPage from '@/components/AdminNavigationPage'
 import ProductsForm from '@/components/ProductsForm'
+import ProductsFormEntry from '@/components/ProductsFormEntry'
 import UsersForm from '@/components/UsersForm'
+import OrdersForm from '@/components/OrdersForm'
 
 Vue.use(Router)
 
@@ -52,6 +54,30 @@ export default new Router({
 				path: 'products',
 				name: 'ProductsForm',
 				component: ProductsForm
+			}, {
+				path: 'products/edit/:productId',
+				name: 'ProductsFormEntry',
+				component: ProductsFormEntry,
+				props: function(route){
+					return {
+						isNew: false,
+						productId: route.params.productId
+					};
+				}
+			}, {
+				path: 'products/create',
+				name: 'ProductsFormEntryNew',
+				component: ProductsFormEntry,
+				props: function(route){
+					return {
+						isNew: true,
+						productId: null
+					};
+				}
+			}, {
+				path: 'orders',
+				name: 'OrdersForm',
+				component: OrdersForm
 			}]
 		}
 	]

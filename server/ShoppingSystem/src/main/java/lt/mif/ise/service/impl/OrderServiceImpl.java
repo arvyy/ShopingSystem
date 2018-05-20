@@ -71,6 +71,11 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public Iterable<UserOrder> getOrdersByUser(String user) {
+        return orderRepo.findByEmail(user).orElseThrow(() ->new NotFoundException(String.format("User %s not found", user)));
+    }
+
+    @Override
     public UserOrder getById (String orderId){
         return orderRepo.findById(orderId).orElseThrow(() -> new NotFoundException(String.format("Order %s not found", orderId)));
     }
@@ -86,7 +91,7 @@ public class OrderServiceImpl implements OrderService{
         try {
             return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         }
-        catch (NullPointerException ex){
+        catch (Exception ex){
             throw new UnauthorizedException("Please log in");
         }
     }

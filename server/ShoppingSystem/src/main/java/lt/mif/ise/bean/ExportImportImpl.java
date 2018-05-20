@@ -51,7 +51,7 @@ public class ExportImportImpl implements ExportImport{
                     Cell cell = cellIterator.next();
                     switch (cell.getCellTypeEnum()){
                         case NUMERIC:
-                            product.setId(String.valueOf(cell.getNumericCellValue()));
+                            product.setProductId(String.valueOf(cell.getNumericCellValue()));
                             break;
                         case STRING:
                             product.setId(cell.getStringCellValue());
@@ -158,7 +158,7 @@ public class ExportImportImpl implements ExportImport{
             //id cell
             Cell cell = row.createCell(0);
             cell.setCellType(CellType.STRING);
-            cell.setCellValue(product.getId());
+            cell.setCellValue(product.getProductId());
 
             //product name cell
             cell = row.createCell(1);

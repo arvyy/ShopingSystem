@@ -113,7 +113,10 @@ public class ExportImportImpl implements ExportImport{
                         case STRING:
                             continue;
                     }
-
+                    Product productToDelete = productRepository.findByProductId(product.getProductId()).get();
+                    if (null != productToDelete){
+                        productRepository.delete(productToDelete);
+                    }
                     productRepository.save(product);
                     productList.add(product);
             }

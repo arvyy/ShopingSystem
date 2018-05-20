@@ -1,7 +1,5 @@
 package lt.mif.ise;
 
-import java.util.UUID;
-
 import lt.mif.ise.bean.ExportImport;
 import lt.mif.ise.bean.ExportImportImpl;
 import lt.mif.ise.bean.ShoppingCart;

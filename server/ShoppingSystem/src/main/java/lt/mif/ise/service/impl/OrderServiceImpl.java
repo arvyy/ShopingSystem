@@ -1,7 +1,6 @@
 package lt.mif.ise.service.impl;
 
 import javafx.util.Pair;
-import lt.mif.ise.bean.ShoppingCart;
 import lt.mif.ise.domain.*;
 import lt.mif.ise.error.exception.NotFoundException;
 import lt.mif.ise.error.exception.UnauthorizedException;

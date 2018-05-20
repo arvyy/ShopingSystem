@@ -1,6 +1,5 @@
 package lt.mif.ise.jpa;
 
-import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.UserOrder;
 import org.springframework.data.repository.CrudRepository;
 

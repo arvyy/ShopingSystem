@@ -3,9 +3,6 @@ package lt.mif.ise.service;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.domain.search.ProductSearch;
-
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

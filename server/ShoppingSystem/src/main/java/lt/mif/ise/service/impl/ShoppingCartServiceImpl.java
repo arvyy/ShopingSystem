@@ -7,6 +7,7 @@ import lt.mif.ise.service.ProductService;
 import lt.mif.ise.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +21,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ShoppingCart shoppingCart;
 
     @Override
+    @Transactional
     public Iterable<Pair<Product, Integer>> getCart() {
         ArrayList<Pair<Product, Integer>> cartWithProducts = new ArrayList<Pair<Product, Integer>>();
         ConcurrentHashMap<String, Integer> cart = shoppingCart.getCart();

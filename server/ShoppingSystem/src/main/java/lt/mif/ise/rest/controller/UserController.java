@@ -1,5 +1,8 @@
 package lt.mif.ise.rest.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lt.mif.ise.domain.EmailUpdateDto;
 import lt.mif.ise.domain.PasswordUpdateDto;
 import lt.mif.ise.domain.User;
@@ -7,11 +10,6 @@ import lt.mif.ise.error.exception.BadRequestException;
 import lt.mif.ise.error.exception.NotFoundException;
 import lt.mif.ise.security.UserValidator;
 import lt.mif.ise.service.UserService;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +20,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.UUID;
 
 @RequestMapping("/api/user/")
 @RestController

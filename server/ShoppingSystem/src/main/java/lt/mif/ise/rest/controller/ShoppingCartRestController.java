@@ -1,22 +1,14 @@
 package lt.mif.ise.rest.controller;
 
 import javafx.util.Pair;
-import lt.mif.ise.bean.ShoppingCart;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.ProductForCart;
-
 import lt.mif.ise.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

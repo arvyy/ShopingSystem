@@ -3,6 +3,8 @@ package lt.mif.ise.service.impl;
 import javafx.util.Pair;
 import lt.mif.ise.bean.ShoppingCart;
 import lt.mif.ise.domain.*;
+import lt.mif.ise.error.exception.NotFoundException;
+import lt.mif.ise.error.exception.UnauthorizedException;
 import lt.mif.ise.jpa.OrderRepository;
 import lt.mif.ise.jpa.PaymentRepository;
 import lt.mif.ise.jpa.PaymentSuccessRepository;
@@ -12,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
-//TODO transactions
 @Service
 public class OrderServiceImpl implements OrderService{
     @Autowired
@@ -25,15 +27,13 @@ public class OrderServiceImpl implements OrderService{
     private PaymentRepository paymentRepo;
 
     @Autowired
-    private ShoppingCart cart;
-
-    @Autowired
     private OrderRepository orderRepo;
 
     @Autowired
     private PaymentSuccessRepository paymentSuccessRepo;
 
     @Override
+    @Transactional
     public UserOrder makeOrder(CardInformation cardInformation) {
         Payment payment = new Payment(cardInformation, 0);
 
@@ -72,18 +72,22 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public UserOrder getById (String orderId){
-        return orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Failed to get order."));
+        return orderRepo.findById(orderId).orElseThrow(() -> new NotFoundException(String.format("Order %s not found", orderId)));
     }
 
     @Override
     public UserOrder updateOrder(String orderId, String state) {
-        UserOrder order = orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Failed to get order."));
+        UserOrder order = orderRepo.findById(orderId).orElseThrow(() -> new NotFoundException(String.format("Order %s not found", orderId)));
         order.setState(state);
         return orderRepo.save(order);
     }
 
-    // gets current user email
     private String getUserUsername (){
-        return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        try {
+            return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        }
+        catch (NullPointerException ex){
+            throw new UnauthorizedException("Please log in");
+        }
     }
 }

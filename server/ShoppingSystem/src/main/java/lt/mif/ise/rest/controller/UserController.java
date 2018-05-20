@@ -3,6 +3,8 @@ package lt.mif.ise.rest.controller;
 import lt.mif.ise.domain.EmailUpdateDto;
 import lt.mif.ise.domain.PasswordUpdateDto;
 import lt.mif.ise.domain.User;
+import lt.mif.ise.error.exception.BadRequestException;
+import lt.mif.ise.error.exception.NotFoundException;
 import lt.mif.ise.security.UserValidator;
 import lt.mif.ise.service.UserService;
 import java.util.UUID;
@@ -89,7 +91,7 @@ public class UserController {
 
         User user = userService.findByEmail(userDetails.getUsername());
         if (null == user){
-            throw new UsernameNotFoundException(null);
+            throw new NotFoundException(String.format("User %s not found", userDetails.getUsername()));
         }
 
         user.setEmail(emailDto.getEmail());
@@ -104,11 +106,11 @@ public class UserController {
 
         User user = userService.findByEmail(userDetails.getUsername());
         if (null == user){
-            throw new UsernameNotFoundException(null);
+            throw new NotFoundException(String.format("User %s not found", userDetails.getUsername()));
         }
 
         if (!passwordDto.getPassword().equals(passwordDto.getConfirmPassword())){
-            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+            throw new BadRequestException("Password confirm does not match");
         }
 
         user.setPassword(passwordDto.getConfirmPassword());

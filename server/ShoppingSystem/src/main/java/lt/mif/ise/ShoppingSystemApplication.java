@@ -31,18 +31,6 @@ public class ShoppingSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShoppingSystemApplication.class, args);
 	}
-	
-	/*
-	 * Nurodom @SessionScope. Su situo metodu, kiekvienai sesijai bus sukurtas atskiras ExampleBean
-	 */
-	@Bean
-	@SessionScope(proxyMode=ScopedProxyMode.INTERFACES)
-	public ExampleBean exampleBean() {
-		ExampleBean b = new ExampleBeanImpl();
-		b.setData(UUID.randomUUID().toString());
-		return b;
-	}
-
 	@Bean
     @SessionScope(proxyMode=ScopedProxyMode.INTERFACES)
     public ShoppingCart ShoppingCartBean(){

@@ -1,9 +1,8 @@
 package lt.mif.ise.domain;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import lt.mif.ise.domain.Error;
 import lt.mif.ise.domain.Payment;
 import lt.mif.ise.domain.PaymentSuccess;
+import lt.mif.ise.error.exception.BadRequestException;
 import lt.mif.ise.jpa.PaymentRepository;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -53,10 +54,12 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             String content = IOUtils.toString(entity.getContent(), "UTF8");
             if (statusCode >= 200 && statusCode < 300)
                 return gson.fromJson(content, PaymentSuccess.class);
-            else {
+            else if (statusCode < 500){
                 Error error = gson.fromJson(content, Error.class);
-                throw new RuntimeException(error.Message);
+                throw new BadRequestException(error.Message);
             }
+            else
+                throw new RuntimeException("Failed to make payment");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Something went wrong");
         } catch (ClientProtocolException e) {

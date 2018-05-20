@@ -1,10 +1,8 @@
 package lt.mif.ise.service.impl;
 
-import lt.mif.ise.domain.Category;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.domain.search.ProductSearch;
-import lt.mif.ise.jpa.CategoryRepository;
 import lt.mif.ise.jpa.ProductRepository;
 import lt.mif.ise.jpa.ProductSearchRepository;
 import lt.mif.ise.service.CategoryService;
@@ -15,18 +13,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import javax.annotation.PostConstruct;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class ProductServiceImpl implements ProductService {

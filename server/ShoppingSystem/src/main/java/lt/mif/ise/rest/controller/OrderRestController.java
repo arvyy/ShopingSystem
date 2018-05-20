@@ -22,6 +22,11 @@ public class OrderRestController {
         return orderService.getAllOrders();
     }
 
+    @RequestMapping(value = "email/{user}", method = RequestMethod.GET)
+    public Iterable<UserOrder> getOrdersByUser (@PathVariable(value = "user") String user){
+        return orderService.getOrdersByUser(user);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "{orderId}")
     public UserOrder getById (@PathVariable(value = "orderId") String orderId){
         return orderService.getById(orderId);

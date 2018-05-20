@@ -1,9 +1,5 @@
 package lt.mif.ise.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.ManyToAny;
-import org.hibernate.id.GUIDGenerator;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

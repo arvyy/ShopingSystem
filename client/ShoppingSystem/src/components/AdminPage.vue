@@ -1,10 +1,13 @@
 <template>
 	<div class="admin-container">
-		<nav class="navbar navbar-default">
-			<ul class="nav navbar-nav navbar-left">
-				<li v-for="nav in adminlinks" class="navigation-link"><a @click="openLink(nav.link)">{{nav.name}}</a></li>
-			</ul>
-		</nav>
+		<b-navbar toggleable="md" variant="info">
+			<b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+			<b-collapse is-nav id="nav_collapse">
+			<b-navbar-nav>
+				<b-nav-item v-for="nav in adminlinks" class="navigation-link"><a @click="openLink(nav.link)">{{nav.name}}</a></b-nav-item>
+			</b-navbar-nav>
+			</b-collapse>
+		</b-navbar>
 		<div class="main">
 			<router-view />	
 		</div>

@@ -8,6 +8,7 @@ import AdminPage from '@/components/AdminPage'
 import AdminNavigationPage from '@/components/AdminNavigationPage'
 import ProductsForm from '@/components/ProductsForm'
 import ProductsFormEntry from '@/components/ProductsFormEntry'
+import OrdersForm from '@/components/OrdersForm'
 import UsersForm from '@/components/UsersForm'
 import CheckoutPage from '@/components/CheckoutPage'
 

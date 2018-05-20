@@ -1,12 +1,15 @@
 <template>
 	<div class="d-flex flex-column">
+		<b-modal id="import-modal" @ok="doImport">
+			<b-form-file v-model="importFile" :state="Boolean(importFile)" placeholder="Choose Excel file..."></b-form-file>
+		</b-modal>
 		<div class="p-1">
-			<button class="btn btn-default float-left" @click="createProduct">Create</button>
-			<button class="btn btn-default float-left">Import</button>
-			<button class="btn btn-default float-left">Export</button>
+			<b-btn @click="createProduct">Create</b-btn>
+			<b-btn v-b-modal="'import-modal'">Import</b-btn>
+			<b-btn @click="exportProduct">Export</b-btn>
 		</div>
-		<div class="p-10 d-flex flex-row">
-			<div class="p-6">
+		<div class="p-10">
+			<div>
 					<table class="table table-hover">
 						<thead>
 						<tr>
@@ -33,10 +36,19 @@ export default {
 	name: 'ProductsForm',
 	data: function() {
 		return {
-			products: []
+			products: [],
+			importFile: null
 		};
 	},
 	methods: {
+		doImport: function() {
+			var fd = new FormData();
+			fd.append('file', this.importFile);
+			var config = { headers: { 'Content-Type': 'multipart/form-data' } };
+			axios.post('/api/excel/upload', fd, config).then(function(resp){
+				t.$router.push({name: 'ProductsForm'});
+			});
+		},
 		loadProducts: function() {
 			var t = this;
 			axios.get('/api/product/list').then(function(resp){
@@ -53,6 +65,9 @@ export default {
 					productId: productId
 				}
 			});
+		},
+		exportProduct: function() {
+			window.open('/api/excel/export');
 		}
 	},
 	mounted: function() {

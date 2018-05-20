@@ -7,6 +7,7 @@ import lt.mif.ise.service.CategoryService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +29,7 @@ public class ExportImportImpl implements ExportImport{
     private static String[] COLUMNS = {"Id", "Name", "Description", "ImageUrl", "Category", "Price"};
 
     @Override
+    @Async
     public Iterable<Product> importProducts(String path) {
         List<Product> productList = new ArrayList<>();
 

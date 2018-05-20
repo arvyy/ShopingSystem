@@ -1,8 +1,51 @@
 <template >
 	<div>
-		<nav class="toolbar navbar navbar-default">
-			<div class="navbar-header">
-				<a @click="openSearch" class="navbar-brand">ISE</a>
+		<div class="toolbar">
+			<span>
+			<button @click="$emit('login')" class="toolbar-item" v-if="!isLogedIn">Log in</button>
+			<button v-bind:class="{activated: showCart}"
+		   @click="toggleCartVisible"
+		   class="cart-toggle toolbar-item">
+				Cart({{ itemsInCart }})
+			</button>
+			<button @click="toggleUserMenuVisible" :class="{activated: showUserMenu}"class="toolbar-item" v-if="isLogedIn">{{ user.name }}</button>
+			</span>
+			<span>
+				<button @click="openSearch" class="toolbar-item">Search</button>
+				<button v-if="isAdmin" @click="openAdminPage" class="toolbar-item">Admin page</button>
+			</span>
+		</div>
+
+		<!-- USER MENU -->
+		<div class="user-menu-container" v-if="showUserMenu">
+			<button class="user-menu">Orders</button>
+			<button class="user-menu">Preferences</button>
+			<button class="user-menu" v-on:click="$emit('logout')">Logout</button>
+		</div>
+
+		<!-- CART -->
+		<div class="cart-container" v-if="showCart">
+			<div v-if="cart.length == 0">Cart is empty</div>
+			<div v-if="cart.length > 0" class="cart">
+				<div class="cart-list">
+					<table>
+						<tr>
+							<th colspan="2">Products</th>
+							<th>{{ cartPrice }}</th>
+							<th><button @click="$emit('clear-cart')">X</button></th>
+						</tr>
+						<tr v-for="cartitem in cart" class="cart-item">
+							<td><a @click="openCartItemPage(cartitem[0].productId)">{{cartitem[0].name}}</a></td>
+							<td><span class="cart-count">x{{cartitem[1]}}</span></td>
+							<td><span>{{cartitem[0].price}}</span></td>
+							<td><button>X</button></td>
+						</tr>
+					</table>
+				</div>
+				<div class="checkout">
+					<button v-on:click="$emit('open-checkout')"
+                  @click="toggleCartVisible">Checkout</button>
+				</div>
 			</div>
 			<ul class="nav navbar-nav navbar-left">
 				<li class="nav-item">
@@ -208,7 +251,7 @@ div.user-menu-container {
 }
 
 div.user-menu-container button {
-	height: 40px; 
+	height: 40px;
 }
 
 div.cart {
@@ -235,3 +278,4 @@ div.cart-item {
 }
 */
 </style>
+

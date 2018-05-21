@@ -88,8 +88,8 @@ public class UserController {
         }
 
         user.setEmail(emailDto.getEmail());
-        userService.save(user);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        userService.updateUser(user);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PreAuthorize(("hasAnyRole('USER')"))
@@ -108,7 +108,7 @@ public class UserController {
 
         user.setPassword(passwordDto.getConfirmPassword());
         userService.save(user);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     

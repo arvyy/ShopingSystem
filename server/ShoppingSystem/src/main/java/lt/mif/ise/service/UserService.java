@@ -5,6 +5,8 @@ import lt.mif.ise.domain.User;
 public interface UserService {
     void save(User user);
 
+    void updateUser(User user);
+
     User findByEmail(String email);
 
     Iterable<User> getAll();

@@ -9,14 +9,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 public class ExportImportImpl implements ExportImport{
 
@@ -30,12 +28,11 @@ public class ExportImportImpl implements ExportImport{
 
     @Override
     @Async
-    public Iterable<Product> importProducts(String path) {
+    public Iterable<Product> importProducts(InputStream inputStream) {
         List<Product> productList = new ArrayList<>();
 
         try {
-            FileInputStream excelFile = new FileInputStream(new File(path));
-            Workbook workbook = new XSSFWorkbook(excelFile);
+            Workbook workbook = new XSSFWorkbook(inputStream);
 
             Sheet sheet = workbook.getSheet("Products");
 
@@ -47,94 +44,92 @@ public class ExportImportImpl implements ExportImport{
                 Product product = new Product();
                 Iterator<Cell> cellIterator = currentRow.iterator();
 
-                    //read id
-                    Cell cell = cellIterator.next();
-                    switch (cell.getCellTypeEnum()){
-                        case NUMERIC:
-                            product.setProductId(String.valueOf(cell.getNumericCellValue()));
-                            break;
-                        case STRING:
-                            product.setId(cell.getStringCellValue());
-                            break;
-                    }
+                //read id
+                Cell cell = cellIterator.next();
+                switch (cell.getCellTypeEnum()){
+                    case NUMERIC:
+                        product.setProductId(String.valueOf(cell.getNumericCellValue()));
+                        break;
+                    case STRING:
+                        product.setId(cell.getStringCellValue());
+                        break;
+                }
 
-                    //read name
-                    cell = cellIterator.next();
-                    switch (cell.getCellTypeEnum()){
-                        case NUMERIC:
-                            product.setName(String.valueOf(cell.getNumericCellValue()));
-                            break;
-                        case STRING:
-                            product.setName(cell.getStringCellValue());
-                            break;
-                    }
+                //read name
+                cell = cellIterator.next();
+                switch (cell.getCellTypeEnum()){
+                    case NUMERIC:
+                        product.setName(String.valueOf(cell.getNumericCellValue()));
+                        break;
+                    case STRING:
+                        product.setName(cell.getStringCellValue());
+                        break;
+                }
 
-                    //read description
-                    cell = cellIterator.next();
-                    switch (cell.getCellTypeEnum()){
-                        case NUMERIC:
-                            product.setDescription(String.valueOf(cell.getNumericCellValue()));
-                            break;
-                        case STRING:
-                            product.setDescription(cell.getStringCellValue());
-                            break;
-                    }
+                //read description
+                cell = cellIterator.next();
+                switch (cell.getCellTypeEnum()){
+                    case NUMERIC:
+                        product.setDescription(String.valueOf(cell.getNumericCellValue()));
+                        break;
+                    case STRING:
+                        product.setDescription(cell.getStringCellValue());
+                        break;
+                }
 
-                    //read ImageUrl
-                    cell = cellIterator.next();
-                    switch (cell.getCellTypeEnum()){
-                        case NUMERIC:
-                            continue;
-                        case STRING:
-                            product.setImageUrl(cell.getStringCellValue());
-                            break;
-                    }
+                //read ImageUrl
+                cell = cellIterator.next();
+                switch (cell.getCellTypeEnum()){
+                    case NUMERIC:
+                        continue;
+                    case STRING:
+                        product.setImageUrl(cell.getStringCellValue());
+                        break;
+                }
 
-                    //read Category
-                    Category cat;
-                    cell = cellIterator.next();
-                    switch (cell.getCellTypeEnum()){
-                        case NUMERIC:
-                            cat = categoryService.getOrCreate(String.valueOf(cell.getNumericCellValue()));
-                            product.setCategory(cat);
-                            break;
-                        case STRING:
-                            cat = categoryService.getOrCreate(cell.getStringCellValue());
-                            product.setCategory(cat);
-                            break;
-                    }
+                //read Category
+                Category cat;
+                cell = cellIterator.next();
+                switch (cell.getCellTypeEnum()){
+                    case NUMERIC:
+                        cat = categoryService.getOrCreate(String.valueOf(cell.getNumericCellValue()));
+                        product.setCategory(cat);
+                        break;
+                    case STRING:
+                        cat = categoryService.getOrCreate(cell.getStringCellValue());
+                        product.setCategory(cat);
+                        break;
+                }
 
-                    //read price
-                    cell = cellIterator.next();
-                    switch (cell.getCellTypeEnum()){
-                        case NUMERIC:
-                            product.setPrice(new BigDecimal(cell.getNumericCellValue()));
-                            break;
-                        case STRING:
-                            continue;
-                    }
-                    Product productToDelete = productRepository.findByProductId(product.getProductId()).get();
-                    if (null != productToDelete){
-                        productRepository.delete(productToDelete);
-                    }
-                    productRepository.save(product);
-                    productList.add(product);
+                //read price
+                cell = cellIterator.next();
+                switch (cell.getCellTypeEnum()){
+                    case NUMERIC:
+                        BigDecimal price = new BigDecimal(cell.getNumericCellValue()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        product.setPrice(price);
+                        break;
+                    case STRING:
+                        continue;
+                }
+                //TODO update if its a duplicate product
+//                Product productToDelete = productRepository.findByProductId(product.getProductId()).get();
+//                if (null != productToDelete){
+//                    productRepository.delete(productToDelete);
+//                }
+                productRepository.save(product);
+                productList.add(product);
             }
             workbook.close();
-            excelFile.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
 
         return productList;
     }
 
     @Override
-    public String exportProducts() {
+    public ByteArrayOutputStream exportProducts() {
         Workbook workbook = new XSSFWorkbook();
-
-        CreationHelper creationHelper = workbook.getCreationHelper();
 
         Sheet sheet = workbook.createSheet("Products");
 
@@ -190,16 +185,12 @@ public class ExportImportImpl implements ExportImport{
         }
 
         try {
-            String path = "products_" + UUID.randomUUID().toString() + ".xlsx";
-            File excelFile = new File(path);
-            FileOutputStream fileOut = new FileOutputStream(excelFile);
-            workbook.write(fileOut);
-            fileOut.close();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            workbook.write(stream);
             workbook.close();
-            return excelFile.getAbsolutePath();
+            return stream;
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return "";
     }
 }

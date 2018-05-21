@@ -59,13 +59,13 @@ public class PaymentRepositoryImpl implements PaymentRepository {
                 throw new BadRequestException(error.Message);
             }
             else
-                throw new RuntimeException("Failed to make payment");
+                throw new RuntimeException("Failed to make payment, payment service failed");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Something went wrong");
+            throw new RuntimeException(e.getMessage());
         } catch (ClientProtocolException e) {
-            throw new RuntimeException("Something went wrong");
+            throw new RuntimeException(e.getMessage());
         } catch (IOException e) {
-            throw new RuntimeException("Something went wrong");
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

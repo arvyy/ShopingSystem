@@ -2,8 +2,11 @@ package lt.mif.ise.bean;
 
 import lt.mif.ise.domain.Product;
 
-public interface ExportImport {
-    Iterable<Product> importProducts(String path);
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
-    String exportProducts();
+public interface ExportImport {
+    Iterable<Product> importProducts(InputStream inputStream);
+
+    ByteArrayOutputStream exportProducts();
 }

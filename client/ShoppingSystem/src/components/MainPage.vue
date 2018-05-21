@@ -58,7 +58,7 @@ export default {
 
 <style scoped>
   .main_page_container {
-    margin-top: 60px;  /*Why does it not affect TopBar?*/
+    margin-top: 60px;
   }
 </style>
 

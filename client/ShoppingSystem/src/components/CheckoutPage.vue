@@ -6,17 +6,6 @@
       </div>
     </div>
 
-    <!--<div class="payment_form_container">-->
-      <!--<form @submit.prevent="confirmAndPay">-->
-        <!--<input type="text" placeholder="Card Number" v-model="cardNumber">-->
-        <!--<input type="text" placeholder="Card Holder Name" v-model="cardHolderName">-->
-        <!--<input type="text" placeholder="Expiration Year" v-model="expirationYear">-->
-        <!--<input type="text" placeholder="Expiration Month" v-model="expirationMonth">-->
-        <!--<input type="text" placeholder="CCV Security Code" v-model="ccv">-->
-        <!--<input type="submit" value="Confirm and pay">-->
-      <!--</form>-->
-    <!--</div>-->
-
     <div class="container w-50">
       <b-form  @submit.prevent="confirmAndPay">
         <b-card bg-variant="light">
@@ -131,8 +120,6 @@
       },
 
       confirmAndPay: function() {
-        console.log("Paying");
-
         let cardInfo = {
           number: this.cardNumber,
           holder: this.cardHolderName,

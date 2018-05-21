@@ -88,7 +88,7 @@ public class UserController {
         }
 
         user.setEmail(emailDto.getEmail());
-        userService.save(user);
+        userService.updateUser(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 

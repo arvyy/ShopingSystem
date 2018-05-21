@@ -5,4 +5,4 @@ server/ShoppingSystem/target
 server/ShoppingSystem/shopping-system.iml
 server/ShoppingSystem/localdb.trace.db
 /localdb.trace.db
-log.log
+**/log.log

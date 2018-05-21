@@ -1,0 +1,796 @@
+2018-05-21 16:59:41.936  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/
+Start Time: 1526911181936
+Method: GET
+2018-05-21 16:59:41.941  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/
+STATUS: 404
+2018-05-21 16:59:41.993  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/error
+Start Time: 1526911181993
+Method: GET
+2018-05-21 16:59:42.134  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/error
+STATUS: 404
+2018-05-21 17:03:17.712  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911397712
+Method: GET
+2018-05-21 17:03:17.710  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911397710
+Method: GET
+2018-05-21 17:03:17.719  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911397719
+Method: GET
+2018-05-21 17:03:17.932  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:03:18.007  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:03:18.040  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:05:38.504  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911538504
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:05:38.516  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:05:38.789  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911538789
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:05:38.805  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911538805
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:05:38.805  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:05:38.825  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:08:30.766  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911710766
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:08:30.766  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911710766
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:08:30.779  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:08:30.785  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:08:31.102  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911711102
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:08:31.102  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:08:39.749  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911719749
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:08:39.755  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911719755
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:08:39.763  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:08:39.766  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:08:40.062  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911720062
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:08:40.064  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:09:22.133  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911762133
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:09:22.154  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911762154
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:09:22.157  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:09:22.169  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:09:22.453  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911762453
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:09:22.453  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:09:32.294  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911772294
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:09:32.304  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:09:32.602  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911772602
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:09:32.602  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911772602
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:09:32.605  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:09:32.605  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:10:06.827  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911806827
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:10:06.831  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911806831
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:10:06.837  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:10:06.838  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:10:07.131  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911807131
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:10:07.133  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:12:07.015  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911927015
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:12:07.035  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911927035
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:12:07.024  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:12:07.065  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:12:07.324  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526911927324
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:12:07.324  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:12:12.125  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911932124
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:12:12.127  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911932127
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:12:12.135  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:12:12.136  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:12:14.808  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526911934808
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:12:14.819  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:12:15.108  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526911935108
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:12:15.108  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:15:50.898  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526912150898
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:15:50.900  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:15:52.962  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526912152962
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:15:52.963  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526912152963
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:15:52.969  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:15:52.973  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:15:55.085  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526912155085
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:15:55.095  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:15:55.395  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526912155395
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:15:55.398  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:15:57.239  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526912157239
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:15:57.251  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:15:57.553  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526912157553
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@641d7cd4: Principal: lt.mif.ise.security.MyUserDetails@2000eb9a; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:15:57.568  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:48:38.520  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914118520
+Method: GET
+2018-05-21 17:48:38.520  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914118520
+Method: GET
+2018-05-21 17:48:38.546  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:48:38.564  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:48:38.811  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526914118811
+Method: GET
+2018-05-21 17:48:38.813  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:48:40.898  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914120898
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:48:40.951  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:48:41.197  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526914121197
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:48:41.197  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914121197
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:48:41.199  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:48:41.204  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:48:44.176  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914124176
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:48:44.191  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:48:44.474  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914124474
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:48:44.480  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:50:45.461  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914245461
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:50:45.469  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:50:45.657  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914245657
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:50:45.660  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:50:45.764  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526914245764
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:50:45.766  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:50:54.205  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914254205
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:50:54.214  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:50:54.507  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526914254507
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:50:54.509  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:50:54.513  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914254513
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:50:54.517  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:51:45.093  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914305093
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:51:45.104  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:51:45.395  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526914305395
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:51:45.397  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:51:45.403  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914305403
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:51:45.406  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:51:47.242  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914307242
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: POST
+2018-05-21 17:51:47.437  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:51:47.534  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914307534
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: POST
+2018-05-21 17:51:47.543  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:51:48.522  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914308522
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: POST
+2018-05-21 17:51:48.538  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:51:49.629  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914309629
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:51:49.639  INFO 11316 --- [http-nio-8080-exec-6] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:52:12.156  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914332156
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:52:12.159  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/user/me
+Start Time: 1526914332159
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:52:12.162  INFO 11316 --- [http-nio-8080-exec-5] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:52:12.165  INFO 11316 --- [http-nio-8080-exec-1] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/user/me
+STATUS: 200
+2018-05-21 17:52:14.139  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914334139
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:52:14.142  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914334142
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:52:14.149  INFO 11316 --- [http-nio-8080-exec-9] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:52:14.155  INFO 11316 --- [http-nio-8080-exec-8] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200
+2018-05-21 17:52:15.932  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914335932
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: POST
+2018-05-21 17:52:15.942  INFO 11316 --- [http-nio-8080-exec-2] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:52:16.472  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914336472
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: POST
+2018-05-21 17:52:16.480  INFO 11316 --- [http-nio-8080-exec-10] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:52:17.005  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+Start Time: 1526914337005
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:52:17.010  INFO 11316 --- [http-nio-8080-exec-3] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/shoppingcart
+STATUS: 200
+2018-05-21 17:52:21.779  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/product/page
+Start Time: 1526914341779
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:52:21.791  INFO 11316 --- [http-nio-8080-exec-7] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/product/page
+STATUS: 200
+2018-05-21 17:52:22.078  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.preHandle --- 
+Request URL: http://localhost:8080/api/category
+Start Time: 1526914342078
+Principal: org.springframework.security.authentication.UsernamePasswordAuthenticationToken@21d4762: Principal: lt.mif.ise.security.MyUserDetails@4600d02c; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@957e: RemoteIpAddress: 127.0.0.1; SessionId: null; Granted Authorities: ROLE_USER
+Method: GET
+2018-05-21 17:52:22.082  INFO 11316 --- [http-nio-8080-exec-4] lt.mif.ise.logging.MethodLogger          : 
+
+-------- Logger.postHandle --- 
+Request URL: http://localhost:8080/api/category
+STATUS: 200

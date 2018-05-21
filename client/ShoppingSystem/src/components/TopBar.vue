@@ -19,7 +19,7 @@
 		<!-- USER MENU -->
 		<div class="user-menu-container" v-if="showUserMenu">
 			<button class="user-menu">Orders</button>
-			<button class="user-menu">Preferences</button>
+			<button class="user-menu" @click="openPreferencesPage">Preferences</button>
 			<button class="user-menu" v-on:click="$emit('logout')">Logout</button>
 		</div>
 
@@ -43,8 +43,7 @@
 					</table>
 				</div>
 				<div class="checkout">
-					<button v-on:click="$emit('open-checkout')"
-                  @click="toggleCartVisible">Checkout</button>
+					<button @click="openCheckoutPage">Checkout</button>
 				</div>
 			</div>
 		</div>
@@ -92,6 +91,14 @@ export default {
 			console.log(productId);
 			this.$router.push({name: 'ProductPage', params: { productId: productId }});
 		},
+    openPreferencesPage: function() {
+      this.$router.push({name: 'Preferences'});
+      this.toggleUserMenuVisible();
+    },
+    openCheckoutPage: function() {
+      this.$router.push({name: 'Checkout'});
+      this.toggleCartVisible();
+    },
 		openAdminPage: function() {
 			this.$router.push({name: 'UsersForm'});
 		},

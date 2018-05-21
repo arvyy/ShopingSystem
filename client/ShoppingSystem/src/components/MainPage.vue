@@ -5,8 +5,7 @@
 			:cart="cart"
 			@login="onLogin"
 			@logout="onLogout"
-			@clear-cart="onClearCart"
-      @open-checkout="onOpenCheckout"/>
+			@clear-cart="onClearCart"/>
 	</div>
 </template>
 
@@ -46,10 +45,7 @@ export default {
 		onClearCart: function() {
 			axios.delete('/api/shoppingcart');
 			this.cart = [];
-		},
-    onOpenCheckout: function() {
-      this.$router.push({name: 'Checkout'});
-    }
+		}
 	},
 	mounted: function() {
 		var t = this;

@@ -3,6 +3,7 @@ package lt.mif.ise.service.impl;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.domain.search.ProductSearch;
+import lt.mif.ise.error.exception.NotFoundException;
 import lt.mif.ise.jpa.ProductRepository;
 import lt.mif.ise.jpa.ProductSearchRepository;
 import lt.mif.ise.service.CategoryService;
@@ -75,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product save(Product product, boolean isNew) {
     	if (!isNew) {
-    		Product p = productRepository.findByProductId(product.getProductId()).orElseThrow(RuntimeException::new);
+    		Product p = productRepository.findByProductId(product.getProductId()).orElseThrow(() -> new NotFoundException(String.format("Product with product id %s not found", product.getProductId())));
     		product.setId(p.getId());
     	}
         return productRepository.save(product);

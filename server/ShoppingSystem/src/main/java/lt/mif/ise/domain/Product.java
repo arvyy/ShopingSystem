@@ -28,6 +28,9 @@ public class Product {
     @Column(nullable= false, precision=8, scale=3)
     private BigDecimal price;
 
+    @Version
+    private int version;
+
     public Category getCategory() { return category; }
 
     public void setCategory(Category category) { this.category = category; }
@@ -79,4 +82,12 @@ public class Product {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 }

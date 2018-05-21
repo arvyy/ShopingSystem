@@ -39,6 +39,8 @@
         </b-tab>
       </b-tabs>
     </b-card>
+
+    <successErrorAlert ref="successErrorAlert"></successErrorAlert>
   </div>
 
 </template>
@@ -46,9 +48,12 @@
 
 <script>
   import axios from 'axios'
+  import Alert from './Alert'
 
   export default {
-    components: {},
+    components: {
+      'successErrorAlert': Alert
+    },
     name: 'PreferencesPage',
     props : [],
     data () {
@@ -65,11 +70,20 @@
           email: this.newEmail
         };
 
+        var self = this;
+
         axios.post('/api/user/update/email', emailInfo)
           .then(function(resp){
-            console.log(resp)
-
-          });
+            if (resp.status.toString().startsWith("2")) {
+              self.$refs.successErrorAlert.showSuccessAlert("Success")
+            }
+            else {
+              self.$refs.successErrorAlert.showDangerAlert("Something went wrong")
+            }
+          })
+          .catch(function (error) {
+            self.$refs.successErrorAlert.showDangerAlert("Error connecting to server")
+          })
       },
       changePassword: function () {
         let passwordInfo = {
@@ -77,11 +91,20 @@
           confirmPassword: this.newPasswordConfirm
         };
 
+        var self = this;
+
         axios.post('/api/user/update/password', passwordInfo)
           .then(function(resp){
-            console.log(resp)
-
-          });
+            if (resp.status.toString().startsWith("2")) {
+              self.$refs.successErrorAlert.showSuccessAlert("Success")
+            }
+            else {
+              self.$refs.successErrorAlert.showDangerAlert("Something went wrong")
+            }
+          })
+          .catch(function (error) {
+            self.$refs.successErrorAlert.showDangerAlert("Error connecting to server")
+          })
       }
     }
 

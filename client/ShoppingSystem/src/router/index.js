@@ -24,7 +24,7 @@ export default new Router({
 				name: 'Search',
 				props : function(route) {
 					return {
-						searchText: route.query.text,
+						searchtext: route.query.text,
 						page: route.query.page,
 						category: route.query.category
 					};

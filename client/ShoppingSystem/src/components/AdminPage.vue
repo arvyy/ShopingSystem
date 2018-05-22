@@ -2,14 +2,15 @@
 	<div class="admin-container">
 		<b-navbar toggleable="md" variant="info">
 			<b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+			<b-navbar-brand @click="openSearch">Ill Shop</b-navbar-brand>
 			<b-collapse is-nav id="nav_collapse">
 			<b-navbar-nav>
-				<b-nav-item v-for="nav in adminlinks" class="navigation-link"><a @click="openLink(nav.link)">{{nav.name}}</a></b-nav-item>
+				<b-nav-item v-for="nav in adminlinks" @click="openLink(nav.link)" class="navigation-link">{{nav.name}}</b-nav-item>
 			</b-navbar-nav>
 			</b-collapse>
 		</b-navbar>
 		<div class="main">
-			<router-view />	
+			<router-view class="container" />	
 		</div>
 	</div>
 </template>
@@ -25,13 +26,19 @@ export default {
 	},
 	computed: {
 		adminlinks: function() {
+			return this.adminlinksmenu;
+			/*
 			return [{
 				name: 'Admin menu',
 				link: 'AdminNavigationPage'
 			}].concat(this.adminlinksmenu);
+			*/
 		}
 	},
 	methods: {
+		openSearch: function() {
+			this.$router.push({name: 'Search'});
+		},
 		openLink: function(link) {
 			this.$router.push({name: link});
 		}

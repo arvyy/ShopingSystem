@@ -1,11 +1,12 @@
 <template>
-	<div class="main_page_container">
-		<SearchBar v-on:do-search="onSearch" :categories="categories"></SearchBar>
+	<div>
+		<h1 class="row justify-content-center">Products</h1>
+		<SearchBar v-on:do-search="onSearch" :category="category" :searchtext="searchtext" :categories="categories"></SearchBar>
+		<hr>
 		<ProductList id="product_list"
 			   :products="productPages"
 			   @add-to-cart="$emit('add-to-cart', $event)"
 			   @set-page="onChangePage" />
-		<!--LogInForm></LogInForm -->
 	</div>
 </template>
 
@@ -18,7 +19,7 @@ import LogInForm from './LogInForm.vue'
 
 export default {
 	name: 'MainPage',
-	props: ['searchText', 'page', 'category'],
+	props: ['searchtext', 'page', 'category'],
 	data () {
 		return {
 			productsPerPage: 20,
@@ -56,7 +57,7 @@ export default {
 			var t = this;
 			axios.get('/api/product/page', {
 				params: {
-					text: t.searchText,
+					text: t.searchtext,
 					category: t.category,
 					size: t.productsPerPage,
 					page: page

@@ -1,6 +1,36 @@
 <template >
 	<div>
-		<div class="toolbar">
+		<b-modal id="cart" title="Cart" hide-footer ref="cartModal">
+			<p v-if="cart.length == 0" class="my-4">Cart is empty</p>
+			<b-container v-if="cart.length > 0">
+				<b-table striped hover outlined :items="cartTableItems">
+					<template slot="removeCartItemButton" slot-scope="cell">
+						<b-btn size="sm" @click.stop="removeCartItem(cell.index)">Remove</b-btn>
+					</template>
+				</b-table>
+	<b-button @click="openCheckout">Checkout {{cartPrice}}$</b-button>
+			</b-container>
+		</b-modal>
+		<b-navbar toggleable="md" variant="info">
+			<b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+			<b-navbar-brand @click="openSearch">Ill Shop</b-navbar-brand>
+			<b-collapse is-nav id="nav_collapse">
+			<b-navbar-nav>
+				<b-nav-item  @click="openAdminPage" v-if="isAdmin">Admin page</b-nav-item>
+			</b-navbar-nav>
+			<b-navbar-nav class="ml-auto">
+				<b-nav-item v-b-modal.cart>Cart({{ itemsInCart }})</b-nav-item>
+				<b-nav-item v-if="!isLogedIn" @click="$emit('login')" right>Login</b-nav-item>
+				
+				<b-nav-item-dropdown v-if="isLogedIn" :text="user.name" right>
+					<b-dropdown-item>Orders</b-dropdown-item>
+					<b-dropdown-item>Preferences</b-dropdown-item>
+					<b-dropdown-item @click="$emit('logout')">Logout</b-dropdown-item>
+				</b-nav-item-dropdown>
+			</b-navbar-nav >
+			</b-collapse>
+		</b-navbar>
+		<!--div class="toolbar">
 			<span>
 			<button @click="$emit('login')" class="toolbar-item" v-if="!isLogedIn">Log in</button>
 			<button v-bind:class="{activated: showCart}"
@@ -21,10 +51,11 @@
 			<button class="user-menu">Orders</button>
 			<button class="user-menu">Preferences</button>
 			<button class="user-menu" v-on:click="$emit('logout')">Logout</button>
-		</div>
+		</div -->
+
 
 		<!-- CART -->
-		<div class="cart-container" v-if="showCart">
+		<!--div class="cart-container" v-if="showCart">
 			<div v-if="cart.length == 0">Cart is empty</div>
 			<div v-if="cart.length > 0" class="cart">
 				<div class="cart-list">
@@ -47,12 +78,11 @@
                   @click="toggleCartVisible">Checkout</button>
 				</div>
 			</div>
-		</div>
+		</div -->
 	</div>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
 	name: 'TopBar',
 	props: [
@@ -62,16 +92,36 @@ export default {
 	data : function() {
 		return {
 			showCart: false,
-			showUserMenu: false
+			showUserMenu: false,
+			fields: [{
+				key: "product",	
+				label: 'Product'
+			}, {
+				key: 'price',
+				label: 'Price'
+			}, {
+				key: 'removeCartItemButton',
+				label: ""
+			}]
 		};
 	},
 	computed: {
+		cartTableItems: function() {
+			var t= this;
+			return this.cart.map(function(entry){
+				return {
+					"product": entry[0].name + " x" + entry[1],
+					"price": t.priceFormat(entry[0].price * entry[1]),
+					"removeCartItemButton": ''
+				}
+			});
+		},
 		cartPrice: function() {
 			var sum = 0;
 			for (var i = 0; i < this.cart.length; i++) {
 				sum += this.cart[i][0].price * this.cart[i][1];
 			}
-			return parseFloat(sum * 100 / 100).toFixed(2);
+			return this.priceFormat(sum);
 		},
 		isAdmin: function() {
 			return this.isLogedIn && this.user.admin;
@@ -88,6 +138,12 @@ export default {
 		}
 	},
 	methods: {
+		removeCartItem: function(index) {
+			this.$emit('remove-cart-item', this.cart[index][0].productId);
+		},
+		priceFormat: function(p) {
+			return parseFloat(p * 100 / 100).toFixed(2);
+		},
 		openCartItemPage: function(productId) {
 			console.log(productId);
 			this.$router.push({name: 'ProductPage', params: { productId: productId }});
@@ -97,6 +153,10 @@ export default {
 		},
 		openSearch: function() {
 			this.$router.push({name: 'Search'});
+		},
+		openCheckout: function() {
+			this.$refs.cartModal.hide();
+			this.$router.push({name: 'Checkout'});
 		},
 		toggleCartVisible: function() {
 			this.showUserMenu = false;

@@ -1,15 +1,20 @@
 <template>
-	<div class="d-flex flex-column">
+	<div>
+		<h1 class="row">Products</h1>
 		<b-modal id="import-modal" @ok="doImport">
 			<b-form-file v-model="importFile" :state="Boolean(importFile)" placeholder="Choose Excel file..."></b-form-file>
 		</b-modal>
-		<div class="p-1">
+		<div class="row">
 			<b-btn @click="createProduct">Create</b-btn>
 			<b-btn v-b-modal="'import-modal'">Import</b-btn>
 			<b-btn @click="exportProduct">Export</b-btn>
 		</div>
-		<div class="p-10">
-			<div>
+		<form class="row">
+			<div class="form-group">
+				<input type="text" v-model="filterText" class="form-control" placeholder="Filter products">
+			</div>
+		</form>
+		<div class="row">
 					<table class="table table-hover">
 						<thead>
 						<tr>
@@ -18,14 +23,13 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr v-for="product in products" 
+						<tr v-for="product in filteredProducts" 
 		  @click="editProduct(product.productId)">
 							<td>{{product.productId}}</td>
 							<td>{{product.name}}</td>
 						</tr>
 						</tbody>
 					</table>
-			</div>
 		</div>
 	</div>
 </template>
@@ -37,8 +41,19 @@ export default {
 	data: function() {
 		return {
 			products: [],
-			importFile: null
+			importFile: null,
+			filterText: ''
 		};
+	},
+	computed: {
+		filteredProducts: function() {
+			if (!this.filterText) return this.products;
+			var t = this.filterText.toLowerCase();
+			return this.products.filter(function(p){
+				return p.productId.toLowerCase().indexOf(t) != -1 ||
+						p.name.toLowerCase().indexOf(t) != -1;
+			});
+		}
 	},
 	methods: {
 		doImport: function() {

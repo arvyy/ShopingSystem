@@ -22,10 +22,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("/api/user/")
@@ -48,10 +51,10 @@ public class UserController {
 
     @RequestMapping(value="sign-up", method = RequestMethod.POST)
     public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult, HttpServletRequest request){
-        userValidator.validate(user, bindingResult);
+        String validationMessage = userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            throw new BadRequestException("Bad user object");
+            throw new BadRequestException(validationMessage);
         }
 
         String email = user.getEmail();
@@ -63,7 +66,7 @@ public class UserController {
 
         autoLogin(email, password, request);
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     public boolean autoLogin( String username, String password, HttpServletRequest request) {
@@ -79,7 +82,7 @@ public class UserController {
 
     @PreAuthorize(("hasAnyRole('USER')"))
     @RequestMapping(value = "update/email", method = RequestMethod.POST)
-    public ResponseEntity updateUserEmail(@RequestBody EmailUpdateDto emailDto){
+    public ResponseEntity updateUserEmail(@RequestBody EmailUpdateDto emailDto, BindingResult result){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = userService.findByEmail(userDetails.getUsername());
@@ -88,13 +91,17 @@ public class UserController {
         }
 
         user.setEmail(emailDto.getEmail());
+        String validationMessage = userValidator.validate(user, result);
+        if (result.hasErrors()){
+            throw new BadRequestException(validationMessage);
+        }
         userService.updateUser(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PreAuthorize(("hasAnyRole('USER')"))
     @RequestMapping(value = "update/password", method = RequestMethod.POST)
-    public ResponseEntity updateUserPassword(@RequestBody PasswordUpdateDto passwordDto){
+    public ResponseEntity updateUserPassword(@RequestBody PasswordUpdateDto passwordDto, BindingResult result){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = userService.findByEmail(userDetails.getUsername());
@@ -107,6 +114,10 @@ public class UserController {
         }
 
         user.setPassword(passwordDto.getConfirmPassword());
+        String validationMessage = userValidator.validate(user, result);
+        if (result.hasErrors()){
+            throw new BadRequestException(validationMessage);
+        }
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -1,6 +1,6 @@
 package lt.mif.ise.service;
 
-import javafx.util.Pair;
+import org.javatuples.Pair;
 import lt.mif.ise.domain.Product;
 
 public interface ShoppingCartService {

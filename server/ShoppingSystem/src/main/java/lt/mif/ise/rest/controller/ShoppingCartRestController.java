@@ -1,9 +1,9 @@
 package lt.mif.ise.rest.controller;
 
-import javafx.util.Pair;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.ProductForCart;
 import lt.mif.ise.service.ShoppingCartService;
+import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +56,7 @@ public class ShoppingCartRestController {
         ArrayList<Object[]> forDeserializing = new ArrayList<>();
         cart.forEach((pair) -> {
             forDeserializing.add(new Object[]{
-                    pair.getKey(), pair.getValue()
+                    pair.getValue0(), pair.getValue1()
             });
         });
         return forDeserializing;

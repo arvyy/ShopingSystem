@@ -1,6 +1,6 @@
 package lt.mif.ise.service.impl;
 
-import javafx.util.Pair;
+import org.javatuples.Pair;
 import lt.mif.ise.domain.*;
 import lt.mif.ise.error.exception.NotFoundException;
 import lt.mif.ise.error.exception.UnauthorizedException;
@@ -40,11 +40,11 @@ public class OrderServiceImpl implements OrderService{
         ArrayList<ProductForCart> products = new ArrayList<>();
         cart.forEach((productAmountPair) -> {
             ProductForCart productForCart = new ProductForCart();
-            productForCart.Id = productAmountPair.getKey().getId();
-            productForCart.Amount = productAmountPair.getValue();
+            productForCart.Id = productAmountPair.getValue0().getId();
+            productForCart.Amount = productAmountPair.getValue1();
             products.add(productForCart);
-            Product product = productAmountPair.getKey();
-            Integer amount = productAmountPair.getValue();
+            Product product = productAmountPair.getValue0();
+            Integer amount = productAmountPair.getValue1();
             payment.Amount += product.getPrice().doubleValue()* 100 * amount;
         });
 

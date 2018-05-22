@@ -9,13 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.persistence.OptimisticLockException;
+
 @ControllerAdvice
 public class GlobalExceptionHandlingController {
-    @ExceptionHandler(value = {RuntimeException.class})
-    protected ResponseEntity<Error> handleRuntime(RuntimeException ex) {
-        return CreateError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(value = {NotFoundException.class})
     protected ResponseEntity<Error> handleNotFound(RuntimeException ex) {
         return CreateError(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -29,6 +26,11 @@ public class GlobalExceptionHandlingController {
     @ExceptionHandler(value = {UnauthorizedException.class})
     protected ResponseEntity<Error> handleUnauthorized(RuntimeException ex) {
         return CreateError(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = {OptimisticLockException.class})
+    protected ResponseEntity<Error> handleOptimisticLocking(RuntimeException ex) {
+        return CreateError(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
     private ResponseEntity<Error> CreateError (String message, HttpStatus statusCode){

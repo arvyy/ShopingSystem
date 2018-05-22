@@ -51,7 +51,7 @@ public class UserController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            throw new BadRequestException("Bad user object");
         }
 
         String email = user.getEmail();
@@ -88,8 +88,8 @@ public class UserController {
         }
 
         user.setEmail(emailDto.getEmail());
-        userService.save(user);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        userService.updateUser(user);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PreAuthorize(("hasAnyRole('USER')"))
@@ -108,7 +108,7 @@ public class UserController {
 
         user.setPassword(passwordDto.getConfirmPassword());
         userService.save(user);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     

@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class ExportImportImpl implements ExportImport{
 
@@ -51,7 +52,7 @@ public class ExportImportImpl implements ExportImport{
                         product.setProductId(String.valueOf(cell.getNumericCellValue()));
                         break;
                     case STRING:
-                        product.setId(cell.getStringCellValue());
+                        product.setProductId(cell.getStringCellValue());
                         break;
                 }
 
@@ -111,11 +112,11 @@ public class ExportImportImpl implements ExportImport{
                     case STRING:
                         continue;
                 }
-                //TODO update if its a duplicate product
-//                Product productToDelete = productRepository.findByProductId(product.getProductId()).get();
-//                if (null != productToDelete){
-//                    productRepository.delete(productToDelete);
-//                }
+                // Delete existing product to avoid duplicates
+                Optional<Product> productToDelete = productRepository.findByProductId(product.getProductId());
+                if (productToDelete.isPresent()){
+                    productRepository.delete(productToDelete.get());
+                }
                 productRepository.save(product);
                 productList.add(product);
             }

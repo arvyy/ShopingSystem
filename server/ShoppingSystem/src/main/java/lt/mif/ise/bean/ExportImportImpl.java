@@ -25,7 +25,7 @@ public class ExportImportImpl implements ExportImport{
     @Autowired
     CategoryService categoryService;
 
-    private static String[] COLUMNS = {"Id", "Name", "Description", "ImageUrl", "Category", "Price"};
+    private static String[] COLUMNS = {"Product Name", "Title", "Price", "Image", "SKU Code", "Description", "Category", "Properties"};
 
     @Override
     @Async
@@ -35,90 +35,111 @@ public class ExportImportImpl implements ExportImport{
         try {
             Workbook workbook = new XSSFWorkbook(inputStream);
 
-            Sheet sheet = workbook.getSheet("Products");
+            Iterator<Sheet> sheetIterator = workbook.sheetIterator();
 
-            Iterator<Row> rows = sheet.iterator();
-            rows.next(); // skip header row
-            while (rows.hasNext()) {
-                Row currentRow = rows.next();
+            while (sheetIterator.hasNext()) {
+                Sheet currentSheet = sheetIterator.next();
 
-                Product product = new Product();
-                Iterator<Cell> cellIterator = currentRow.iterator();
+                Iterator<Row> rowIterator = currentSheet.rowIterator();
+                rowIterator.next();
+                while (rowIterator.hasNext()) {
+                    Row currentRow = rowIterator.next();
+                    Product product = new Product();
 
-                //read id
-                Cell cell = cellIterator.next();
-                switch (cell.getCellTypeEnum()){
-                    case NUMERIC:
-                        product.setProductId(String.valueOf(cell.getNumericCellValue()));
-                        break;
-                    case STRING:
-                        product.setProductId(cell.getStringCellValue());
-                        break;
+                    Iterator<Cell> cellIterator = currentRow.cellIterator();
+                    // raed cells
+                    Cell cell = cellIterator.next();
+
+                    //read Product Name
+                    switch (cell.getCellTypeEnum()) {
+                        case NUMERIC:
+                            product.setName(String.valueOf(cell.getNumericCellValue()));
+                            break;
+                        case STRING:
+                            product.setName(cell.getStringCellValue());
+                            break;
+                    }
+
+                    //read Title
+                    cell = cellIterator.next();
+                    switch (cell.getCellTypeEnum()) {
+                        case NUMERIC:
+                            product.setTitle(String.valueOf(cell.getNumericCellValue()));
+                            break;
+                        case STRING:
+                            product.setTitle(cell.getStringCellValue());
+                            break;
+                    }
+
+                    //read price
+                    cell = cellIterator.next();
+                    switch (cell.getCellTypeEnum()) {
+                        case NUMERIC:
+                            BigDecimal price = new BigDecimal(cell.getNumericCellValue()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                            product.setPrice(price);
+                            break;
+                        case STRING:
+                            continue;
+                        default:
+                            continue;
+                    }
+
+                    //read Image
+                    cell = cellIterator.next();
+                    switch (cell.getCellTypeEnum()) {
+                        case NUMERIC:
+                            continue;
+                        case STRING:
+                            product.setImageUrl(cell.getStringCellValue());
+                            break;
+                    }
+
+                    //read id
+                    cell = cellIterator.next();
+                    switch (cell.getCellTypeEnum()) {
+                        case NUMERIC:
+                            product.setProductId(String.valueOf(cell.getNumericCellValue()));
+                            break;
+                        case STRING:
+                            product.setProductId(cell.getStringCellValue());
+                            break;
+                        default:
+                            continue;
+                    }
+
+                    //read description
+                    cell = cellIterator.next();
+                    switch (cell.getCellTypeEnum()) {
+                        case NUMERIC:
+                            product.setDescription(String.valueOf(cell.getNumericCellValue()));
+                            break;
+                        case STRING:
+                            product.setDescription(cell.getStringCellValue());
+                            break;
+                    }
+
+                    //read Category
+                    Category cat;
+                    cell = cellIterator.next();
+                    switch (cell.getCellTypeEnum()) {
+                        case NUMERIC:
+                            cat = categoryService.getOrCreate(String.valueOf(cell.getNumericCellValue()));
+                            product.setCategory(cat);
+                            break;
+                        case STRING:
+                            cat = categoryService.getOrCreate(cell.getStringCellValue());
+                            product.setCategory(cat);
+                            break;
+                    }
+
+                    // Delete existing product to avoid duplicates
+                    Optional<Product> productToDelete = productRepository.findByProductId(product.getProductId());
+                    if (productToDelete.isPresent()) {
+                        productRepository.delete(productToDelete.get());
+                    }
+                    productRepository.save(product);
+                    productList.add(product);
                 }
-
-                //read name
-                cell = cellIterator.next();
-                switch (cell.getCellTypeEnum()){
-                    case NUMERIC:
-                        product.setName(String.valueOf(cell.getNumericCellValue()));
-                        break;
-                    case STRING:
-                        product.setName(cell.getStringCellValue());
-                        break;
-                }
-
-                //read description
-                cell = cellIterator.next();
-                switch (cell.getCellTypeEnum()){
-                    case NUMERIC:
-                        product.setDescription(String.valueOf(cell.getNumericCellValue()));
-                        break;
-                    case STRING:
-                        product.setDescription(cell.getStringCellValue());
-                        break;
-                }
-
-                //read ImageUrl
-                cell = cellIterator.next();
-                switch (cell.getCellTypeEnum()){
-                    case NUMERIC:
-                        continue;
-                    case STRING:
-                        product.setImageUrl(cell.getStringCellValue());
-                        break;
-                }
-
-                //read Category
-                Category cat;
-                cell = cellIterator.next();
-                switch (cell.getCellTypeEnum()){
-                    case NUMERIC:
-                        cat = categoryService.getOrCreate(String.valueOf(cell.getNumericCellValue()));
-                        product.setCategory(cat);
-                        break;
-                    case STRING:
-                        cat = categoryService.getOrCreate(cell.getStringCellValue());
-                        product.setCategory(cat);
-                        break;
-                }
-
-                //read price
-                cell = cellIterator.next();
-                switch (cell.getCellTypeEnum()){
-                    case NUMERIC:
-                        BigDecimal price = new BigDecimal(cell.getNumericCellValue()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
-                        product.setPrice(price);
-                        break;
-                    case STRING:
-                        continue;
-                }
-                // Delete existing product to avoid duplicates
-                Optional<Product> productToDelete = productRepository.findByProductId(product.getProductId());
-                if (productToDelete.isPresent()){
-                    productRepository.delete(productToDelete.get());
-                }
-                productRepository.save(product);
-                productList.add(product);
             }
             workbook.close();
         } catch (Exception e) {
@@ -134,12 +155,18 @@ public class ExportImportImpl implements ExportImport{
 
         Sheet sheet = workbook.createSheet("Products");
 
+        CellStyle cellStyle = workbook.createCellStyle();
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+
         Font headerFont = workbook.createFont();
         headerFont.setBold(true);
-        headerFont.setColor(IndexedColors.BLUE.getIndex());
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+        headerFont.setFontHeightInPoints((short)12);
+        headerFont.setFontName("Arial");
 
         CellStyle headerCellStyle = workbook.createCellStyle();
         headerCellStyle.setFont(headerFont);
+        headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
 
         // Row for header
         Row headerRow = sheet.createRow(0);
@@ -154,35 +181,51 @@ public class ExportImportImpl implements ExportImport{
         int rowIdx = 1;
         for (Product product : productRepository.findAll()) {
             Row row = sheet.createRow(rowIdx++);
-            //id cell
+            //product name cell
             Cell cell = row.createCell(0);
             cell.setCellType(CellType.STRING);
-            cell.setCellValue(product.getProductId());
+            cell.setCellValue(product.getName());
+            cell.setCellStyle(cellStyle);
 
-            //product name cell
+            //product title cell
             cell = row.createCell(1);
             cell.setCellType(CellType.STRING);
-            cell.setCellValue(product.getName());
+            cell.setCellValue(product.getTitle());
+            cell.setCellStyle(cellStyle);
 
-            //description cell
+            //price
             cell = row.createCell(2);
-            cell.setCellType(CellType.STRING);
-            cell.setCellValue(product.getDescription());
+            cell.setCellType(CellType.NUMERIC);
+            cell.setCellValue(product.getPrice().doubleValue());
+            cell.setCellStyle(cellStyle);
 
-            //image url
+            //image
             cell = row.createCell(3);
             cell.setCellType(CellType.STRING);
             cell.setCellValue(product.getImageUrl());
+            cell.setCellStyle(cellStyle);
 
-            //category
+            //SKU cell
             cell = row.createCell(4);
             cell.setCellType(CellType.STRING);
-            cell.setCellValue(product.getCategory().getName());
+            cell.setCellValue(product.getProductId());
+            cell.setCellStyle(cellStyle);
 
-            //price
+            //description cell
             cell = row.createCell(5);
-            cell.setCellType(CellType.NUMERIC);
-            cell.setCellValue(product.getPrice().doubleValue());
+            cell.setCellType(CellType.STRING);
+            cell.setCellValue(product.getDescription());
+            cell.setCellStyle(cellStyle);
+
+            //category
+            cell = row.createCell(6);
+            cell.setCellType(CellType.STRING);
+            cell.setCellValue((product.getCategory() != null) ? product.getCategory().getName() : "");
+            cell.setCellStyle(cellStyle);
+        }
+
+        for (int i = 0; i < COLUMNS.length; i++){
+            sheet.autoSizeColumn(i);
         }
 
         try {

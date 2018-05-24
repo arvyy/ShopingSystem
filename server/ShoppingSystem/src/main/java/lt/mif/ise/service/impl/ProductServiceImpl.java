@@ -63,6 +63,8 @@ public class ProductServiceImpl implements ProductService {
     	if (!isNew) {
     		Product p = productRepository.findByProductId(product.getProductId()).orElseThrow(() -> new NotFoundException(String.format("Product with product id %s not found", product.getProductId())));
     		product.setId(p.getId());
+            p.setProperties(product);
+            return productRepository.save(p);
     	}
         return productRepository.save(product);
     }

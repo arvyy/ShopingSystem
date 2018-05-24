@@ -29,7 +29,7 @@ public class Product {
     private BigDecimal price;
 
     @Version
-    private int version;
+    private Integer version;
 
     public Category getCategory() { return category; }
 
@@ -83,11 +83,21 @@ public class Product {
 		this.productId = productId;
 	}
 
-    public int getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public void setProperties(Product product){
+        this.productId = product.getProductId() == null ? this.productId : product.getProductId();
+        this.name = product.getName() == null ? this.name : product.getName();
+        this.description = product.getDescription() == null ? this.description : product.getDescription();
+        this.imageUrl = product.getImageUrl() == null ? this.imageUrl : product.getImageUrl();
+        this.category = product.getCategory() == null ? this.category : product.getCategory();
+        this.price = product.getPrice() == null ? this.price : product.getPrice();
+        this.version = product.getVersion() == null ? this.version : product.getVersion();
     }
 }

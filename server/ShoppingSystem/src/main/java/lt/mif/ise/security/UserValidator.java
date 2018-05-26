@@ -12,13 +12,15 @@ public class UserValidator{
     @Autowired
     private UserService userService;
 
-    public String validate(Object o, BindingResult errors) {
+    public String validate(Object o, BindingResult errors, boolean isNew) {
         User user = (User) o;
 
         String result = "";
-        if (userService.findByEmail(user.getEmail()) != null) {
-            errors.addError(new ObjectError("email", "Email already exist.\n"));
-            result += "Email already exist.\n";
+        if (isNew) {
+            if (userService.findByEmail(user.getEmail()) != null) {
+                errors.addError(new ObjectError("email", "Email already exist.\n"));
+                result += "Email already exist.\n";
+            }
         }
 
         if (user.getPassword().length() < 8) {

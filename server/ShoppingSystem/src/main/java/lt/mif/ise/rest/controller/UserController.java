@@ -17,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,7 +52,7 @@ public class UserController {
 
     @RequestMapping(value="sign-up", method = RequestMethod.POST)
     public ResponseEntity signUp(@RequestBody @Valid User user, BindingResult bindingResult, HttpServletRequest request){
-        String validationMessage = userValidator.validate(user, bindingResult);
+        String validationMessage = userValidator.validate(user, bindingResult, true);
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(validationMessage);
@@ -82,7 +83,7 @@ public class UserController {
 
     @PreAuthorize(("hasAnyRole('USER')"))
     @RequestMapping(value = "update/email", method = RequestMethod.POST)
-    public ResponseEntity updateUserEmail(@RequestBody EmailUpdateDto emailDto, BindingResult result){
+    public ResponseEntity updateUserEmail(@RequestBody @Valid EmailUpdateDto emailDto, BindingResult result){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = userService.findByEmail(userDetails.getUsername());
@@ -91,7 +92,7 @@ public class UserController {
         }
 
         user.setEmail(emailDto.getEmail());
-        String validationMessage = userValidator.validate(user, result);
+        String validationMessage = userValidator.validate(user, result, false);
         if (result.hasErrors()){
             throw new BadRequestException(validationMessage);
         }
@@ -109,12 +110,24 @@ public class UserController {
             throw new NotFoundException(String.format("User %s not found", userDetails.getUsername()));
         }
 
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getEmail(),
+                            passwordDto.getOldPassword()
+                    )
+            );
+        }
+        catch (AuthenticationException ae){
+            throw new BadRequestException(String.format("User %s password is incorrect", user.getEmail()));
+        }
+
         if (!passwordDto.getPassword().equals(passwordDto.getConfirmPassword())){
             throw new BadRequestException("Password confirm does not match");
         }
 
         user.setPassword(passwordDto.getConfirmPassword());
-        String validationMessage = userValidator.validate(user, result);
+        String validationMessage = userValidator.validate(user, result, false);
         if (result.hasErrors()){
             throw new BadRequestException(validationMessage);
         }

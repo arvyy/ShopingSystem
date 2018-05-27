@@ -1,63 +1,35 @@
 <template>
-	<div class="products-page">
-		<div class="form-toolbar">
-			<button @click="createProduct">Create</button>
-			<button>Import</button>
-			<button>Export</button>
+	<div>
+		<h1 class="row">Products</h1>
+		<b-modal id="import-modal" @ok="doImport">
+			<b-form-file v-model="importFile" :state="Boolean(importFile)" placeholder="Choose Excel file..."></b-form-file>
+		</b-modal>
+		<div class="row">
+			<b-btn @click="createProduct">Create</b-btn>
+			<b-btn v-b-modal="'import-modal'">Import</b-btn>
+			<b-btn @click="exportProduct">Export</b-btn>
 		</div>
-		<div class="products-form">
-			<div class="left-panel">
-				<div class="table-cnt">
-					<table class="admin-data-table">
+		<form class="row">
+			<div class="form-group">
+				<input type="text" v-model="filterText" class="form-control" placeholder="Filter products">
+			</div>
+		</form>
+		<div class="row">
+					<table class="table table-hover">
+						<thead>
 						<tr>
-							<th class="id-col">Id</th>
-							<th class="name-col">Name</th>
+							<th>Id</th>
+							<th>Name</th>
 						</tr>
-						<tr v-for="product in products" 
-		  :class="{ selectedrow : product.productId == selectedId}"
+						</thead>
+						<tbody>
+						<tr v-for="product in filteredProducts" 
 		  @click="editProduct(product.productId)">
 							<td>{{product.productId}}</td>
 							<td>{{product.name}}</td>
 						</tr>
+						</tbody>
 					</table>
-				</div>
-			</div>
-			<div class="right-panel" v-if="!showForm && isLoading">Loading...</div>
-			<form class="right-panel" v-if="showForm" @submit="onSubmit" enctype="multipart/form-data">
-				<h2>{{formHeader}}</h2>
-				<p>
-				<label for="product-form-productid">
-					Id:<br><input type="text" :required="selectedCreate" :disabled="!selectedCreate" id="product-form-productid" name="productId" v-model="product.productId">
-				</label>
-				</p>
-				<p>
-				<label for="product-form-name">
-					Name:<br><input type="text" required id="product-form-name" name="name" v-model="product.name">
-				</label>
-				</p>
-				<p>
-				<label for="product-form-desc">
-					Description:<br><textarea required id="product-form-desc" name="description" v-model="product.description"></textarea>
-				</label>
-				</p>
-				<p>
-				<label for="product-form-price">
-					Price:<br><input type="number" required step="0.01" id="product-form-price" name="price" v-model="product.price">
-				</label>
-				</p>
-				<p>
-				<label for="product-form-category">
-					Category:<br><input type="text" name="categoryName" id="product-form-category" v-model="category">
-				</label>
-				</p>
-				<p>
-				<label for="product-form-file">
-					Image:<br><input type="file" name="file" id="product-form-file">
-				</label>
-				</p>
-				<input type="submit" :value="saveText">
-				<button v-if="selectedId" @click="onDelete">Delete</button>
-			</form>
 		</div>
 	</div>
 </template>
@@ -68,77 +40,49 @@ export default {
 	name: 'ProductsForm',
 	data: function() {
 		return {
-			filterText: '',
 			products: [],
-			selectedId: '',
-			selectedCreate: false,
-			product: {},
-			category: '',
-			formHeader: '',
-			isLoading: false
+			importFile: null,
+			filterText: ''
 		};
 	},
 	computed: {
-		showForm: function() {
-			return (this.selectedId || this.selectedCreate) && !this.isLoading;
-		},
-		saveText: function() {
-			return this.selectedCreate? 'Create' : 'Update';
+		filteredProducts: function() {
+			if (!this.filterText) return this.products;
+			var t = this.filterText.toLowerCase();
+			return this.products.filter(function(p){
+				return p.productId.toLowerCase().indexOf(t) != -1 ||
+						p.name.toLowerCase().indexOf(t) != -1;
+			});
 		}
 	},
 	methods: {
-		loadProducts: function(editIdAfterLoad) {
+		doImport: function() {
+			var fd = new FormData();
+			fd.append('file', this.importFile);
+			var config = { headers: { 'Content-Type': 'multipart/form-data' } };
+			axios.post('/api/excel/upload', fd, config).then(function(resp){
+				t.$router.push({name: 'ProductsForm'});
+			});
+		},
+		loadProducts: function() {
 			var t = this;
 			axios.get('/api/product/list').then(function(resp){
 				t.products = resp.data;	
-				if (editIdAfterLoad) {
-					t.editProduct(editIdAfterLoad);
-				}
 			});	
-		},
-		editProduct: function(id) {
-			var t = this;
-			this.isLoading = true;
-			axios.get('/api/product/id/' + id).then(function(resp){
-				t.product = resp.data;
-				t.selectedId = id;
-				t.selectedCreate = false;
-				t.formHeader = 'Editing product ' + t.product.name;
-				if (t.product.category) {
-					t.category = t.product.category.name;
-				} else {
-					t.category = '';
-				}
-				t.isLoading = false;
-			});
-			this.selectedId = id;
-			this.selectedCreate = false;
 		},
 		createProduct: function() {
-			this.selectedId = '';
-			this.selectedCreate = true;
-			this.product = {};
-			this.category = '';
-			this.formHeader = 'Creating new product';
+			this.$router.push({name: 'ProductsFormEntryNew'});
 		},
-		onSubmit: function(e) {
-			e.preventDefault();
-			var t = this;
-			var config = { headers: { 'Content-Type': 'multipart/form-data' } };
-			var fd = new FormData(e.target);
-			fd.append('isNew', this.selectedCreate);
-			if (!this.selectedCreate) {
-				fd.append('productId', this.selectedId);
-				//else ateina is formos
-			}
-			axios.post('/api/product', fd, config).then(function(resp){
-				t.loadProducts(t.selectedCreate? t.product.productId : t.selectedId);
+		editProduct: function(productId) {
+			this.$router.push({
+				name: 'ProductsFormEntry', 
+				params: {
+					productId: productId
+				}
 			});
 		},
-		onDelete: function() {
-			axios.delete('/api/product/id/' + this.selectedId).then(function(resp){
-				t.loadProducts();
-			});	
+		exportProduct: function() {
+			window.open('/api/excel/export');
 		}
 	},
 	mounted: function() {

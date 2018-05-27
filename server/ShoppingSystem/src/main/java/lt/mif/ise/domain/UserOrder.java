@@ -18,6 +18,9 @@ public class UserOrder {
     @OneToOne
     private PaymentSuccess payment;
 
+    @Version
+    private int version;
+
     public PaymentSuccess getPayment() {
         return payment;
     }
@@ -56,5 +59,13 @@ public class UserOrder {
 
     public void setProducts(ArrayList<ProductForCart> products) {
         this.products = products;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

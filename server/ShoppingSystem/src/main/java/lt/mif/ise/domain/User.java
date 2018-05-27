@@ -1,6 +1,7 @@
 package lt.mif.ise.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class User {
 
     @NotNull
     @NotEmpty
+    @Email(message = "Email is not valid.")
     private String email;
 
     @NotNull

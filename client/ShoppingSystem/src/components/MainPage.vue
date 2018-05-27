@@ -1,11 +1,12 @@
 <template>
 	<div class="main_page_container">
-		<router-view @add-to-cart="addToCart" />
 			<TopBar :user="currentUser"
 			:cart="cart"
 			@login="onLogin"
 			@logout="onLogout"
-			@clear-cart="onClearCart"/>
+			@clear-cart="onClearCart"
+	  @remove-cart-item="onRemoveCartItem" />
+		<router-view @add-to-cart="addToCart" class="container" />
 	</div>
 </template>
 
@@ -24,6 +25,13 @@ export default {
 		};
 	},
 	methods: {
+		loadCart: function() {
+			var t = this;
+			axios.get('/api/shoppingcart').then(function(resp){
+				var cart = resp.data;
+				t.cart = cart;
+			});
+		},
 		addToCart : function(productId) {
 			var t = this;
 			var data = [{
@@ -45,6 +53,15 @@ export default {
 		onClearCart: function() {
 			axios.delete('/api/shoppingcart');
 			this.cart = [];
+		},
+		onRemoveCartItem: function(productId) {
+			var t = this;
+			axios.delete('/api/shoppingcart/' + productId).then(function(resp){
+				t.loadCart();	
+			});
+		},
+		onOpenCheckout: function() {
+			this.$router.push({name: 'Checkout'});
 		}
 	},
 	mounted: function() {
@@ -52,14 +69,12 @@ export default {
 		axios.get('/api/user/me').then(function(resp){
 			t.currentUser = resp.data;
 		});
+		this.loadCart();
 	}
 }
 </script>
 
 <style scoped>
-  .main_page_container {
-    margin-top: 60px;
-  }
 </style>
 
 <!--Global style-->

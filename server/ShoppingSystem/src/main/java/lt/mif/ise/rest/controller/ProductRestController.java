@@ -39,9 +39,9 @@ public class ProductRestController {
         return productService.getById(productId);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data", "application/json"})
     public Product createProduct(
-    		Product product, 
+    		@RequestBody Product product,
     		@RequestParam(value = "isNew") boolean isNew, 
     		@RequestParam(value = "categoryName", required=false) String category,
     		@RequestParam(value = "file", required=false) MultipartFile file) throws IllegalStateException, IOException{
@@ -61,14 +61,13 @@ public class ProductRestController {
         return productService.save(product, isNew);
     }
     
-/*
-    @RequestMapping(method = RequestMethod.PUT, consumes = {"multipart/form-data"})
+
+    @RequestMapping(method = RequestMethod.PUT, consumes = {"application/json"})
     public Product modifyProduct(
-    		Product product,
-    		@RequestPart(value = "file", required = false) MultipartFile file){
-        return productService.modify(product);
+    		@RequestBody Product product){
+        return productService.save(product, false);
     }
-*/
+
     @RequestMapping(method = RequestMethod.DELETE, value = "id/{productId}")
     public void deleteProduct(@PathVariable(value= "productId") String productId){
         productService.delete(productId);
@@ -79,7 +78,7 @@ public class ProductRestController {
         return productService.findProducts(criteria, page);
     }
     
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    //@PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Iterable<ProductSearch> findProductsList(ProductCriteria criteria) {
     	return productService.findProductsList(criteria);

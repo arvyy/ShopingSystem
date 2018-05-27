@@ -2,37 +2,31 @@ package lt.mif.ise.security;
 
 import lt.mif.ise.domain.User;
 import lt.mif.ise.service.UserService;
+import org.omg.CORBA.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
+import org.springframework.validation.*;
 
 @Component
-public class UserValidator implements Validator{
+public class UserValidator{
     @Autowired
     private UserService userService;
 
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
-    }
-
-    @Override
-    public void validate(Object o, Errors errors) {
+    public String validate(Object o, BindingResult errors, boolean isNew) {
         User user = (User) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-        if (user.getEmail().length() < 6 || user.getEmail().length() > 32) {
-            errors.rejectValue("email", "Size.userForm.email");
-        }
-        if (userService.findByEmail(user.getEmail()) != null) {
-            errors.rejectValue("email", "Duplicate.userForm.email");
+        String result = "";
+        if (isNew) {
+            if (userService.findByEmail(user.getEmail()) != null) {
+                errors.addError(new ObjectError("email", "Email already exist.\n"));
+                result += "Email already exist.\n";
+            }
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (user.getPassword().length() < 8) {
-            errors.rejectValue("password", "Size.userForm.password");
+            errors.addError(new ObjectError("password", "Password should be longer than 7 characters.\n"));
+            result += "Password should be longer than 7 characters.\n";
         }
+        return result;
     }
 }

@@ -6,5 +6,5 @@
 	"link": "ProductsForm"
 }, {
 	"name": "Orders",
-	"link": "OrdersPage"
+	"link": "OrdersForm"
 }]

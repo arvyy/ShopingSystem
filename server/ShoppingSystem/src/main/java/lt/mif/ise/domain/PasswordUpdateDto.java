@@ -1,6 +1,7 @@
 package lt.mif.ise.domain;
 
 public class PasswordUpdateDto {
+    String oldPassword;
     String password;
     String confirmPassword;
 
@@ -19,5 +20,9 @@ public class PasswordUpdateDto {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
+    public String getOldPassword() { return oldPassword; }
+
+    public void setOldPassword(String oldPassword) { this.oldPassword = oldPassword; }
 }
 

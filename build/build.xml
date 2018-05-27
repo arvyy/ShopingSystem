@@ -1,0 +1,52 @@
+<project name="ISE eShop">
+	<condition property="isWinOs">
+		<os family="windows" />
+	</condition>
+
+	<tstamp>
+		<format property="TODAY_MY" pattern="yyyyMMdd-HHmmss"  locale="en,UK" />
+	</tstamp>
+
+	<property name="server-src" location="../server/ShoppingSystem" />
+	<property name="client-src" location="../client/ShoppingSystem" />
+	<property name="dist" location="./dist" />
+	<property name="dist-ts" location="${dist}/ise-${TODAY_MY}" />
+
+	<target name="compile-server-win" if="${isWinOs}">
+		<exec dir="${server-src}" executable="cmd">
+			<arg line="/c mvn clean package" />
+		</exec>
+	</target>
+	<target name="compile-server-unix" unless="${isWinOs}">
+		<exec dir="${server-src}" executable="sh">
+			<arg line="-c 'mvn clean package'" />
+		</exec>
+	</target>
+
+	<target name="compile-ui-win" if="${isWinOs}">
+		<exec dir="${client-src}" executable="cmd">
+			<arg line="/c npm run build" />
+		</exec>
+	</target>
+	<target name="compile-ui-unix" unless="${isWinOs}">
+		<exec dir="${client-src}" executable="sh">
+			<arg line="-c 'npm run build'" />
+		</exec>
+	</target>
+
+	<target name="compile-ui" depends="compile-ui-win,compile-ui-unix"/>
+	<target name="compile-server" depends="compile-server-win,compile-server-unix"/>
+
+	<target name="dist" depends="compile-ui, compile-server">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist-ts}" />
+		<copy todir="${dist-ts}">
+			<fileset dir="${server-src}/target" includes="*.jar" />
+		</copy>
+		<copy todir="${dist-ts}/static">
+			<fileset dir="${client-src}/dist" />
+		</copy>
+		<zip destfile="${dist-ts}.zip"
+				basedir="${dist-ts}"/>
+	</target>
+</project>

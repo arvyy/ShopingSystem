@@ -1,0 +1,3 @@
+-- Insert default user roles:
+MERGE INTO ROLE VALUES (1, 'ROLE_USER')
+MERGE INTO ROLE VALUES (2, 'ROLE_ADMIN')

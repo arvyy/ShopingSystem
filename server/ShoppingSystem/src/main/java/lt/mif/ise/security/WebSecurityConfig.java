@@ -2,6 +2,7 @@ package lt.mif.ise.security;
 
 import lt.mif.ise.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,9 +20,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true) //using global method security we can authorize requests using @PreAuthorize annotation. Example: @PreAuthorize("hasAnyRole('ADMIN')"
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+    @Value("${ill.admin.password}")
+    private String adminPassword;
+
+    @Value("${ill.admin.email}")
+    private String adminEmail;
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
@@ -53,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.inMemoryAuthentication().withUser(adminEmail).password(bCryptPasswordEncoder.encode(adminPassword)).roles("ADMIN");
     }
 
     @Bean

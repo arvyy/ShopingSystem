@@ -7,6 +7,8 @@ import LoginPage from '@/components/LogInPage'
 import AdminPage from '@/components/AdminPage'
 import AdminNavigationPage from '@/components/AdminNavigationPage'
 import ProductsForm from '@/components/ProductsForm'
+import ProductsFormEntry from '@/components/ProductsFormEntry'
+import OrdersForm from '@/components/OrdersForm'
 import UsersForm from '@/components/UsersForm'
 import CheckoutPage from '@/components/CheckoutPage'
 import PreferencesPage from '@/components/PreferencesPage'
@@ -23,7 +25,7 @@ export default new Router({
 				name: 'Search',
 				props : function(route) {
 					return {
-						searchText: route.query.text,
+						searchtext: route.query.text,
 						page: route.query.page,
 						category: route.query.category
 					};
@@ -62,6 +64,30 @@ export default new Router({
 				path: 'products',
 				name: 'ProductsForm',
 				component: ProductsForm
+			}, {
+				path: 'products/edit/:productId',
+				name: 'ProductsFormEntry',
+				component: ProductsFormEntry,
+				props: function(route){
+					return {
+						isNew: false,
+						productId: route.params.productId
+					};
+				}
+			}, {
+				path: 'products/create',
+				name: 'ProductsFormEntryNew',
+				component: ProductsFormEntry,
+				props: function(route){
+					return {
+						isNew: true,
+						productId: null
+					};
+				}
+			}, {
+				path: 'orders',
+				name: 'OrdersForm',
+				component: OrdersForm
 			}]
 		}
 	]

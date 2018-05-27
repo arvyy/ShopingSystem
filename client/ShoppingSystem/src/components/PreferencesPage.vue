@@ -74,6 +74,7 @@
 
     methods: {
       changeEmail: function () {
+        this.$emit('showErrorAlert', "test")
         let emailInfo = {
           email: this.newEmail
         };
@@ -82,15 +83,11 @@
 
         axios.post('/api/user/update/email', emailInfo)
           .then(function(resp){
-            if (resp.status.toString().startsWith("2")) {
-              self.$refs.successErrorAlert.showSuccessAlert("Success")
-            }
-            else {
-              self.$refs.successErrorAlert.showDangerAlert("Something went wrong")
-            }
+            //self.$refs.successErrorAlert.showSuccessAlert("Success")
+            self.onSucessfulUpdate()
           })
           .catch(function (error) {
-            self.$refs.successErrorAlert.showDangerAlert("Error connecting to server")
+            //self.$refs.successErrorAlert.showDangerAlert("Error: " + error.response.data.Message)
           })
       },
       changePassword: function () {
@@ -104,16 +101,18 @@
 
         axios.post('/api/user/update/password', passwordInfo)
           .then(function(resp){
-            if (resp.status.toString().startsWith("2")) {
-              self.$refs.successErrorAlert.showSuccessAlert("Success")
-            }
-            else {
-              self.$refs.successErrorAlert.showDangerAlert("Something went wrong")
-            }
+            self.$refs.successErrorAlert.showSuccessAlert("Success")
+            self.onSucessfulUpdate()
           })
           .catch(function (error) {
-            self.$refs.successErrorAlert.showDangerAlert("Error connecting to server")
+            self.$refs.successErrorAlert.showDangerAlert("Error: " + error.response.data.Message)
           })
+      },
+      onSucessfulUpdate: function() {
+        this.newEmail = ''
+        this.newPassword =''
+        this.newPasswordConfirm = ''
+        this.oldPassword = ''
       }
     }
 

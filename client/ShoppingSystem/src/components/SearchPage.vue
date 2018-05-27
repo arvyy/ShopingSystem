@@ -18,7 +18,7 @@ import ProductList from './ProductList.vue'
 import LogInForm from './LogInForm.vue'
 
 export default {
-	name: 'MainPage',
+	name: 'SearchPage',
 	props: ['searchtext', 'page', 'category'],
 	data () {
 		return {

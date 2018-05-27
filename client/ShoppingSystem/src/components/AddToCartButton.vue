@@ -10,6 +10,7 @@ export default {
 	props: ['productId'],
 	data () {
 		return {
+
 		}
 	}
 

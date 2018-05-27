@@ -21,10 +21,10 @@
 			<b-navbar-nav class="ml-auto">
 				<b-nav-item v-b-modal.cart>Cart({{ itemsInCart }})</b-nav-item>
 				<b-nav-item v-if="!isLogedIn" @click="$emit('login')" right>Login</b-nav-item>
-				
+
 				<b-nav-item-dropdown v-if="isLogedIn" :text="user.name" right>
 					<b-dropdown-item>Orders</b-dropdown-item>
-					<b-dropdown-item>Preferences</b-dropdown-item>
+					<b-dropdown-item @click="openPreferencesPage">Preferences</b-dropdown-item>
 					<b-dropdown-item @click="$emit('logout')">Logout</b-dropdown-item>
 				</b-nav-item-dropdown>
 			</b-navbar-nav >
@@ -93,7 +93,7 @@ export default {
 			showCart: false,
 			showUserMenu: false,
 			fields: [{
-				key: "product",	
+				key: "product",
 				label: 'Product'
 			}, {
 				key: 'price',
@@ -149,7 +149,6 @@ export default {
 		},
     openPreferencesPage: function() {
       this.$router.push({name: 'Preferences'});
-      this.toggleUserMenuVisible();
     },
     openCheckoutPage: function() {
       this.$router.push({name: 'Checkout'});

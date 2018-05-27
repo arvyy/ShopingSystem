@@ -17,7 +17,14 @@
         </b-tab>
         <b-tab title="Change Password">
           <b-form @submit.prevent="changePassword">
-            <!--TODO: Implement Old password check-->
+            <b-form-group label="Old Password:"
+                          label-class="font-weight-bold">
+              <b-form-input type="password"
+                            v-model="oldPassword"
+                            required
+                            placeholder="Old Password">
+              </b-form-input>
+            </b-form-group>
             <b-form-group label="New Password:"
                           label-class="font-weight-bold">
               <b-form-input type="password"
@@ -60,7 +67,8 @@
       return {
         newEmail: '',
         newPassword: '',
-        newPasswordConfirm: ''
+        newPasswordConfirm: '',
+        oldPassword: ''
       }
     },
 
@@ -87,8 +95,9 @@
       },
       changePassword: function () {
         let passwordInfo = {
+          oldPassword: this.oldPassword,
           password: this.newPassword,
-          confirmPassword: this.newPasswordConfirm
+          confirmPassword: this.newPasswordConfirm,
         };
 
         var self = this;

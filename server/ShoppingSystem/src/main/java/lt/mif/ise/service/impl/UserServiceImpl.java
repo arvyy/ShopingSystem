@@ -33,6 +33,36 @@ public class UserServiceImpl implements UserService {
 
     @PostConstruct
     public void init() {
+        if (userRepository.count() == 0) {
+            // test user
+            User u1 = new User();
+            u1.setEnabled(true);
+            u1.setId(UUID.randomUUID().toString());
+            u1.setEmail("testUser@gmail.com");
+            u1.setPassword(bCryptPasswordEncoder.encode("testUser"));
+            Set<Role> userRole = roleRepository.findByName("ROLE_USER");
+            if (null == userRole || 0 == userRole.size()){
+                Role newRole = createNewRole(1l, "ROLE_USER");
+                roleRepository.save(newRole);
+                userRole.add(newRole);
+            }
+            u1.setRoles(userRole);
+
+            //admin user
+            User u2 = new User();
+            u2.setEnabled(true);
+            u2.setId(UUID.randomUUID().toString());
+            u2.setEmail("admin@gmail.com");
+            u2.setPassword(bCryptPasswordEncoder.encode("admin"));
+            Set<Role> adminRole = roleRepository.findByName("ROLE_ADMIN");
+            if (null == adminRole || 0 == adminRole.size()){
+                Role newAdmRole = createNewRole(2l, "ROLE_ADMIN");
+                roleRepository.save(newAdmRole);
+                adminRole.add(newAdmRole);
+            }
+            u2.setRoles(adminRole);
+            userRepository.saveAll(Arrays.asList(u1, u2));
+        }
     }
 
     @Override

@@ -39,6 +39,21 @@ public class ProductServiceImpl implements ProductService {
     
 	@PostConstruct
 	public void init() {
+		productRepository.deleteAll();
+		if (productRepository.count() < 100) {
+			List<Product> products = IntStream.range(0, 100)
+				.mapToObj((i) -> {
+					Product p = new Product();
+					p.setProductId("prod-" + i);
+					p.setDescription("" + p.hashCode());
+					p.setName("Product NR" + i);
+					p.setPrice(new BigDecimal(1.99));
+					p.setCategory(categoryService.getOrCreate("Category" + i%5));
+					return p;
+				})
+				.collect(Collectors.toList());
+			productRepository.saveAll(products);
+		}
 	}
 
     @Override

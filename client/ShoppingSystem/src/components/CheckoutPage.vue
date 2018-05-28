@@ -80,7 +80,9 @@
   export default {
     components: {},
     name: 'CheckoutPage',
-    props : [],
+    props : [
+
+    ],
     data () {
       return {
         cardNumber: '',
@@ -90,7 +92,6 @@
         cvv: ''
       }
     },
-
     methods: {
       productsProvider: function() {
         let promise = axios.get('/api/shoppingcart');

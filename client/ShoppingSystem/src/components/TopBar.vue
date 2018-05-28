@@ -20,9 +20,9 @@
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
 				<b-nav-item v-b-modal.cart>Cart({{ itemsInCart }})</b-nav-item>
-				<b-nav-item v-if="!isLogedIn" @click="$emit('login')" right>Login</b-nav-item>
+				<b-nav-item v-if="!isLoggedIn" @click="$emit('login')" right>Login</b-nav-item>
 
-				<b-nav-item-dropdown v-if="isLogedIn" :text="user.name" right>
+				<b-nav-item-dropdown v-if="isLoggedIn" :text="user.name" right>
 					<b-dropdown-item>Orders</b-dropdown-item>
 					<b-dropdown-item @click="openPreferencesPage">Preferences</b-dropdown-item>
 					<b-dropdown-item @click="$emit('logout')">Logout</b-dropdown-item>
@@ -32,13 +32,13 @@
 		</b-navbar>
 		<!--div class="toolbar">
 			<span>
-			<button @click="$emit('login')" class="toolbar-item" v-if="!isLogedIn">Log in</button>
+			<button @click="$emit('login')" class="toolbar-item" v-if="!isLoggedIn">Log in</button>
 			<button v-bind:class="{activated: showCart}"
 		   @click="toggleCartVisible"
 		   class="cart-toggle toolbar-item">
 				Cart({{ itemsInCart }})
 			</button>
-			<button @click="toggleUserMenuVisible" :class="{activated: showUserMenu}"class="toolbar-item" v-if="isLogedIn">{{ user.name }}</button>
+			<button @click="toggleUserMenuVisible" :class="{activated: showUserMenu}"class="toolbar-item" v-if="isLoggedIn">{{ user.name }}</button>
 			</span>
 			<span>
 				<button @click="openSearch" class="toolbar-item">Search</button>
@@ -51,7 +51,7 @@
 			<button class="user-menu">Orders</button>
 			<button class="user-menu" @click="openPreferencesPage">Preferences</button>
 			<button class="user-menu" v-on:click="$emit('logout')">Logout</button>
-		</div -->
+		</div>
 
 
 		<!-- CART -->
@@ -123,9 +123,9 @@ export default {
 			return this.priceFormat(sum);
 		},
 		isAdmin: function() {
-			return this.isLogedIn && this.user.admin;
+			return this.isLoggedIn && this.user.admin;
 		},
-		isLogedIn: function() {
+		isLoggedIn: function() {
 			return (this.user && this.user.name)? true : false;
 		},
 		itemsInCart: function() {
@@ -150,10 +150,6 @@ export default {
     openPreferencesPage: function() {
       this.$router.push({name: 'Preferences'});
     },
-    openCheckoutPage: function() {
-      this.$router.push({name: 'Checkout'});
-      this.toggleCartVisible();
-    },
 		openAdminPage: function() {
 			this.$router.push({name: 'UsersForm'});
 		},
@@ -162,7 +158,12 @@ export default {
 		},
 		openCheckout: function() {
 			this.$refs.cartModal.hide();
-			this.$router.push({name: 'Checkout'});
+			if (this.isLoggedIn) {
+        this.$router.push({name: 'Checkout'});
+      }
+      else {
+        this.$router.push({name: 'Login'});
+      }
 		},
 		toggleCartVisible: function() {
 			this.showUserMenu = false;

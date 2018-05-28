@@ -1,11 +1,13 @@
 <template>
 	<div class="main_page_container">
-			<TopBar :user="currentUser"
+			<topBar ref="topBar"
+      :user="currentUser"
 			:cart="cart"
 			@login="onLogin"
 			@logout="onLogout"
 			@clear-cart="onClearCart"
 	  @remove-cart-item="onRemoveCartItem" />
+
 		<router-view @add-to-cart="addToCart" class="container" />
 	</div>
 </template>
@@ -16,7 +18,7 @@ import axios from 'axios'
 export default {
 	name: 'MainPage',
 	components: {
-		TopBar
+		'topBar': TopBar
 	},
 	data : function() {
 		return {
@@ -57,11 +59,8 @@ export default {
 		onRemoveCartItem: function(productId) {
 			var t = this;
 			axios.delete('/api/shoppingcart/' + productId).then(function(resp){
-				t.loadCart();	
+				t.loadCart();
 			});
-		},
-		onOpenCheckout: function() {
-			this.$router.push({name: 'Checkout'});
 		}
 	},
 	mounted: function() {

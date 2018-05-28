@@ -47,7 +47,6 @@
       </b-tabs>
     </b-card>
 
-    <successErrorAlert ref="successErrorAlert"></successErrorAlert>
   </div>
 
 </template>
@@ -55,12 +54,9 @@
 
 <script>
   import axios from 'axios'
-  import Alert from './Alert'
+  import { NotificationBus } from './../NotificationBus.js';
 
   export default {
-    components: {
-      'successErrorAlert': Alert
-    },
     name: 'PreferencesPage',
     props : [],
     data () {
@@ -74,7 +70,6 @@
 
     methods: {
       changeEmail: function () {
-        this.$emit('showErrorAlert', "test")
         let emailInfo = {
           email: this.newEmail
         };
@@ -83,11 +78,11 @@
 
         axios.post('/api/user/update/email', emailInfo)
           .then(function(resp){
-            //self.$refs.successErrorAlert.showSuccessAlert("Success")
+            NotificationBus.$emit('success', 'Email Updated');
             self.onSucessfulUpdate()
           })
           .catch(function (error) {
-            //self.$refs.successErrorAlert.showDangerAlert("Error: " + error.response.data.Message)
+            NotificationBus.$emit('error', "Error: " + error.response.data.Message)
           })
       },
       changePassword: function () {
@@ -101,11 +96,11 @@
 
         axios.post('/api/user/update/password', passwordInfo)
           .then(function(resp){
-            self.$refs.successErrorAlert.showSuccessAlert("Success")
+            NotificationBus.$emit('success', 'Password Updated');
             self.onSucessfulUpdate()
           })
           .catch(function (error) {
-            self.$refs.successErrorAlert.showDangerAlert("Error: " + error.response.data.Message)
+            NotificationBus.$emit('error', "Error: " + error.response.data.Message)
           })
       },
       onSucessfulUpdate: function() {
@@ -115,7 +110,6 @@
         this.oldPassword = ''
       }
     }
-
   }
 </script>
 

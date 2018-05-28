@@ -1,7 +1,5 @@
 <template>
   <div class="alert_page_container">
-    <router-view />
-    <errorEvent :showErrorAlert="showDangerAlert"/>
     <div class="alert_container w-50 mx-auto">
       <b-alert :show="dismissCountDown"
                fade
@@ -42,7 +40,7 @@
         this.alertVariant = 'sucess'
         this.showAlert(alertMessage, dismissCount)
       },
-      showDangerAlert (alertMessage, dismissCount) {
+      showErrorAlert (alertMessage, dismissCount) {
         this.alertVariant = 'danger'
         this.showAlert(alertMessage, dismissCount)
       }
@@ -52,8 +50,8 @@
 </script>
 
 <style scoped>
-  .alert_page_container {
-
-  }
+  /*.alert_page_container {*/
+    /*bottom: 5%;*/
+  /*}*/
 
 </style>

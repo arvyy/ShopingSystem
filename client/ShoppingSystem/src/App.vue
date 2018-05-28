@@ -21,7 +21,7 @@
         self.$refs.successErrorAlert.showErrorAlert(message)
       });
 
-      NotificationBus.$on('sucess', message => {
+      NotificationBus.$on('success', message => {
         self.$refs.successErrorAlert.showSuccessAlert(message)
       });
     }

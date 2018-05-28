@@ -37,7 +37,7 @@
         this.dismissCountDown = dismissCount;
       },
       showSuccessAlert (alertMessage, dismissCount) {
-        this.alertVariant = 'sucess'
+        this.alertVariant = 'success'
         this.showAlert(alertMessage, dismissCount)
       },
       showErrorAlert (alertMessage, dismissCount) {

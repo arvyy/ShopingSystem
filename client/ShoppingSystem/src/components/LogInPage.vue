@@ -59,6 +59,8 @@
 
 <script>
 import axios from 'axios'
+import { NotificationBus } from './../NotificationBus.js';
+
 export default {
 	name: 'LogInPage',
 	data : function() {
@@ -75,13 +77,16 @@ export default {
 			e.preventDefault();
 			var t = this;
 			//gaidys sitas, kazkaip gudriau turetu susidet parametrai
-			axios.post('/login?username=' + encodeURIComponent(t.username) + 
+			axios.post('/login?username=' + encodeURIComponent(t.username) +
 				'&password=' + encodeURIComponent(t.password))
 				.then(function(resp){
 					if (resp.data.success === true) {
 						t.onLoginSuccess();
 					}
-				});
+				})
+        .catch(function (error) {
+          NotificationBus.$emit('error', "Error: " + error.response.data.Message)
+        })
 		},
 		doSignup: function(e) {
 			e.preventDefault();
@@ -93,7 +98,10 @@ export default {
 				if (resp.data.success === true) {
 					t.onLoginSuccess();
 				}
-			});
+			})
+      .catch(function (error) {
+        NotificationBus.$emit('error', "Error: " + error.response.data.Message)
+      })
 		},
 		onLoginSuccess: function() {
 			this.$router.go(-1);

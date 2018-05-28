@@ -75,6 +75,7 @@
 
 <script>
   import axios from 'axios'
+  import { NotificationBus } from './../NotificationBus.js';
 
   export default {
     components: {},
@@ -128,12 +129,21 @@
           cvv: this.cvv,
         };
 
+        var self = this;
+
         axios.post('/api/order/', cardInfo)
           .then(function(resp){
-            console.log(resp)
-
-          });
+            NotificationBus.$emit('success', 'Payment successful');
+            self.onSucessfulUpdate()
+          })
+          .catch(function (error) {
+            NotificationBus.$emit('error', "Error: " + error.response.data.Message)
+          })
       },
+
+      onSucessfulUpdate: function () {
+        this.$router.push({name: 'SearchPage'});
+      }
     }
 
   }

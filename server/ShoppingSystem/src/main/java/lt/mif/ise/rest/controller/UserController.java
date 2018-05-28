@@ -8,6 +8,7 @@ import lt.mif.ise.domain.PasswordUpdateDto;
 import lt.mif.ise.domain.User;
 import lt.mif.ise.error.exception.BadRequestException;
 import lt.mif.ise.error.exception.NotFoundException;
+import lt.mif.ise.security.MyUserDetails;
 import lt.mif.ise.security.UserValidator;
 import lt.mif.ise.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -84,7 +86,7 @@ public class UserController {
     @PreAuthorize(("hasAnyRole('USER')"))
     @RequestMapping(value = "update/email", method = RequestMethod.POST)
     public ResponseEntity updateUserEmail(@RequestBody @Valid EmailUpdateDto emailDto, BindingResult result){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = userService.findByEmail(userDetails.getUsername());
         if (null == user){
@@ -97,6 +99,8 @@ public class UserController {
             throw new BadRequestException(validationMessage);
         }
         userService.updateUser(user);
+        userDetails.setUserEmail(user.getEmail());
+
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -30,7 +30,7 @@ export default {
 .product_container {
 	border: rgb(208, 208, 208) solid 2px;
 	width: 250px;
-	height: 275px;
+	height: 300px;
 	overflow: hidden;
 	margin: 0;
 }
@@ -46,11 +46,11 @@ export default {
 .name {
 	font-weight: bold;
 	font-size: 20px;
-	margin-bottom: 2%;
+	margin-bottom: 0%;
 }
 
 .price {
-	margin-bottom: 4%;
+	margin-bottom: 3%;
 }
 
 .add_to_cart_button {

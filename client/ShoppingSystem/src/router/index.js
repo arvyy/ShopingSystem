@@ -8,10 +8,11 @@ import AdminPage from '@/components/AdminPage'
 import AdminNavigationPage from '@/components/AdminNavigationPage'
 import ProductsForm from '@/components/ProductsForm'
 import ProductsFormEntry from '@/components/ProductsFormEntry'
-import OrdersForm from '@/components/OrdersForm'
 import UsersForm from '@/components/UsersForm'
 import CheckoutPage from '@/components/CheckoutPage'
 import PreferencesPage from '@/components/PreferencesPage'
+import OrdersPage from '@/components/OrdersPage'
+import OrdersEditPage from '@/components/OrdersEditPage'
 
 Vue.use(Router)
 
@@ -21,7 +22,7 @@ export default new Router({
 			path: '/',
 			component: MainPage,
 			children: [{
-				path: '/',
+				path: '',
 				name: 'Search',
 				props : function(route) {
 					return {
@@ -31,6 +32,16 @@ export default new Router({
 					};
 				},
 				component: SearchPage
+			}, {
+				path: 'orders',
+				name: 'OrdersPage',
+				props: function(route) {
+					return {
+						page: route.query.page,
+						editable: false
+					};
+				},
+				component: OrdersPage
 			}, {
 				path: 'product/:productId',
 				name: 'ProductPage',
@@ -57,6 +68,16 @@ export default new Router({
 			path: '/admin',
 			component: AdminPage,
 			children: [{
+				path: 'orders/user/:user',
+				name: 'OrdersEditPage',
+				component: OrdersEditPage,
+				props: function(route) {
+					return {
+						page: route.query.page,
+						user: route.params.user
+					};
+				}
+			}, {
 				path: 'users',
 				name: 'UsersForm',
 				component: UsersForm
@@ -84,10 +105,6 @@ export default new Router({
 						productId: null
 					};
 				}
-			}, {
-				path: 'orders',
-				name: 'OrdersForm',
-				component: OrdersForm
 			}]
 		}
 	]

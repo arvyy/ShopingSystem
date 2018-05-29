@@ -1,19 +1,26 @@
 package lt.mif.ise.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class UserOrder {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private String id;
-
-    private String email;
-
+    
     private String state;
 
-    private ArrayList<ProductForCart> products;
+    @OneToMany(mappedBy="userOrder", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    private List<UserOrderItem> products;
+    
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JsonIgnore
+    private User user;
 
     @OneToOne
     private PaymentSuccess payment;
@@ -45,19 +52,11 @@ public class UserOrder {
         this.state = state;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public ArrayList<ProductForCart> getProducts() {
+    public List<UserOrderItem> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<ProductForCart> products) {
+    public void setProducts(List<UserOrderItem> products) {
         this.products = products;
     }
 
@@ -68,4 +67,12 @@ public class UserOrder {
     public void setVersion(int version) {
         this.version = version;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

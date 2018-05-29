@@ -8,19 +8,26 @@ import lt.mif.ise.jpa.OrderRepository;
 import lt.mif.ise.jpa.PaymentRepository;
 import lt.mif.ise.jpa.PaymentSuccessRepository;
 import lt.mif.ise.service.OrderService;
+import lt.mif.ise.service.ProductService;
 import lt.mif.ise.service.ShoppingCartService;
+import lt.mif.ise.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.UUID;
+
+import javax.annotation.PostConstruct;
 
 @Service
 public class OrderServiceImpl implements OrderService{
-    @Autowired
-    private ShoppingCartService cartService;
 
     @Autowired
     private PaymentRepository paymentRepo;
@@ -30,48 +37,59 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private PaymentSuccessRepository paymentSuccessRepo;
+    
+    @Autowired
+    UserService userService;
+    
+    @Autowired
+    ProductService ps; //testavimui
+    
+    @Value("${userOrder.state.first}")
+    String startingState;
 
+    
     @Override
     @Transactional
-    public UserOrder makeOrder(CardInformation cardInformation) {
+    public UserOrder makeOrder(String userEmail, Iterable<Pair<Product, Integer>> cart, CardInformation cardInformation) {
         Payment payment = new Payment(cardInformation, 0);
-
-        Iterable<Pair<Product, Integer>> cart = cartService.getCart();
-        ArrayList<ProductForCart> products = new ArrayList<>();
+        User u = userService.findByEmail(userEmail);
+        ArrayList<UserOrderItem> products = new ArrayList<>();
+        UserOrder order = new UserOrder();
         cart.forEach((productAmountPair) -> {
-            ProductForCart productForCart = new ProductForCart();
-            productForCart.Id = productAmountPair.getValue0().getId();
-            productForCart.Amount = productAmountPair.getValue1();
-            products.add(productForCart);
+        	UserOrderItem i = new UserOrderItem();
+        	i.setCount(productAmountPair.getValue1());
+        	Product p = productAmountPair.getValue0();
+        	i.setName(p.getName());
+        	i.setPrice(p.getPrice());
+        	i.setProductId(p.getProductId());
+        	i.setUserOrder(order);
+        	i.setId(UUID.randomUUID().toString());
+            products.add(i);
             Product product = productAmountPair.getValue0();
             Integer amount = productAmountPair.getValue1();
             payment.Amount += product.getPrice().doubleValue()* 100 * amount;
         });
-
-        cartService.clearCart();
-
-        PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
-        paymentSuccessRepo.save(paymentSuccess);
-
-        UserOrder order = new UserOrder();
-        order.setPayment(paymentSuccess);
-        order.setState("NEW");
-        order.setEmail(getUserUsername());
         order.setProducts(products);
 
-        orderRepo.save(order);
+        //PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
+        //paymentSuccessRepo.save(paymentSuccess);
 
-        return order;
+        //order.setPayment(paymentSuccess);
+        order.setState(startingState);
+        order.setUser(u);
+
+        return orderRepo.save(order);
     }
-
+/*
     @Override
     public Iterable<UserOrder> getAllOrders (){
         return orderRepo.findAll();
     }
-
+*/
     @Override
-    public Iterable<UserOrder> getOrdersByUser(String user) {
-        return orderRepo.findByEmail(user).orElseThrow(() ->new NotFoundException(String.format("User %s not found", user)));
+    public Page<UserOrder> getOrdersByUser(String email, Pageable page) {
+    	User user = userService.findByEmail(email);
+        return orderRepo.findByUser(user, page);
     }
 
     @Override
@@ -84,14 +102,5 @@ public class OrderServiceImpl implements OrderService{
         UserOrder order = orderRepo.findById(orderId).orElseThrow(() -> new NotFoundException(String.format("Order %s not found", orderId)));
         order.setState(state);
         return orderRepo.save(order);
-    }
-
-    private String getUserUsername (){
-        try {
-            return ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        }
-        catch (Exception ex){
-            throw new UnauthorizedException("Please log in");
-        }
     }
 }

@@ -13,11 +13,8 @@ module.exports = {
 		proxyTable: {
 			// proxy all requests starting with /api to jsonplaceholder
 			'/api': {
-				target: 'http://localhost:8080/api',
-				changeOrigin: true,
-				pathRewrite: {
-					'^/api': ''
-				}
+				target: 'http://localhost:8080',
+				changeOrigin: true
 			},
 			'/login' : {
 				target: 'http://localhost:8080',
@@ -26,6 +23,9 @@ module.exports = {
 			'/logout' : {
 				target: 'http://localhost:8080',
 				changeOrigin: true
+			},
+			'/product-image': {
+				target: 'http://localhost:8080'
 			}
 		},
 

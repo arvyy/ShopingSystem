@@ -1,39 +1,51 @@
 <template>
-			<form class="p-6" @submit="onSubmit" enctype="multipart/form-data">
-				<h2>{{formHeader}}</h2>
-				<p>
-				<label for="product-form-productid">
-					Id:<br><input type="text" :required="isNew" :disabled="!isNew" id="product-form-productid" name="productId" v-model="product.productId">
+	<div>
+		<h1 class="row">{{formHeader}}</h1>
+			<form @submit="onSubmit" enctype="multipart/form-data">
+				<div class="row form-group">
+					<label for="product-form-productid">Id</label>
+					<input type="text" class="form-control" :required="isNew" :disabled="!isNew" id="product-form-productid" name="productId" v-model="product.productId">
+				</div>
+				<div class="row form-group">
+					<label for="product-form-name">Name</label>
+					<input type="text" class="form-control" required id="product-form-name" name="name" v-model="product.name">
+				</div>
+				<div class="row form-group">
+					<label for="product-form-desc">Description</label>
+					<textarea class="form-control" required id="product-form-desc" name="description" v-model="product.description"></textarea>
+				</div>
+				<div class="row form-group">
+					<label for="product-form-price">Price</label>
+					<input class="form-control" type="number" required step="0.01" id="product-form-price" name="price" v-model="product.price">
 				</label>
-				</p>
-				<p>
-				<label for="product-form-name">
-					Name:<br><input type="text" required id="product-form-name" name="name" v-model="product.name">
+				</div>
+				<div class="row form-group">
+					<label for="product-form-category">Category</label>
+					<input class="form-control" type="text" name="categoryName" id="product-form-category" v-model="category">
+				</div>
+				<div v-if="!product.imageUrl" class="row form-group">
+					<label for="product-form-file">Image</label>
+					<input class="form-control" type="file" name="file" id="product-form-file">
 				</label>
-				</p>
-				<p>
-				<label for="product-form-desc">
-					Description:<br><textarea required id="product-form-desc" name="description" v-model="product.description"></textarea>
-				</label>
-				</p>
-				<p>
-				<label for="product-form-price">
-					Price:<br><input type="number" required step="0.01" id="product-form-price" name="price" v-model="product.price">
-				</label>
-				</p>
-				<p>
-				<label for="product-form-category">
-					Category:<br><input type="text" name="categoryName" id="product-form-category" v-model="category">
-				</label>
-				</p>
-				<p>
-				<label for="product-form-file">
-					Image:<br><input type="file" name="file" id="product-form-file">
-				</label>
-				</p>
-				<input type="submit" :value="saveText">
-				<button v-if="!isNew" @click="onDelete">Delete</button>
+				</div>
+				<div class="row form-group" v-if="product.imageUrl">
+					<div class="img-container col-4">
+						<img :src="product.imageUrl">
+					</div>
+					<div class="col-8 form-group">
+						<b-form-select v-model="imageAction" :options="imageActionOptions" class="row mb-3" size="sm" />
+						<div v-if="imageAction == 1" class="row form-group">
+							<label for="product-form-file">New image</label>
+							<input class="form-control" type="file" name="file" id="product-form-file">
+						</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<b-btn type="submit" >{{saveText}}</b-btn>
+					<b-btn v-if="!isNew" @click="onDelete">Delete</b-btn>
+				</div>
 			</form>
+		</div>
 </template>
 
 <script>
@@ -47,7 +59,13 @@ export default {
 	data: function() {
 		return {
 			product: {},
-			category: ''
+			category: '',
+			imageAction: 0,
+			imageActionOptions: [
+				{value: 0, text: 'Keep image'},
+				{value: 1, text: 'Change image'},
+				{value: 2, text: 'Delete image'}
+			]
 		};
 	},
 
@@ -111,3 +129,14 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+.img-container {
+  width: 200px;
+}
+
+.img-container img {
+  max-height: 100%;
+  max-width: 100%;
+}
+</style>

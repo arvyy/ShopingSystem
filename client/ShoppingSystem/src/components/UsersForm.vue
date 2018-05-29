@@ -12,12 +12,14 @@
 					<tr>
 						<th >User</th>
 						<th >Activated</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="user in filteredUsers">
 						<td>{{ user.email }}</td>
 						<td><input type="checkbox" :checked="user.enabled" @click="updateUser(user)"></td>
+						<td><b-button @click="openUserOrders(user)">Orders</b-button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -45,6 +47,17 @@ export default {
 		}
 	},
 	methods: {
+		openUserOrders: function(user) {
+			this.$router.push({
+				name: 'OrdersEditPage',
+				params: {
+					user: user.email
+				},
+				query: {
+					page: 0
+				}
+			});
+		},
 		loadUsers: function() {
 			var t = this;
 			axios.get('/api/user/allusers').then(function(resp){

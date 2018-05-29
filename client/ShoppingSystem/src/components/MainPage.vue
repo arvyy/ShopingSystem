@@ -8,7 +8,7 @@
 			@clear-cart="onClearCart"
 	  @remove-cart-item="onRemoveCartItem" />
 
-		<router-view @add-to-cart="addToCart" class="container" />
+		<router-view :user="currentUser" @add-to-cart="addToCart" class="container" />
 	</div>
 </template>
 

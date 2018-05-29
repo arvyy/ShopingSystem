@@ -3,7 +3,7 @@
 		<b-modal id="cart" title="Cart" hide-footer ref="cartModal">
 			<p v-if="cart.length == 0" class="my-4">Cart is empty</p>
 			<b-container v-if="cart.length > 0">
-				<b-table striped hover outlined :items="cartTableItems">
+				<b-table striped hover outlined :items="cartTableItems" :fields="fields">
 					<template slot="removeCartItemButton" slot-scope="cell">
 						<b-btn size="sm" @click.stop="removeCartItem(cell.index)">Remove</b-btn>
 					</template>
@@ -23,7 +23,7 @@
 				<b-nav-item v-if="!isLoggedIn" @click="$emit('login')" right>Login</b-nav-item>
 
 				<b-nav-item-dropdown v-if="isLoggedIn" :text="user.name" right>
-					<b-dropdown-item>Orders</b-dropdown-item>
+					<b-dropdown-item @click="openOrdersPage">Orders</b-dropdown-item>
 					<b-dropdown-item @click="openPreferencesPage">Preferences</b-dropdown-item>
 					<b-dropdown-item @click="$emit('logout')">Logout</b-dropdown-item>
 				</b-nav-item-dropdown>
@@ -146,6 +146,9 @@ export default {
 		openCartItemPage: function(productId) {
 			console.log(productId);
 			this.$router.push({name: 'ProductPage', params: { productId: productId }});
+		},
+		openOrdersPage: function() {
+			this.$router.push({name: 'OrdersPage', query: {page: 0}});
 		},
     openPreferencesPage: function() {
       this.$router.push({name: 'Preferences'});

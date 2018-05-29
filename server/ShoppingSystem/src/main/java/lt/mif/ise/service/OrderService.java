@@ -1,12 +1,17 @@
 package lt.mif.ise.service;
 
+import org.javatuples.Pair;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import lt.mif.ise.domain.CardInformation;
+import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.UserOrder;
 
 public interface OrderService {
-    UserOrder makeOrder (CardInformation payment);
-    Iterable<UserOrder> getAllOrders();
-    Iterable<UserOrder> getOrdersByUser(String user);
+    UserOrder makeOrder (String user, Iterable<Pair<Product, Integer>> cart, CardInformation payment);
+    //Iterable<UserOrder> getAllOrders();
+    Page<UserOrder> getOrdersByUser(String user, Pageable page);
     UserOrder getById (String orderId);
     UserOrder updateOrder (String orderId, String state);
 }

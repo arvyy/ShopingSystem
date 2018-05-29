@@ -7,6 +7,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ public class ExportImportRestController {
     @Autowired
     private ExportImport exportImport;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     public Iterable<Product> upload(@RequestParam(value = "file")MultipartFile file){
         try {
@@ -28,6 +30,7 @@ public class ExportImportRestController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "export", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public ResponseEntity<ByteArrayResource> export(HttpServletResponse response) {

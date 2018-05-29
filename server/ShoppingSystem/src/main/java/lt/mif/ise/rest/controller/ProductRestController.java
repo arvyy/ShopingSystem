@@ -82,12 +82,16 @@ public class ProductRestController {
     public Product modifyProductMultipart(
             Product product,
             @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam(value = "categoryName", required=false) String category,
             @RequestParam(value = "deleteImage", required = false) boolean deleteImage) throws IOException{
         product = setImage(product, file);
         if (file == null && deleteImage){
             String path = new File(productImgLocation.getFile(), product.getProductId() + ".jpg").getAbsolutePath();
             new File(path).delete();
             product.setImageUrl(null);
+        }
+        if (category != null) {
+            product.setCategory(categoryService.getOrCreate(category));
         }
         return saveProduct(product);
     }

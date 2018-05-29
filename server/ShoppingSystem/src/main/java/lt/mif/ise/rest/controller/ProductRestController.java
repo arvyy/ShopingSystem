@@ -39,35 +39,60 @@ public class ProductRestController {
         return productService.getById(productId);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data", "application/json"})
+    @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
     public Product createProduct(
-    		@RequestBody Product product,
+    		Product product,
     		@RequestParam(value = "isNew") boolean isNew, 
     		@RequestParam(value = "categoryName", required=false) String category,
     		@RequestParam(value = "file", required=false) MultipartFile file) throws IllegalStateException, IOException{
-    	if (file != null && !file.isEmpty()) {
-    		String fname = file.getOriginalFilename();
-    		String type = fname.substring(fname.lastIndexOf("."));
-    		String imgName = product.getProductId() + type;
-    		product.setImageUrl("/product-image/" + imgName);
-    		String path = new File(productImgLocation.getFile(), imgName).getAbsolutePath();
-    		new File(path).delete();
-    		productImgLocation.getFile().mkdirs();
-    		Files.copy(file.getInputStream(), Paths.get(path));
-    	}
+        product = setImage(product, file);
     	if (category != null) {
     		product.setCategory(categoryService.getOrCreate(category));
     	}
         return productService.save(product, isNew);
     }
-    
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = {"application/json"})
-    public Product modifyProduct(
-    		@RequestBody Product product){
+    private Product saveProduct(Product product){
         return productService.save(product, false);
     }
 
+    private Product setImage(Product product, MultipartFile file) throws IOException{
+        if (file != null && !file.isEmpty()) {
+            String fname = file.getOriginalFilename();
+            String type = fname.substring(fname.lastIndexOf("."));
+            String imgName = product.getProductId() + type;
+            product.setImageUrl("/product-image/" + imgName);
+            String path = new File(productImgLocation.getFile(), imgName).getAbsolutePath();
+            new File(path).delete();
+            productImgLocation.getFile().mkdirs();
+            Files.copy(file.getInputStream(), Paths.get(path));
+        }
+        return product;
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(method = RequestMethod.PUT, consumes = {"application/json"})
+    public Product modifyProductJson(
+    		@RequestBody Product product){
+        return saveProduct(product);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    public Product modifyProductMultipart(
+            Product product,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam(value = "deleteImage", required = false) boolean deleteImage) throws IOException{
+        product = setImage(product, file);
+        if (file == null && deleteImage){
+            String path = new File(productImgLocation.getFile(), product.getProductId() + ".jpg").getAbsolutePath();
+            new File(path).delete();
+            product.setImageUrl(null);
+        }
+        return saveProduct(product);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.DELETE, value = "id/{productId}")
     public void deleteProduct(@PathVariable(value= "productId") String productId){
         productService.delete(productId);
@@ -78,7 +103,7 @@ public class ProductRestController {
         return productService.findProducts(criteria, page);
     }
     
-    //@PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Iterable<ProductSearch> findProductsList(ProductCriteria criteria) {
     	return productService.findProductsList(criteria);

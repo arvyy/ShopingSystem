@@ -18,6 +18,7 @@ public class Product {
     
     private String name;
 
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
 
     private String imageUrl;

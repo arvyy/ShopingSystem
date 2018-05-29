@@ -42,6 +42,9 @@
       },
       showErrorAlert (alertMessage, dismissCount) {
         this.alertVariant = 'danger'
+        if (!alertMessage) {
+          alertMessage = "Error connecting to server"
+        }
         this.showAlert(alertMessage, dismissCount)
       }
     }

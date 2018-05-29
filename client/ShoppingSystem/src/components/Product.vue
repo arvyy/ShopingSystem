@@ -4,7 +4,7 @@
 			<a v-on:click="$emit('product-click')"><img class="image" src="./../assets/logo.png"></a>
 		</div>
 		<div class="product_info_container">
-			<div class="name"><a v-on:click="$emit('product-click')">{{ name }}</a></div>
+			<div class="name"><a v-on:click="$emit('product-click')">{{shortName}}</a></div>
 			<div class="price">Price: {{ price }} $</div>
 			<AddToCartButton class="add_to_cart_button" :productId="productId" @add-to-cart="$emit('add-to-cart', $event)" ></AddToCartButton>
 		</div>
@@ -20,6 +20,7 @@ export default {
 	props: ['name', 'price', 'image', 'productId'],
 	data () {
 		return {
+		  shortName: this.name
 		}
 	}
 
@@ -46,12 +47,15 @@ export default {
 .name {
 	font-weight: bold;
 	font-size: 16px;
-	margin-bottom: 10px;
+	margin-bottom: 4px;
+  line-height: 1em;
+  height: 2em;       /* height is 2x line-height, so two lines will display */
+  overflow: hidden;
 }
 
 .price {
   font-size: 14px;
-	margin-bottom: 3%;
+	margin-bottom: 2%;
 }
 
 .add_to_cart_button {

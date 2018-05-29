@@ -1,8 +1,10 @@
 package lt.mif.ise.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import sun.security.util.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import java.math.BigDecimal;
 
 @Entity
@@ -18,6 +20,7 @@ public class Product {
     
     private String name;
 
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
 
     private String imageUrl;

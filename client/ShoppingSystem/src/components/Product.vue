@@ -45,11 +45,12 @@ export default {
 
 .name {
 	font-weight: bold;
-	font-size: 20px;
-	margin-bottom: 0%;
+	font-size: 16px;
+	margin-bottom: 10px;
 }
 
 .price {
+  font-size: 14px;
 	margin-bottom: 3%;
 }
 

@@ -46,6 +46,9 @@ public class ProductRestController {
     		@RequestParam(value = "isNew") boolean isNew, 
     		@RequestParam(value = "categoryName", required=false) String category,
     		@RequestParam(value = "file", required=false) MultipartFile file) throws IllegalStateException, IOException{
+        if (!productService.isProductIdValid(product.getProductId())){
+            throw new BadRequestException("Invalid product ID specified.");
+        }
         product = setImage(product, file);
     	if (category != null) {
     		product.setCategory(categoryService.getOrCreate(category));

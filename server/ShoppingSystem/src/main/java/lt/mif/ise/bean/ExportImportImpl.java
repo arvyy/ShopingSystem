@@ -4,6 +4,7 @@ import lt.mif.ise.domain.Category;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.jpa.ProductRepository;
 import lt.mif.ise.service.CategoryService;
+import lt.mif.ise.service.ProductService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ExportImportImpl implements ExportImport{
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductService productService;
 
     @Autowired
     CategoryService categoryService;
@@ -98,9 +102,15 @@ public class ExportImportImpl implements ExportImport{
                     cell = cellIterator.next();
                     switch (cell.getCellTypeEnum()) {
                         case NUMERIC:
+                            if (!productService.isProductIdValid(String.valueOf(cell.getNumericCellValue()))){
+                                continue;
+                            }
                             product.setProductId(String.valueOf(cell.getNumericCellValue()));
                             break;
                         case STRING:
+                            if (!productService.isProductIdValid(cell.getStringCellValue())){
+                                continue;
+                            }
                             product.setProductId(cell.getStringCellValue());
                             break;
                         default:

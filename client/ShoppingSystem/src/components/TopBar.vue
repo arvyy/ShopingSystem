@@ -151,7 +151,12 @@ export default {
 			this.$router.push({name: 'OrdersPage', query: {page: 0}});
 		},
     openPreferencesPage: function() {
-      this.$router.push({name: 'Preferences'});
+      if (this.isLoggedIn) {
+        this.$router.push({name: 'Preferences'});
+      }
+      else {
+        this.$router.push({name: 'Login'});
+      }
     },
 		openAdminPage: function() {
 			this.$router.push({name: 'UsersForm'});

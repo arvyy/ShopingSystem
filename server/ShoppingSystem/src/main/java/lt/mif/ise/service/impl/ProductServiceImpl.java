@@ -22,6 +22,8 @@ import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -107,5 +109,19 @@ public class ProductServiceImpl implements ProductService {
     	};
     }
 
+    @Override
+	public boolean isProductIdValid(String productId){
+		if (productId.isEmpty())
+			return false;
+
+		Pattern p = Pattern.compile("[^a-z0-9&-]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(productId);
+		boolean b = m.find();
+
+		if (b)
+			return false;
+
+		return true;
+	}
 
 }

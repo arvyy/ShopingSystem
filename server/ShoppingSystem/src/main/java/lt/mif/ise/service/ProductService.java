@@ -17,4 +17,6 @@ public interface ProductService {
 
     void delete(String productId);
 
+    boolean isProductIdValid(String productId);
+
 }

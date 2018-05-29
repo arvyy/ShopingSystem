@@ -18,6 +18,7 @@ public class Product {
     
     private String name;
 
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
 
     private String imageUrl;
@@ -98,7 +99,7 @@ public class Product {
         this.productId = product.getProductId() == null ? this.productId : product.getProductId();
         this.name = product.getName() == null ? this.name : product.getName();
         this.description = product.getDescription() == null ? this.description : product.getDescription();
-        this.imageUrl = product.getImageUrl() == null ? this.imageUrl : product.getImageUrl();
+        this.imageUrl = product.getImageUrl();
         this.category = product.getCategory() == null ? this.category : product.getCategory();
         this.price = product.getPrice() == null ? this.price : product.getPrice();
         this.version = product.getVersion() == null ? this.version : product.getVersion();

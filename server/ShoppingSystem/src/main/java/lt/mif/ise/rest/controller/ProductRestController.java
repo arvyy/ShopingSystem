@@ -3,6 +3,7 @@ package lt.mif.ise.rest.controller;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.search.ProductCriteria;
 import lt.mif.ise.domain.search.ProductSearch;
+import lt.mif.ise.error.exception.BadRequestException;
 import lt.mif.ise.service.CategoryService;
 import lt.mif.ise.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class ProductRestController {
     		@RequestParam(value = "isNew") boolean isNew, 
     		@RequestParam(value = "categoryName", required=false) String category,
     		@RequestParam(value = "file", required=false) MultipartFile file) throws IllegalStateException, IOException{
+        if (!productService.isProductIdValid(product.getProductId())){
+            throw new BadRequestException("Invalid product ID specified.");
+        }
         product = setImage(product, file);
     	if (category != null) {
     		product.setCategory(categoryService.getOrCreate(category));
@@ -82,12 +86,25 @@ public class ProductRestController {
     public Product modifyProductMultipart(
             Product product,
             @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam(value = "categoryName", required=false) String category,
             @RequestParam(value = "deleteImage", required = false) boolean deleteImage) throws IOException{
         product = setImage(product, file);
         if (file == null && deleteImage){
-            String path = new File(productImgLocation.getFile(), product.getProductId() + ".jpg").getAbsolutePath();
+            Product temp = productService.getById(product.getProductId());
+            if (null == temp){
+                throw new BadRequestException(String.format("Product with %s ID not found", product.getProductId()));
+            }
+            String imageUrl = temp.getImageUrl();
+            String imageName = "";
+            if (null != imageUrl){
+                imageName = imageUrl.substring(imageUrl.lastIndexOf("/"));
+            }
+            String path = new File(productImgLocation.getFile(), imageName).getAbsolutePath();
             new File(path).delete();
             product.setImageUrl(null);
+        }
+        if (category != null) {
+            product.setCategory(categoryService.getOrCreate(category));
         }
         return saveProduct(product);
     }

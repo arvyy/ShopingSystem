@@ -88,8 +88,11 @@ export default {
 }
 
 .add_to_cart_container {
-	width: 50%;
+  position: absolute;
+	width: 20%;
+  left: 50%;
 	transform: translate(50%);
+  bottom: 5%
 }
 
 </style>

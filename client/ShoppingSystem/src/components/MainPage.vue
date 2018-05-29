@@ -51,6 +51,7 @@ export default {
 		onLogout: function() {
 			axios.post('/logout');
 			this.currentUser = null;
+      this.$router.push({name: 'Search'});
 		},
 		onClearCart: function() {
 			axios.delete('/api/shoppingcart');

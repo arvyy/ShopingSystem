@@ -94,11 +94,6 @@ public class ProductServiceImpl implements ProductService {
     }
     
     private Specification<ProductSearch> buildProductSpec(ProductCriteria search) {
-    	/*
-    	 * inline interface'o Specification implementacija.
-    	 * ateity papildysim paieskai pagal kaina, kategorija, ir t.t.
-    	 * 
-    	 */
     	return (Root<ProductSearch> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
     		ArrayList<Predicate> predicates = new ArrayList<>();
     		search.getText().filter(t->!t.isEmpty()).ifPresent(t -> {

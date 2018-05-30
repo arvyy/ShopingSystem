@@ -42,7 +42,7 @@
       },
       showErrorAlert (alertMessage, dismissCount) {
         this.alertVariant = 'danger'
-        if (!alertMessage) {
+        if (!alertMessage || alertMessage == "") {
           alertMessage = "Error connecting to server"
         }
         this.showAlert(alertMessage, dismissCount)

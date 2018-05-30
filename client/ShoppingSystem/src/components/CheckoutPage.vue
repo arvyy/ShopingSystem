@@ -143,7 +143,7 @@
       },
 
       onSucessfulUpdate: function () {
-        this.$router.push({name: 'SearchPage'});
+        this.$router.push({name: 'OrdersPage'});
       }
     }
 

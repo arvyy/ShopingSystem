@@ -1,18 +1,18 @@
 <template>
 	<div v-if="!isLoading">
-		<div class="product_page_container">
-			<h1>{{ product.name }}</h1>
+		<div class="product_page_container container">
 			<div class="product_display_container">
 				<div class="image_container">
 					<img class="product_image" src="../assets/logo.png" v-if="!product.imageUrl">
 					<img class="product_image" v-bind:src="product.imageUrl" v-if="product.imageUrl">
 				</div>
-				<div class="product_description_container round_border">
+        <h1>{{ product.name }}</h1>
+				<div class="product_description_container round_border w-75 centered">
 					{{ product.description }}
-					<div class="add_to_cart_container">
-						<AddToCartButton :productId="productId" @add-to-cart="$emit('add-to-cart', $event)"></AddToCartButton>
-					</div>
 				</div>
+        <div class="add_to_cart_container">
+          <AddToCartButton :productId="productId" @add-to-cart="$emit('add-to-cart', $event)"></AddToCartButton>
+        </div>
 			</div>
 		</div>
 	</div>
@@ -58,20 +58,13 @@ export default {
 }
 
 .product_display_container {
-	position: absolute;
-	top: 20%;
-	left: 50%;
-	transform: translate(-50%);
 
-	width: 80vw;
-	height: 40vh;
 }
 
 .image_container {
-	float: left;
-	display: inline-block;
-	width: 40%;
-	height: 100%;
+  width: 40%;
+  left: 50%;
+  margin: auto;
 }
 
 .product_image {
@@ -80,19 +73,15 @@ export default {
 	height: 100%;
 }
 
-.product_description_container {
-	display: inline-block;
-	width: 40%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.2);
-}
 
 .add_to_cart_container {
-  position: absolute;
 	width: 20%;
-  left: 50%;
-	transform: translate(50%);
-  bottom: 5%
+  margin: auto;
+}
+
+.product_description_container {
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 </style>

@@ -35,7 +35,7 @@ export default {
 	methods: {
 		getQuery: function() {
 			return {
-				text: this.searchText,
+				text: this.searchtext,
 				page: this.page,
 				category: this.category
 			};

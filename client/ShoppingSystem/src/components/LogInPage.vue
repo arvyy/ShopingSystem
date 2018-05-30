@@ -100,16 +100,16 @@ export default {
 				email: t.signupUsername,
 				password: t.signupPassword
 			}).then(function(resp){
-				if (resp.data.success === true) {
+				//if (resp.data.success === true) {
 					t.onLoginSuccess();
-				}
+				//}
 			})
       .catch(function (error) {
         NotificationBus.$emit('error', error.response.data.Message)
       })
 		},
 		onLoginSuccess: function() {
-			this.$router.go(-1);
+			this.$router.push({name: 'Search'});
 		}
 	},
 	mounted : function() {

@@ -20,7 +20,7 @@
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
 				<b-nav-item v-b-modal.cart>Cart({{ itemsInCart }})</b-nav-item>
-				<b-nav-item v-if="!isLoggedIn" @click="$emit('login')" right>Login</b-nav-item>
+				<b-nav-item v-if="!isLoggedIn" @click="$emit('login')" right>Sign-up/Login</b-nav-item>
 
 				<b-nav-item-dropdown v-if="isLoggedIn" :text="user.name" right>
 					<b-dropdown-item @click="openOrdersPage">Orders</b-dropdown-item>

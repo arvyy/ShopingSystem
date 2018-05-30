@@ -81,6 +81,12 @@ export default {
 
 .product_description_container {
   margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+
   background-color: rgba(0, 0, 0, 0.1);
 }
 

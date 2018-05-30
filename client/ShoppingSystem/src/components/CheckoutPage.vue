@@ -148,7 +148,7 @@
             self.onSucessfulUpdate()
           })
           .catch(function (error) {
-            NotificationBus.$emit('error', "Error: " + error.response.data.Message)
+            NotificationBus.$emit('error', error.response.data.Message)
           })
       },
 

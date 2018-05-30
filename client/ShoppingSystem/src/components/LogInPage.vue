@@ -85,7 +85,12 @@ export default {
 					}
 				})
         .catch(function (error) {
-          NotificationBus.$emit('error', "Error: " + error.response.data.Message)
+          if (error.response.data.Message) {
+            NotificationBus.$emit('error', error.response.data.Message)
+          }
+          else {
+            NotificationBus.$emit('error', "Error: wrong username or password")
+          }
         })
 		},
 		doSignup: function(e) {
@@ -100,7 +105,7 @@ export default {
 				}
 			})
       .catch(function (error) {
-        NotificationBus.$emit('error', "Error: " + error.response.data.Message)
+        NotificationBus.$emit('error', error.response.data.Message)
       })
 		},
 		onLoginSuccess: function() {

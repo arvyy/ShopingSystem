@@ -42,8 +42,11 @@
       },
       showErrorAlert (alertMessage, dismissCount) {
         this.alertVariant = 'danger'
-        if (!alertMessage || alertMessage == "") {
+        if (typeof alertMessage === 'undefined' || !alertMessage || alertMessage == "") {
           alertMessage = "Error connecting to server"
+        }
+        else {
+          alertMessage = "Error: " + alertMessage;
         }
         this.showAlert(alertMessage, dismissCount)
       }

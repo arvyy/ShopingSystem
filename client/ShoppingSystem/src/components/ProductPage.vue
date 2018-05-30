@@ -7,6 +7,7 @@
 					<img class="product_image" v-bind:src="product.imageUrl" v-if="product.imageUrl">
 				</div>
         <h1>{{ product.name }}</h1>
+        <h2>{{ product.price }} €</h2>
 				<div class="product_description_container round_border w-75 centered">
 					{{ product.description }}
 				</div>
@@ -53,6 +54,11 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
 .product_page_container {
 
 }

@@ -4,6 +4,7 @@ import lt.mif.ise.domain.CardInformation;
 import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.UserOrder;
 import lt.mif.ise.error.exception.BadRequestException;
+import lt.mif.ise.error.exception.UnauthorizedException;
 import lt.mif.ise.service.OrderService;
 import lt.mif.ise.service.ShoppingCartService;
 
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -34,9 +34,11 @@ public class OrderRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     public UserOrder makeOrder (@RequestBody CardInformation cardInformation, Principal p){
-       UserOrder order = orderService.makeOrder(p.getName(), cartService.getCart(), cardInformation);
-       cartService.clearCart();
-       return order;
+        try {
+            return orderService.makeOrder(p.getName(), cartService.getCart(), cardInformation);
+        } catch (NullPointerException e){
+            throw new UnauthorizedException("Please log in");
+        }
     }
 //
 //    @RequestMapping(method = RequestMethod.GET)

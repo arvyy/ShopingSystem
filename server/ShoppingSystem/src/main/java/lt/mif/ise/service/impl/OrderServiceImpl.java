@@ -37,6 +37,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private PaymentSuccessRepository paymentSuccessRepo;
+
+    @Autowired
+    private ShoppingCartService cartService;
     
     @Autowired
     UserService userService;
@@ -78,6 +81,8 @@ public class OrderServiceImpl implements OrderService{
         order.setState(startingState);
         order.setUser(u);
 
+
+        cartService.clearCart();
         return orderRepo.save(order);
     }
 /*

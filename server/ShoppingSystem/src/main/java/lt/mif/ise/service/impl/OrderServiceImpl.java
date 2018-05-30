@@ -71,10 +71,10 @@ public class OrderServiceImpl implements OrderService{
         });
         order.setProducts(products);
 
-        //PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
-        //paymentSuccessRepo.save(paymentSuccess);
+        PaymentSuccess paymentSuccess = paymentRepo.MakePayment(payment);
+        paymentSuccess = paymentSuccessRepo.save(paymentSuccess);
 
-        //order.setPayment(paymentSuccess);
+        order.setPayment(paymentSuccess);
         order.setState(startingState);
         order.setUser(u);
 

@@ -85,12 +85,12 @@ public class OrderServiceImpl implements OrderService{
         cartService.clearCart();
         return orderRepo.save(order);
     }
-/*
+
     @Override
-    public Iterable<UserOrder> getAllOrders (){
-        return orderRepo.findAll();
+    public Page<Iterable<UserOrder>> getAllOrders (Pageable page){
+        return orderRepo.findAll(page);
     }
-*/
+
     @Override
     public Page<UserOrder> getOrdersByUser(String email, Pageable page) {
     	User user = userService.findByEmail(email);

@@ -11,4 +11,5 @@ import java.util.Optional;
 
 public interface OrderRepository extends CrudRepository<UserOrder, String> {
     Page<UserOrder> findByUser(User user, Pageable page);
+    Page<Iterable<UserOrder>> findAll(Pageable page);
 }

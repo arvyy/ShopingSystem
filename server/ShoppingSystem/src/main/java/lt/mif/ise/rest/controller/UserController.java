@@ -83,7 +83,7 @@ public class UserController {
         return true;
     }
 
-    @PreAuthorize(("hasAnyRole('USER')"))
+    @PreAuthorize("hasAnyRole('ADMIN') or hasAnyRole('USER')")
     @RequestMapping(value = "update/email", method = RequestMethod.POST)
     public ResponseEntity updateUserEmail(@RequestBody @Valid EmailUpdateDto emailDto, BindingResult result){
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -104,7 +104,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PreAuthorize(("hasAnyRole('USER')"))
+    @PreAuthorize("hasAnyRole('ADMIN') or hasAnyRole('USER')")
     @RequestMapping(value = "update/password", method = RequestMethod.POST)
     public ResponseEntity updateUserPassword(@RequestBody PasswordUpdateDto passwordDto, BindingResult result){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -115,7 +115,7 @@ public class UserController {
         }
 
         try {
-            Authentication authentication = authenticationManager.authenticate(
+            authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getEmail(),
                             passwordDto.getOldPassword()
@@ -139,7 +139,6 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    
     @RequestMapping("me")
     public JsonNode me(UsernamePasswordAuthenticationToken user) {
     	ObjectNode n = om.createObjectNode();
@@ -164,34 +163,5 @@ public class UserController {
     @RequestMapping(value = "enable/{email}", method = RequestMethod.POST)
     public void enableUserByEmail(@PathVariable(value = "email") String email){
         userService.enableByEmail(email);
-    }
-/*
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(value = "disable/{id}", method = RequestMethod.POST)
-    public void disableUserById(@PathVariable(value= "id") String id){
-        userService.disableById(id);
-    }
-
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(value = "enable/{id}", method = RequestMethod.POST)
-    public void enableUserById(@PathVariable(value = "id") String id){
-        userService.enableById(id);
-    }
-*/
-    @PreAuthorize("hasAnyRole('ADMIN') or hasAnyRole('USER')")
-    @RequestMapping(value="test/secured/admin", method = RequestMethod.GET)
-    public String testAdminAuthorization(){
-        return "welcome ADMIN";
-    }
-
-    @PreAuthorize(("hasAnyRole('USER')"))
-    @RequestMapping(value="test/secured/user", method = RequestMethod.GET)
-    public String testUserAuthorization(){
-        return "welcome USER";
-    }
-
-    @RequestMapping(value = "test/user", method = RequestMethod.GET)
-    public String testNonAuthorizedUser(){
-        return "welcome non authorized";
     }
 }

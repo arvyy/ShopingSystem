@@ -23,9 +23,6 @@ import java.nio.file.Paths;
 @RequestMapping("/api/product")
 @RestController
 public class ProductRestController {
-	/*
-	 * TODO error handling mapping
-	 */
     @Autowired
     private ProductService productService;
     
@@ -40,6 +37,7 @@ public class ProductRestController {
         return productService.getById(productId);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
     public Product createProduct(
     		Product product,

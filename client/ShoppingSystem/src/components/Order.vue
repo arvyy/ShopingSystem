@@ -2,7 +2,10 @@
 
 	<div class="order">
 		<b-row>
-			<h2>{{createdAt}}</h2>
+			OrderID: {{order.id}}
+		</b-row>
+		<b-row v-if="createdAt">
+			Creation date: {{createdAt}}
 		</b-row>
 		<b-row>
 			<b-table striped hover outlined :items="orderItems" :fields="fields"></b-table>
@@ -26,7 +29,9 @@ export default {
 			return this.order.products;
 		},
 		createdAt: function() {
-			return (this.order && this.order.payment)? this.order.payment : '';
+			return (this.order && this.order.payment && this.order.payment.created_at)? 
+				this.order.payment.created_at.slice(0, 10) : 
+				'';
 		}
 	},
 	data: function() {

@@ -45,7 +45,7 @@ public class OrderRestController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public Page<Iterable<UserOrder>> getAllOrders (Pageable page){
+    public Page<UserOrder> getAllOrders (Pageable page){
         return orderService.getAllOrders(page);
     }
 

@@ -12,9 +12,25 @@ public class PaymentSuccess extends Payment {
     @Id
     @JsonProperty("id")
     @SerializedName("id")
-    public String Id;
+    private String id;
 
     @JsonProperty("created_at")
     @SerializedName("created_at")
-    public Date Created;
+    private Date created;
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
 }

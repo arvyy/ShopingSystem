@@ -87,8 +87,8 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Page<Iterable<UserOrder>> getAllOrders (Pageable page){
-        return orderRepo.findAll(page);
+    public Page<UserOrder> getAllOrders (Pageable page){
+        return orderRepo.findAllByOrderByPaymentCreatedDesc(page);
     }
 
     @Override

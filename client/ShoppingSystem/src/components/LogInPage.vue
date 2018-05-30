@@ -31,12 +31,12 @@
 				<input type="password" class="form-control" id="inputPasswordSignup" placeholder="Password" v-model="signupPassword">
 			  </div>
 			</div>
-			<div class="form-group row">
+			<!--div class="form-group row">
 			  <label for="inputPasswordSignupRepeat" class="col-sm-2 col-form-label">Repeat password</label>
 			  <div class="col-sm-10">
 				<input type="password" class="form-control" id="inputPasswordSignupRepeat" placeholder="Password">
 			  </div>
-			</div>
+			</div-->
 			<button type="submit" class="btn btn-primary">Signup</button>
 		</form>
 	</div>

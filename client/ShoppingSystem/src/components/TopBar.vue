@@ -62,13 +62,13 @@
 					<table>
 						<tr>
 							<th colspan="2">Products</th>
-							<th>{{ cartPrice }}</th>
+							<th>{{ cartPrice }} €</th>
 							<th><button @click="$emit('clear-cart')">X</button></th>
 						</tr>
 						<tr v-for="cartitem in cart" class="cart-item">
 							<td><a @click="openCartItemPage(cartitem[0].productId)">{{cartitem[0].name}}</a></td>
 							<td><span class="cart-count">x{{cartitem[1]}}</span></td>
-							<td><span>{{cartitem[0].price}}</span></td>
+							<td><span>{{cartitem[0].price}} €</span></td>
 							<td><button>X</button></td>
 						</tr>
 					</table>

@@ -1,11 +1,15 @@
 <template>
 	<div class="product_container round_border">
 		<div class="image_container">
-			<a v-on:click="$emit('product-click')"><img class="image" src="./../assets/logo.png"></a>
+			<a v-on:click="$emit('product-click')">
+				<img class="image" src="../assets/logo.png" v-if="!image">
+				<img class="image" v-bind:src="image" v-if="image">
+				<!-- img class="image" src="./../assets/logo.png" -->
+			</a>
 		</div>
 		<div class="product_info_container">
 			<div class="name"><a v-on:click="$emit('product-click')">{{shortName}}</a></div>
-			<div class="price">Price: {{ price }} $</div>
+			<div class="price">Price: {{ price }} €</div>
 			<AddToCartButton class="add_to_cart_button" :productId="productId" @add-to-cart="$emit('add-to-cart', $event)" ></AddToCartButton>
 		</div>
 	</div>
@@ -18,9 +22,9 @@ export default {
 	components: {AddToCartButton},
 	name: 'Product',
 	props: ['name', 'price', 'image', 'productId'],
-	data () {
-		return {
-		  shortName: this.name
+	computed: {
+		shortName: function() {
+		  return this.name;
 		}
 	}
 

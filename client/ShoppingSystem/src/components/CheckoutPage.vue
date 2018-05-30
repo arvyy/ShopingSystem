@@ -115,7 +115,7 @@
           products.push({
             name: '',
             quantity: '',
-            price: totalPrice
+            price: totalPrice + ' €'
           })
           return(products || [])
         })

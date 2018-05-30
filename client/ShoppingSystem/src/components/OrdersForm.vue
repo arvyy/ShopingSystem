@@ -1,43 +1,63 @@
 <template>
 	<div>
-		<h1 class="row">Orders</h1>
-		<form class="row">
-			<div class="form-group">
-				<input type="text" v-model="usersFilter" class="form-control" placeholder="Filter users">
-			</div>
-		</form>
-		<b-table striped hover :items="orders" :fields="fields" class="row"></b-table>
+		<Order v-for="order in ordersPages.content" :order="order" :editable="true" :states="states" @order-state-change="onOrderStateChange(order, $event)" ></Order>
+		<b-pagination align="center" @input="onPageChange($event - 1)" size="md" :total-rows="ordersPages.totalElements" :value="ordersPages.number + 1" :per-page="ordersPages.size"/>
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
+import Order from './Order.vue'
 export default {
 	name: 'OrdersForm',
+	props: ['page'],
+	components: {
+		'Order': Order
+	},
 	data: function() {
 		return {
-			orders: [],
-			usersFilter: '',
-			fields: [{
-				key: 'id',
-				label: 'Order ID',
-				sortable: true
-			}, {
-				key: 'user',
-				label: 'User'
-			}]
+			ordersPerPage: 10,
+			ordersPages: {},
+			states: []
 		};
 	},
+	watch: {
+		'$route': function(to, from) {
+			this.loadOrders();
+		}
+	},
 	methods: {
+		onOrderStateChange: function(order, newstate) {
+			axios.put('/api/order/' + order.id + '?state=' + encodeURIComponent(newstate));
+		},
+		loadStates: function() {
+			var t = this;
+			axios.get('/api/order/states').then(function(response){
+				t.states = response.data;
+			});
+		},
+		onPageChange: function(newPage) {
+			this.$router.push({name: 'OrdersForm', query: {
+				page: newPage
+			}});
+		},
 		loadOrders: function() {
 			var t = this;
-			axios.get('/api/order').then(function(resp){
-				t.orders = resp.data;	
-			});	
-		},
+			var url = '/api/order';
+			axios.get(url, {
+				params: {
+					size: t.ordersPerpage,
+					page: t.page
+				}
+			}).then(function(response){
+				t.ordersPages = response.data;
+			});
+		}
 	},
 	mounted: function() {
 		this.loadOrders();
-	}
+		this.loadStates();
+	}	
 }
 </script>
+

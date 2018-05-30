@@ -13,6 +13,7 @@ import CheckoutPage from '@/components/CheckoutPage'
 import PreferencesPage from '@/components/PreferencesPage'
 import OrdersPage from '@/components/OrdersPage'
 import OrdersEditPage from '@/components/OrdersEditPage'
+import OrdersForm from '@/components/OrdersForm'
 
 Vue.use(Router)
 
@@ -85,6 +86,15 @@ export default new Router({
 				path: 'products',
 				name: 'ProductsForm',
 				component: ProductsForm
+			}, {
+				path: 'orders',
+				name: 'OrdersForm',
+				props: function(route) {
+					return {
+						page: route.query.page
+					};
+				},
+				component: OrdersForm
 			}, {
 				path: 'products/edit/:productId',
 				name: 'ProductsFormEntry',

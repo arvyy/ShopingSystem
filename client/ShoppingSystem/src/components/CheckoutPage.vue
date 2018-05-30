@@ -20,7 +20,9 @@
               <b-form-input type="text"
                             v-model="cardNumber"
                             required
-                            placeholder="Your Card Number">
+                            placeholder="Your Card Number"
+                            minlength="16"
+                            :maxlength="16">
               </b-form-input>
             </b-form-group>
             <b-form-group label="Card Holder Name:"
@@ -35,20 +37,26 @@
               <b-col>
                 <b-form-group label="Expiration Month:"
                                    label-class="font-weight-bold">
-                <b-form-input type="text"
+                <b-form-input type="number"
                               v-model="expirationMonth"
                               required
-                              placeholder="MM">
+                              placeholder="MM"
+                              :minlength="2"
+                              :maxlength="2"
+                              min="0"
+                              max="12">
                 </b-form-input>
               </b-form-group>
               </b-col>
               <b-col>
                 <b-form-group label="Expiration Year:"
                               label-class="font-weight-bold">
-                  <b-form-input type="text"
+                  <b-form-input type="number"
                                 v-model="expirationYear"
                                 required
-                                placeholder="YY">
+                                placeholder="YY"
+                                :minlength="2"
+                                :maxlength="2">
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -58,7 +66,9 @@
                   <b-form-input type="text"
                                 v-model="cvv"
                                 required
-                                placeholder="CVV">
+                                placeholder="CVV"
+                                :minlength="3"
+                                :maxlength="3">
                   </b-form-input>
                 </b-form-group>
               </b-col>

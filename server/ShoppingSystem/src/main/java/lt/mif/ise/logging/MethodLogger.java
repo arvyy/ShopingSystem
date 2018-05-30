@@ -20,16 +20,22 @@ public class MethodLogger extends HandlerInterceptorAdapter{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         long startTime = System.currentTimeMillis();
 
-        logger.info("\n\n-------- Logger.preHandle --- " +
+        try{
+            logger.info("\n\n-------- Logger.preHandle --- " +
                     "\nRequest URL: " + request.getRequestURL() +
                     "\nStart Time: " + System.currentTimeMillis() +
-                ((null != request.getUserPrincipal()) ?
-                    "\nPrincipal: " + request.getUserPrincipal().getName() +
-                    "\nAuthorities: " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString() : "") +
+                    ((null != request.getUserPrincipal()) ?
+                            "\nPrincipal: " + request.getUserPrincipal().getName() +
+                                    "\nAuthorities: " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString() : "") +
                     "\nMethod: " + request.getMethod());
 
-        request.setAttribute("startTime", startTime);
+            request.setAttribute("startTime", startTime);
 
+        }
+        catch(Exception e){
+            logger.info(e.getMessage());
+            return true;
+        }
         return true;
     }
 
@@ -42,11 +48,12 @@ public class MethodLogger extends HandlerInterceptorAdapter{
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, //
                                 Object handler, Exception ex) {
-        logger.info("\n\n-------- Logger.postHandle --- " +
+        try{
+            logger.info("\n\n-------- Logger.postHandle --- " +
                     "\nRequest URL: " + request.getRequestURL() +
                     "\nSTATUS: " + response.getStatus() +
                     ((null != ex) ? "\nException : "+ ex : ""));
-
+        }
+        catch(Exception e){ logger.info(e.getMessage()); }
     }
-
 }

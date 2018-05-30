@@ -2,7 +2,7 @@
 	<div>
 		<div class="row justify-content-center">
 			<div class="product_container" v-for="product in products.content">
-				<Product :name=product.name :price=product.price :productId=product.productId v-on:add-to-cart="$emit('add-to-cart', $event)" v-on:product-click="openProductPage(product.productId)"></Product>
+				<Product :image="product.imageUrl" :name=product.name :price=product.price :productId=product.productId v-on:add-to-cart="$emit('add-to-cart', $event)" v-on:product-click="openProductPage(product.productId)"></Product>
 			</div>
 		</div>
 		<b-pagination align="center" @input="$emit('set-page', $event - 1)" size="md" :total-rows="products.totalElements" :value="products.number + 1" :per-page="products.size"/>

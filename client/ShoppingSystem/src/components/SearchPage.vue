@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1 class="row justify-content-center">Products</h1>
+		<hr>
 		<SearchBar v-on:do-search="onSearch" :category="category" :searchtext="searchtext" :categories="categories"></SearchBar>
 		<hr>
 		<ProductList id="product_list"
@@ -75,7 +75,7 @@ export default {
 		}
 	},
 	mounted : function() {
-		this.loadItemsList(this.page);
+		this.loadItemsList(0);
 		this.loadCategories();
 	},
 

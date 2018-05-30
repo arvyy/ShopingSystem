@@ -109,19 +109,23 @@ export default {
 
 		onSubmit: function(e) {
 			e.preventDefault();
+			var url = this.isNew? '/api/product' : '/api/product/update';
 			var t = this;
 			var config = { headers: { 'Content-Type': 'multipart/form-data' } };
 			var fd = new FormData(e.target);
 			fd.append('isNew', this.isNew);
+			fd.append('imageUrl', this.product.imageUrl);
 			if (!this.isNew) {
 				fd.append('productId', this.productId);
 				//else ateina is formos
+				fd.append('deleteImage', this.imageAction == 2);
 			}
-			axios.post('/api/product', fd, config).then(function(resp){
+			axios.post(url, fd, config).then(function(resp){
 				t.$router.push({name: 'ProductsForm'});
 			});
 		},
 		onDelete: function() {
+			var t = this;
 			axios.delete('/api/product/id/' + this.productId).then(function(resp){
 				t.$router.push({name: 'ProductsForm'});
 			});	

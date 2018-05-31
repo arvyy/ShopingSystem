@@ -53,11 +53,12 @@ public class OrderServiceImpl implements OrderService{
     
     @Override
     @Transactional
-    public UserOrder makeOrder(String userEmail, Iterable<Pair<Product, Integer>> cart, CardInformation cardInformation) {
+    public UserOrder makeOrder(String userEmail, Iterable<Pair<Product, Integer>> cart, CardInformation cardInformation, String address) {
         Payment payment = new Payment(cardInformation, 0);
         User u = userService.findByEmail(userEmail);
         ArrayList<UserOrderItem> products = new ArrayList<>();
         UserOrder order = new UserOrder();
+		order.setAddress(address);
         cart.forEach((productAmountPair) -> {
         	UserOrderItem i = new UserOrderItem();
         	i.setCount(productAmountPair.getValue1());

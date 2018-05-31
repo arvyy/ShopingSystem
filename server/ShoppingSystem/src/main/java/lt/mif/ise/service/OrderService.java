@@ -9,7 +9,7 @@ import lt.mif.ise.domain.Product;
 import lt.mif.ise.domain.UserOrder;
 
 public interface OrderService {
-    UserOrder makeOrder (String user, Iterable<Pair<Product, Integer>> cart, CardInformation payment);
+    UserOrder makeOrder (String user, Iterable<Pair<Product, Integer>> cart, CardInformation payment, String address);
     Page<UserOrder> getAllOrders(Pageable page);
     Page<UserOrder> getOrdersByUser(String user, Pageable page);
     UserOrder getById (String orderId);

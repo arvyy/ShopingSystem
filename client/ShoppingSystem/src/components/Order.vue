@@ -4,6 +4,9 @@
 		<b-row>
 			OrderID: {{order.id}}
 		</b-row>
+		<b-row>
+			Delivery address: {{order.address}}
+		</b-row>
 		<b-row v-if="createdAt">
 			Creation date: {{createdAt}}
 		</b-row>

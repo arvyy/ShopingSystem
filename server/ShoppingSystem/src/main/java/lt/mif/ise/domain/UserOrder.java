@@ -22,6 +22,8 @@ public class UserOrder {
     @JsonIgnore
     private User user;
 
+	private String address;
+
     @OneToOne
     private PaymentSuccess payment;
 
@@ -74,5 +76,13 @@ public class UserOrder {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public void setAddress(String a) {
+		this.address = a;
+	}
+
+	public String getAddress() {
+		return this.address;
 	}
 }

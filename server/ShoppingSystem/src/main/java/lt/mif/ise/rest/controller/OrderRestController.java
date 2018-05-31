@@ -35,9 +35,9 @@ public class OrderRestController {
 
     @PreAuthorize("hasAnyRole('ADMIN') or hasAnyRole('USER')")
     @RequestMapping(method = RequestMethod.POST)
-    public UserOrder makeOrder (@RequestBody CardInformation cardInformation, Principal p){
+    public UserOrder makeOrder (@RequestBody CardInformation cardInformation, @RequestParam("address") String address, Principal p){
         try {
-            return orderService.makeOrder(p.getName(), cartService.getCart(), cardInformation);
+            return orderService.makeOrder(p.getName(), cartService.getCart(), cardInformation, address);
         } catch (NullPointerException e){
             throw new UnauthorizedException("Please log in");
         }

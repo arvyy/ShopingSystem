@@ -55,8 +55,8 @@
                                 v-model="expirationYear"
                                 required
                                 placeholder="YY"
-                                :minlength="2"
-                                :max="2050">
+                                :min="18"
+                                :max="99">
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -74,6 +74,11 @@
               </b-col>
             </b-form-row>
           </b-form-group>
+		  <b-form-row>
+			  <b-form-group label="Delivery address" label-class="font-weight-bold">
+				  <b-form-input type="text" v-model="address" required></b-form-input>
+			  </b-form-group>
+		  </b-form-row>
           <b-button type="submit" variant="primary">Confirm And Pay</b-button>
         </b-card>
       </b-form>
@@ -99,7 +104,8 @@
         cardHolderName: '',
         expirationYear: '',
         expirationMonth: '',
-        cvv: ''
+        cvv: '',
+		address: ''
       }
     },
     methods: {
@@ -142,7 +148,7 @@
 
         var self = this;
 
-        axios.post('/api/order/', cardInfo)
+        axios.post('/api/order/?address=' + encodeURIComponent(this.address), cardInfo)
           .then(function(resp){
             NotificationBus.$emit('success', 'Payment successful');
             self.onSucessfulUpdate()

@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         roleRepository.save(newRole);
         return newRole;
     }
-
+/*
     @PostConstruct
     public void init() {
         if (userRepository.count() == 0) {
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
             userRepository.saveAll(Arrays.asList(u1, u2));
         }
     }
-
+*/
     @Override
     public void save(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

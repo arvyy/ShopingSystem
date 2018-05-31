@@ -104,10 +104,11 @@
           })
       },
       onSucessfulUpdate: function() {
-        this.newEmail = ''
-        this.newPassword =''
-        this.newPasswordConfirm = ''
-        this.oldPassword = ''
+        this.newEmail = '';
+        this.newPassword ='';
+        this.newPasswordConfirm = '';
+        this.oldPassword = '';
+		this.$emit('email-update');
       }
     }
   }

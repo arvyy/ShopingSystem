@@ -57,11 +57,12 @@ export default {
 	},
 	methods: {
 		doImport: function() {
+			var t = this;
 			var fd = new FormData();
 			fd.append('file', this.importFile);
 			var config = { headers: { 'Content-Type': 'multipart/form-data' } };
 			axios.post('/api/excel/upload', fd, config).then(function(resp){
-				t.$router.push({name: 'ProductsForm'});
+				t.loadProducts();
 			});
 		},
 		loadProducts: function() {

@@ -56,7 +56,7 @@
                                 required
                                 placeholder="YY"
                                 :minlength="2"
-                                :maxlength="2">
+                                :max="2050">
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -153,6 +153,7 @@
       },
 
       onSucessfulUpdate: function () {
+		this.$emit('order-complete');
         this.$router.push({name: 'OrdersPage'});
       }
     }

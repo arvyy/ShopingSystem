@@ -45,6 +45,10 @@
 					<b-btn v-if="!isNew" @click="onDelete">Delete</b-btn>
 				</div>
 			</form>
+
+			<b-modal ref="deleteModal" @ok="doDelete">
+				The product will be permamently deleted
+			</b-modal>
 		</div>
 </template>
 
@@ -125,6 +129,9 @@ export default {
 			});
 		},
 		onDelete: function() {
+			this.$refs.deleteModal.show();
+		},
+		doDelete: function() {
 			var t = this;
 			axios.delete('/api/product/id/' + this.productId).then(function(resp){
 				t.$router.push({name: 'ProductsForm'});

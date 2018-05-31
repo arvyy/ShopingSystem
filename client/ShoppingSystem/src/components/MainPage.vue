@@ -8,7 +8,11 @@
 			@clear-cart="onClearCart"
 	  @remove-cart-item="onRemoveCartItem" />
 
-		<router-view :user="currentUser" @add-to-cart="addToCart" class="container" />
+		<router-view :user="currentUser" 
+		   class="container"
+			@email-update="loadCurrentUser"
+			@add-to-cart="addToCart" 
+			@order-complete="loadCart" />
 	</div>
 </template>
 
@@ -62,13 +66,17 @@ export default {
 			axios.delete('/api/shoppingcart/' + productId).then(function(resp){
 				t.loadCart();
 			});
+		},
+		loadCurrentUser: function() {
+			var t = this;
+			axios.get('/api/user/me').then(function(resp){
+				t.currentUser = resp.data;
+			});
 		}
 	},
 	mounted: function() {
 		var t = this;
-		axios.get('/api/user/me').then(function(resp){
-			t.currentUser = resp.data;
-		});
+		this.loadCurrentUser();
 		this.loadCart();
 	}
 }

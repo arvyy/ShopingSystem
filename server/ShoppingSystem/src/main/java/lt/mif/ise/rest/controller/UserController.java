@@ -92,7 +92,9 @@ public class UserController {
         if (null == user){
             throw new NotFoundException(String.format("User %s not found", userDetails.getUsername()));
         }
-
+		if (userService.findByEmail(emailDto.getEmail()) != null) {
+            throw new BadRequestException("Email already exists.\n");
+		}
         user.setEmail(emailDto.getEmail());
         String validationMessage = userValidator.validate(user, result, false);
         if (result.hasErrors()){
